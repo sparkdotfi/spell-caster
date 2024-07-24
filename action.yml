@@ -18,4 +18,4 @@ outputs:
 
 runs:
   using: bun1
-  main: main.ts
+  main: out/action.js
