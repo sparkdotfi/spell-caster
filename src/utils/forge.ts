@@ -1,4 +1,4 @@
-import { $ } from 'bun'
+import { $ } from 'dax-sh'
 import { Address } from 'viem'
 
 export async function deployContract(contractName: string, rpc: string, from: Address): Promise<Address> {

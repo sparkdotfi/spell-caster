@@ -17,5 +17,5 @@ outputs:
     description: The time we greeted you
 
 runs:
-  using: bun1
+  using: node20
   main: out/action.js
