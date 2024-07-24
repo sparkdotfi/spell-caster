@@ -1,4 +1,4 @@
-# Spell Caster
+# Spark Spells GitHub Action
 
 Execute a spell on a persisted, forked network with a shareable link.
 

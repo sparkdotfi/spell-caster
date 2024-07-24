@@ -1,0 +1,21 @@
+name: Spell Caster
+description: Spark Spell Caster
+
+inputs:
+  TENDERLY_ACCOUNT:
+    description: 'Tenderly credentials'
+    required: true
+  TENDERLY_PROJECT:
+    description: 'Tenderly credentials'
+    required: true
+  TENDERLY_API_KEY:
+    description: 'Tenderly credentials'
+    required: true
+
+outputs:
+  time:
+    description: The time we greeted you
+
+runs:
+  using: bun1
+  main: main.ts
