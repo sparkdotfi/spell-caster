@@ -27,16 +27,16 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
     originChainId: originChainId,
     forkChainId,
   })
-  const ethereumClient = new EthereumClient(rpc, forkChainId, config.deployer)
+  const ethereumClient = new EthereumClient(rpc.adminRpcUrl, forkChainId, config.deployer)
 
-  const spellAddress = await deployContract(spellName, rpc, config.deployer)
+  const spellAddress = await deployContract(spellName, rpc.adminRpcUrl, config.deployer)
 
   await executeSpell({ spellAddress, network: chain, ethereumClient })
 
   return {
     originChainId,
-    forkRpc: rpc,
+    forkRpc: rpc.publicRpcUrl,
     forkChainId,
-    appUrl: buildAppUrl({ rpc, originChainId }),
+    appUrl: buildAppUrl({ rpc: rpc.publicRpcUrl, originChainId }),
   }
 }

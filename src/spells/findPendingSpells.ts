@@ -17,6 +17,6 @@ export function findPendingSpells(projectRootPath: string): string[] {
 }
 
 export function getFilenameWithoutExtension(fullPath: string): string {
-  const parsedPath = path.parse(fullPath);
-  return parsedPath.name;
+  const parsedPath = path.parse(fullPath)
+  return parsedPath.name
 }

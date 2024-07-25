@@ -1,8 +1,8 @@
 import core from '@actions/core'
 import { forkAndExecuteSpell } from '..'
 import { getConfig } from '../config'
-import { findPendingSpells } from '../spells/findPendingSpells'
 import { getRequiredGithubInput } from '../config/environments/action'
+import { findPendingSpells } from '../spells/findPendingSpells'
 
 async function main(): Promise<void> {
   const config = getConfig(getRequiredGithubInput)

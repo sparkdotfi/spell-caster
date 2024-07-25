@@ -9,7 +9,8 @@ export interface CreateTenderlyForkArgs {
 }
 
 export interface CreateTenderlyVnetResult {
-  rpcUrl: string
+  publicRpcUrl: string
+  adminRpcUrl: string
 }
 
 export class TenderlyVnetClient {
@@ -55,6 +56,10 @@ export class TenderlyVnetClient {
     )
 
     const data: any = await response.json()
-    return { rpcUrl: data.rpcs[0].url }
+
+    const adminRpc = data.rpcs.find((rpc: any) => rpc.name === 'Admin RPC')
+    const publicRpc = data.rpcs.find((rpc: any) => rpc.name === 'Public RPC')
+
+    return { publicRpcUrl: publicRpc.url, adminRpcUrl: adminRpc.url }
   }
 }
