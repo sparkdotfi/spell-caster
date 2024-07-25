@@ -1,7 +1,7 @@
 import assert from 'node:assert'
 import { type Address, encodeFunctionData } from 'viem'
-import type { NetworkConfig } from './config'
-import type { IEthereumClient } from './periphery/ethereum'
+import { NetworkConfig } from '../config'
+import { IEthereumClient } from '../periphery/ethereum'
 
 interface ExecuteSpellArgs {
   spellAddress: Address

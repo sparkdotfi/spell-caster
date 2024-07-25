@@ -1,4 +1,4 @@
-import { TenderlyVnetClient } from './TenderlyVnetClient'
+import { CreateTenderlyVnetResult, TenderlyVnetClient } from './TenderlyVnetClient'
 
 export async function createTenderlyVNet(opts: {
   apiKey: string
@@ -6,7 +6,7 @@ export async function createTenderlyVNet(opts: {
   project: string
   originChainId: number
   forkChainId: number
-}): Promise<string> {
+}): Promise<CreateTenderlyVnetResult> {
   const client = new TenderlyVnetClient(opts)
   const vnet = await client.create({
     forkChainId: opts.forkChainId,
@@ -14,7 +14,7 @@ export async function createTenderlyVNet(opts: {
     name: `spark-spell-${Date.now()}`,
   })
 
-  return vnet.rpcUrl
+  return vnet
 }
 
 export function getRandomChainId(): number {

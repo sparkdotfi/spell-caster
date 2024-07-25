@@ -1,10 +1,10 @@
-import type { Address } from 'viem'
+import { type Address, zeroAddress } from 'viem'
 import { gnosis, mainnet } from 'viem/chains'
-import { getRequiredEnv } from './env'
 
 export interface Config {
   tenderly: TenderlyConfig
   networks: Record<string, NetworkConfig>
+  deployer: Address
 }
 
 export interface NetworkConfig {
@@ -19,12 +19,12 @@ export interface TenderlyConfig {
   apiKey: string
 }
 
-export function getConfig(): Config {
+export function getConfig(getEnvVariable: (key: string) => string): Config {
   return {
     tenderly: {
-      account: getRequiredEnv('TENDERLY_ACCOUNT'),
-      project: getRequiredEnv('TENDERLY_PROJECT'),
-      apiKey: getRequiredEnv('TENDERLY_API_KEY'),
+      account: getEnvVariable('TENDERLY_ACCOUNT'),
+      project: getEnvVariable('TENDERLY_PROJECT'),
+      apiKey: getEnvVariable('TENDERLY_API_KEY'),
     },
     networks: {
       [mainnet.id]: {
@@ -38,5 +38,6 @@ export function getConfig(): Config {
         sparkSpellExecutor: '0xc4218C1127cB24a0D6c1e7D25dc34e10f2625f5A',
       },
     },
+    deployer: zeroAddress,
   }
 }
