@@ -1,0 +1,24 @@
+name: Spell Caster
+description: Spark Spell Caster
+
+inputs:
+  github-token:
+    description: 'Github token is needed to post comments on the PR'
+    required: true
+  TENDERLY_ACCOUNT:
+    description: 'Tenderly credentials'
+    required: true
+  TENDERLY_PROJECT:
+    description: 'Tenderly credentials'
+    required: true
+  TENDERLY_API_KEY:
+    description: 'Tenderly credentials'
+    required: true
+
+outputs:
+  time:
+    description: The time we greeted you
+
+runs:
+  using: node20
+  main: out/action.js
