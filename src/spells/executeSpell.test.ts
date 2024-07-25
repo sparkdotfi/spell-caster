@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'bun:test'
-import type { NetworkConfig } from './config'
+import { NetworkConfig } from '../config'
+import { getMockEthereumClient } from '../test/MockEthereumClient'
+import { randomAddress } from '../test/addressUtils'
+import { asciiToHex, hexStringToHex } from '../test/hexUtils'
 import { executeSpell } from './executeSpell'
-import { getMockEthereumClient } from './test/MockEthereumClient'
-import { randomAddress } from './test/addressUtils'
-import { asciiToHex, hexStringToHex } from './test/hexUtils'
 
 describe(executeSpell.name, () => {
   test('replaces the code of the executor with a code of a spell', async () => {

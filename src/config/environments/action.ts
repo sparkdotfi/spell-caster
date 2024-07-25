@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import core from '@actions/core';
+import core from '@actions/core'
 
 export function getRequiredGithubInput(key: string): string {
   const value = core.getInput(key)

@@ -1,4 +1,4 @@
-import { zeroAddress, type Address } from 'viem'
+import { type Address, zeroAddress } from 'viem'
 import { gnosis, mainnet } from 'viem/chains'
 
 export interface Config {
