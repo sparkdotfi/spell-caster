@@ -1,4 +1,4 @@
-# Spell Caster
+# Spell Caster 🪄
 
 Execute a [Spark spell](https://github.com/marsfoundation/spark-spells) on a forked network with a shareable links.
 
@@ -10,7 +10,7 @@ Spell Caster can be run as CLI (for local testing) or configured as GitHub Actio
 bun install # only first time
 # fill out .env based on .env.example
 
-#bun src/index.ts --root <spark-spells-root-path> <spell-name>
+# bun src/index.ts --root <spark-spells-root-path> <spell-name>
 bun src/index.ts --root ../spark-spell SparkEthereum_20240627
 ```
 
