@@ -10,7 +10,7 @@ import { getRequiredGithubInput } from '../config/environments/action'
 import { findPendingSpells } from '../spells/findPendingSpells'
 
 async function main(): Promise<void> {
-  const config = getConfig(getRequiredGithubInput)
+  const config = getConfig(getRequiredGithubInput, process.cwd())
 
   const allPendingSpellNames = findPendingSpells(process.cwd())
   core.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)

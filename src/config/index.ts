@@ -5,6 +5,7 @@ export interface Config {
   tenderly: TenderlyConfig
   networks: Record<string, NetworkConfig>
   deployer: Address
+  spellsRepoPath: string
 }
 
 export interface NetworkConfig {
@@ -19,7 +20,7 @@ export interface TenderlyConfig {
   apiKey: string
 }
 
-export function getConfig(getEnvVariable: (key: string) => string): Config {
+export function getConfig(getEnvVariable: (key: string) => string, spellsRepoPath: string): Config {
   return {
     tenderly: {
       account: getEnvVariable('TENDERLY_ACCOUNT'),
@@ -39,5 +40,6 @@ export function getConfig(getEnvVariable: (key: string) => string): Config {
       },
     },
     deployer: zeroAddress,
+    spellsRepoPath,
   }
 }

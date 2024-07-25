@@ -30,7 +30,12 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
   })
   const ethereumClient = new EthereumClient(rpc.adminRpcUrl, forkChainId, config.deployer)
 
-  const spellAddress = await deployContract(spellName, rpc.adminRpcUrl, config.deployer)
+  const spellAddress = await deployContract({
+    contractName: spellName,
+    rpc: rpc.adminRpcUrl,
+    from: config.deployer,
+    cwd: config.spellsRepoPath,
+  })
 
   await executeSpell({ spellAddress, network: chain, ethereumClient })
 
