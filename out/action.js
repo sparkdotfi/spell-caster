@@ -50405,8 +50405,13 @@ var $ = build$FromState(buildInitial$State({
 }));
 
 // src/periphery/forge/index.ts
-async function deployContract3(contractName, rpc5, from) {
-  const result = await $`forge create --rpc-url ${rpc5} --from ${from} ${contractName} --unlocked --json`.json();
+async function deployContract3({
+  contractName,
+  rpc: rpc5,
+  from,
+  cwd: cwd2
+}) {
+  const result = await $`forge create --rpc-url ${rpc5} --from ${from} ${contractName} --unlocked --json`.cwd(cwd2).json();
   return result.deployedTo;
 }
 
@@ -50561,7 +50566,12 @@ async function forkAndExecuteSpell(spellName, config) {
     forkChainId
   });
   const ethereumClient = new EthereumClient(rpc5.adminRpcUrl, forkChainId, config.deployer);
-  const spellAddress = await deployContract3(spellName, rpc5.adminRpcUrl, config.deployer);
+  const spellAddress = await deployContract3({
+    contractName: spellName,
+    rpc: rpc5.adminRpcUrl,
+    from: config.deployer,
+    cwd: config.spellsRepoPath
+  });
   await executeSpell({ spellAddress, network: chain5, ethereumClient });
   return {
     spellName,
@@ -50573,7 +50583,7 @@ async function forkAndExecuteSpell(spellName, config) {
 }
 
 // src/config/index.ts
-function getConfig(getEnvVariable) {
+function getConfig(getEnvVariable, spellsRepoPath) {
   return {
     tenderly: {
       account: getEnvVariable("TENDERLY_ACCOUNT"),
@@ -50592,7 +50602,8 @@ function getConfig(getEnvVariable) {
         sparkSpellExecutor: "0xc4218C1127cB24a0D6c1e7D25dc34e10f2625f5A"
       }
     },
-    deployer: zeroAddress
+    deployer: zeroAddress,
+    spellsRepoPath
   };
 }
 
@@ -55911,7 +55922,7 @@ function getFilenameWithoutExtension(fullPath) {
 
 // src/bin/action.ts
 async function main() {
-  const config2 = getConfig(getRequiredGithubInput);
+  const config2 = getConfig(getRequiredGithubInput, process.cwd());
   const allPendingSpellNames = findPendingSpells(process.cwd());
   core3.default.info(`Pending spells: ${allPendingSpellNames.join(", ")}`);
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config2)));
