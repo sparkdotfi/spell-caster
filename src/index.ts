@@ -8,6 +8,7 @@ import { executeSpell } from './spells/executeSpell'
 import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
 
 export interface ForkAndExecuteSpellReturn {
+  spellName: string
   originChainId: number
   forkRpc: string
   forkChainId: number
@@ -34,6 +35,7 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
   await executeSpell({ spellAddress, network: chain, ethereumClient })
 
   return {
+    spellName,
     originChainId,
     forkRpc: rpc.publicRpcUrl,
     forkChainId,

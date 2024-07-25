@@ -2,6 +2,9 @@ name: Spell Caster
 description: Spark Spell Caster
 
 inputs:
+  github-token:
+    description: 'Github token is needed to post comments on the PR'
+    required: true
   TENDERLY_ACCOUNT:
     description: 'Tenderly credentials'
     required: true
