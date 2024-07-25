@@ -4,7 +4,7 @@ import { executeSpell } from '../executeSpell'
 import { EthereumClient } from '../periphery/ethereum'
 import { buildAppUrl } from '../periphery/spark-app'
 import { createTenderlyVNet, getRandomChainId } from '../periphery/tenderly'
-import { deployContract } from '../utils/forge'
+import { deployContract } from '../periphery/forge'
 import { getChainIdFromSpellName } from '../utils/getChainIdFromSpellName'
 import { getRequiredShellEnv } from '../config/environments/cli'
 
