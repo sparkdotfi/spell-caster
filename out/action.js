@@ -50937,6 +50937,8 @@ function getChainIdFromSpellName(spellName) {
       return mainnet.id;
     case "Gnosis":
       return gnosis.id;
+    case "Base":
+      return base.id;
     default:
       throw new Error(`Unknown chain name: ${name}`);
   }
