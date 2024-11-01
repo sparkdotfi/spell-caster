@@ -1,4 +1,4 @@
-import { gnosis, mainnet } from 'viem/chains'
+import { base, gnosis, mainnet } from 'viem/chains'
 
 export function getChainIdFromSpellName(spellName: string): number {
   const regex = /^Spark([a-zA-Z]+)_\d+$/
@@ -17,6 +17,8 @@ export function getChainIdFromSpellName(spellName: string): number {
       return mainnet.id
     case 'Gnosis':
       return gnosis.id
+    case 'Base':
+      return base.id
     default:
       throw new Error(`Unknown chain name: ${name}`)
   }
