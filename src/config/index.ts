@@ -1,5 +1,5 @@
 import { type Address, zeroAddress } from 'viem'
-import { gnosis, mainnet } from 'viem/chains'
+import { base, gnosis, mainnet } from 'viem/chains'
 
 export interface Config {
   tenderly: TenderlyConfig
@@ -37,6 +37,11 @@ export function getConfig(getEnvVariable: (key: string) => string, spellsRepoPat
         name: 'gnosis',
         chainId: gnosis.id,
         sparkSpellExecutor: '0xc4218C1127cB24a0D6c1e7D25dc34e10f2625f5A',
+      },
+      [base.id]: {
+        name: 'base',
+        chainId: base.id,
+        sparkSpellExecutor: '0xF93B7122450A50AF3e5A76E1d546e95Ac1d0F579',
       },
     },
     deployer: zeroAddress,
