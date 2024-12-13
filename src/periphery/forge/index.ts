@@ -1,3 +1,4 @@
+import core from '@actions/core'
 import { $ } from 'dax-sh'
 import { Address } from 'viem'
 
@@ -8,5 +9,7 @@ export async function deployContract({
   cwd,
 }: { contractName: string; rpc: string; from: Address; cwd: string }): Promise<Address> {
   const result = await $`forge create --rpc-url ${rpc} --from ${from} ${contractName} --unlocked --json`.cwd(cwd).json()
+  core.info(`Deployed spell ${contractName} to address ${result.deployedTo}`)
+  core.debug(`Deploy result: ${result}`)
   return result.deployedTo
 }
