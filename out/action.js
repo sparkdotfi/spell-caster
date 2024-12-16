@@ -861,7 +861,8 @@ var require_tunnel = __commonJS((exports) => {
     }
     function onError(cause) {
       connectReq.removeAllListeners();
-      debug("tunneling socket could not be established, cause=%s\n", cause.message, cause.stack);
+      debug(`tunneling socket could not be established, cause=%s
+`, cause.message, cause.stack);
       var error = new Error("tunneling socket could not be established, " + "cause=" + cause.message);
       error.code = "ECONNRESET";
       options.request.emit("error", error);
@@ -1962,7 +1963,9 @@ var require_HeaderParser = __commonJS((exports, module) => {
   var inherits = __require("node:util").inherits;
   var getLimit = require_getLimit();
   var StreamSearch = require_sbmh();
-  var B_DCRLF = Buffer.from("\r\n\r\n");
+  var B_DCRLF = Buffer.from(`\r
+\r
+`);
   var RE_CRLF = /\r\n/g;
   var RE_HDR = /^([^:]+):[ \t]?([\x00-\xFF]+)?$/;
   function HeaderParser(cfg) {
@@ -2062,7 +2065,8 @@ var require_Dicer = __commonJS((exports, module) => {
   var HeaderParser = require_HeaderParser();
   var DASH = 45;
   var B_ONEDASH = Buffer.from("-");
-  var B_CRLF = Buffer.from("\r\n");
+  var B_CRLF = Buffer.from(`\r
+`);
   var EMPTY_FN = function() {
   };
   function Dicer(cfg) {
@@ -2164,7 +2168,8 @@ var require_Dicer = __commonJS((exports, module) => {
   };
   Dicer.prototype.setBoundary = function(boundary) {
     const self = this;
-    this._bparser = new StreamSearch("\r\n--" + boundary);
+    this._bparser = new StreamSearch(`\r
+--` + boundary);
     this._bparser.on("info", function(isMatch, data, start, end) {
       self._oninfo(isMatch, data, start, end);
     });
@@ -2400,7 +2405,7 @@ var require_parseParams = __commonJS((exports, module) => {
   var decodeText = require_decodeText();
   var RE_ENCODED = /%[a-fA-F0-9][a-fA-F0-9]/g;
   var EncodedLookup = {
-    "%00": "\0",
+    "%00": "\x00",
     "%01": "\x01",
     "%02": "\x02",
     "%03": "\x03",
@@ -2418,8 +2423,8 @@ var require_parseParams = __commonJS((exports, module) => {
     "%0B": "\v",
     "%0c": "\f",
     "%0C": "\f",
-    "%0d": `\r`,
-    "%0D": `\r`,
+    "%0d": "\r",
+    "%0D": "\r",
     "%0e": "\x0E",
     "%0E": "\x0E",
     "%0f": "\x0F",
@@ -2576,316 +2581,316 @@ var require_parseParams = __commonJS((exports, module) => {
     "%7D": "}",
     "%7e": "~",
     "%7E": "~",
-    "%7f": "\x7F",
-    "%7F": "\x7F",
-    "%80": "\x80",
-    "%81": "\x81",
-    "%82": "\x82",
-    "%83": "\x83",
-    "%84": "\x84",
-    "%85": "\x85",
-    "%86": "\x86",
-    "%87": "\x87",
-    "%88": "\x88",
-    "%89": "\x89",
-    "%8a": "\x8A",
-    "%8A": "\x8A",
-    "%8b": "\x8B",
-    "%8B": "\x8B",
-    "%8c": "\x8C",
-    "%8C": "\x8C",
-    "%8d": "\x8D",
-    "%8D": "\x8D",
-    "%8e": "\x8E",
-    "%8E": "\x8E",
-    "%8f": "\x8F",
-    "%8F": "\x8F",
-    "%90": "\x90",
-    "%91": "\x91",
-    "%92": "\x92",
-    "%93": "\x93",
-    "%94": "\x94",
-    "%95": "\x95",
-    "%96": "\x96",
-    "%97": "\x97",
-    "%98": "\x98",
-    "%99": "\x99",
-    "%9a": "\x9A",
-    "%9A": "\x9A",
-    "%9b": "\x9B",
-    "%9B": "\x9B",
-    "%9c": "\x9C",
-    "%9C": "\x9C",
-    "%9d": "\x9D",
-    "%9D": "\x9D",
-    "%9e": "\x9E",
-    "%9E": "\x9E",
-    "%9f": "\x9F",
-    "%9F": "\x9F",
-    "%a0": "\xA0",
-    "%A0": "\xA0",
-    "%a1": "\xA1",
-    "%A1": "\xA1",
-    "%a2": "\xA2",
-    "%A2": "\xA2",
-    "%a3": "\xA3",
-    "%A3": "\xA3",
-    "%a4": "\xA4",
-    "%A4": "\xA4",
-    "%a5": "\xA5",
-    "%A5": "\xA5",
-    "%a6": "\xA6",
-    "%A6": "\xA6",
-    "%a7": "\xA7",
-    "%A7": "\xA7",
-    "%a8": "\xA8",
-    "%A8": "\xA8",
-    "%a9": "\xA9",
-    "%A9": "\xA9",
-    "%aa": "\xAA",
-    "%Aa": "\xAA",
-    "%aA": "\xAA",
-    "%AA": "\xAA",
-    "%ab": "\xAB",
-    "%Ab": "\xAB",
-    "%aB": "\xAB",
-    "%AB": "\xAB",
-    "%ac": "\xAC",
-    "%Ac": "\xAC",
-    "%aC": "\xAC",
-    "%AC": "\xAC",
-    "%ad": "\xAD",
-    "%Ad": "\xAD",
-    "%aD": "\xAD",
-    "%AD": "\xAD",
-    "%ae": "\xAE",
-    "%Ae": "\xAE",
-    "%aE": "\xAE",
-    "%AE": "\xAE",
-    "%af": "\xAF",
-    "%Af": "\xAF",
-    "%aF": "\xAF",
-    "%AF": "\xAF",
-    "%b0": "\xB0",
-    "%B0": "\xB0",
-    "%b1": "\xB1",
-    "%B1": "\xB1",
-    "%b2": "\xB2",
-    "%B2": "\xB2",
-    "%b3": "\xB3",
-    "%B3": "\xB3",
-    "%b4": "\xB4",
-    "%B4": "\xB4",
-    "%b5": "\xB5",
-    "%B5": "\xB5",
-    "%b6": "\xB6",
-    "%B6": "\xB6",
-    "%b7": "\xB7",
-    "%B7": "\xB7",
-    "%b8": "\xB8",
-    "%B8": "\xB8",
-    "%b9": "\xB9",
-    "%B9": "\xB9",
-    "%ba": "\xBA",
-    "%Ba": "\xBA",
-    "%bA": "\xBA",
-    "%BA": "\xBA",
-    "%bb": "\xBB",
-    "%Bb": "\xBB",
-    "%bB": "\xBB",
-    "%BB": "\xBB",
-    "%bc": "\xBC",
-    "%Bc": "\xBC",
-    "%bC": "\xBC",
-    "%BC": "\xBC",
-    "%bd": "\xBD",
-    "%Bd": "\xBD",
-    "%bD": "\xBD",
-    "%BD": "\xBD",
-    "%be": "\xBE",
-    "%Be": "\xBE",
-    "%bE": "\xBE",
-    "%BE": "\xBE",
-    "%bf": "\xBF",
-    "%Bf": "\xBF",
-    "%bF": "\xBF",
-    "%BF": "\xBF",
-    "%c0": "\xC0",
-    "%C0": "\xC0",
-    "%c1": "\xC1",
-    "%C1": "\xC1",
-    "%c2": "\xC2",
-    "%C2": "\xC2",
-    "%c3": "\xC3",
-    "%C3": "\xC3",
-    "%c4": "\xC4",
-    "%C4": "\xC4",
-    "%c5": "\xC5",
-    "%C5": "\xC5",
-    "%c6": "\xC6",
-    "%C6": "\xC6",
-    "%c7": "\xC7",
-    "%C7": "\xC7",
-    "%c8": "\xC8",
-    "%C8": "\xC8",
-    "%c9": "\xC9",
-    "%C9": "\xC9",
-    "%ca": "\xCA",
-    "%Ca": "\xCA",
-    "%cA": "\xCA",
-    "%CA": "\xCA",
-    "%cb": "\xCB",
-    "%Cb": "\xCB",
-    "%cB": "\xCB",
-    "%CB": "\xCB",
-    "%cc": "\xCC",
-    "%Cc": "\xCC",
-    "%cC": "\xCC",
-    "%CC": "\xCC",
-    "%cd": "\xCD",
-    "%Cd": "\xCD",
-    "%cD": "\xCD",
-    "%CD": "\xCD",
-    "%ce": "\xCE",
-    "%Ce": "\xCE",
-    "%cE": "\xCE",
-    "%CE": "\xCE",
-    "%cf": "\xCF",
-    "%Cf": "\xCF",
-    "%cF": "\xCF",
-    "%CF": "\xCF",
-    "%d0": "\xD0",
-    "%D0": "\xD0",
-    "%d1": "\xD1",
-    "%D1": "\xD1",
-    "%d2": "\xD2",
-    "%D2": "\xD2",
-    "%d3": "\xD3",
-    "%D3": "\xD3",
-    "%d4": "\xD4",
-    "%D4": "\xD4",
-    "%d5": "\xD5",
-    "%D5": "\xD5",
-    "%d6": "\xD6",
-    "%D6": "\xD6",
-    "%d7": "\xD7",
-    "%D7": "\xD7",
-    "%d8": "\xD8",
-    "%D8": "\xD8",
-    "%d9": "\xD9",
-    "%D9": "\xD9",
-    "%da": "\xDA",
-    "%Da": "\xDA",
-    "%dA": "\xDA",
-    "%DA": "\xDA",
-    "%db": "\xDB",
-    "%Db": "\xDB",
-    "%dB": "\xDB",
-    "%DB": "\xDB",
-    "%dc": "\xDC",
-    "%Dc": "\xDC",
-    "%dC": "\xDC",
-    "%DC": "\xDC",
-    "%dd": "\xDD",
-    "%Dd": "\xDD",
-    "%dD": "\xDD",
-    "%DD": "\xDD",
-    "%de": "\xDE",
-    "%De": "\xDE",
-    "%dE": "\xDE",
-    "%DE": "\xDE",
-    "%df": "\xDF",
-    "%Df": "\xDF",
-    "%dF": "\xDF",
-    "%DF": "\xDF",
-    "%e0": "\xE0",
-    "%E0": "\xE0",
-    "%e1": "\xE1",
-    "%E1": "\xE1",
-    "%e2": "\xE2",
-    "%E2": "\xE2",
-    "%e3": "\xE3",
-    "%E3": "\xE3",
-    "%e4": "\xE4",
-    "%E4": "\xE4",
-    "%e5": "\xE5",
-    "%E5": "\xE5",
-    "%e6": "\xE6",
-    "%E6": "\xE6",
-    "%e7": "\xE7",
-    "%E7": "\xE7",
-    "%e8": "\xE8",
-    "%E8": "\xE8",
-    "%e9": "\xE9",
-    "%E9": "\xE9",
-    "%ea": "\xEA",
-    "%Ea": "\xEA",
-    "%eA": "\xEA",
-    "%EA": "\xEA",
-    "%eb": "\xEB",
-    "%Eb": "\xEB",
-    "%eB": "\xEB",
-    "%EB": "\xEB",
-    "%ec": "\xEC",
-    "%Ec": "\xEC",
-    "%eC": "\xEC",
-    "%EC": "\xEC",
-    "%ed": "\xED",
-    "%Ed": "\xED",
-    "%eD": "\xED",
-    "%ED": "\xED",
-    "%ee": "\xEE",
-    "%Ee": "\xEE",
-    "%eE": "\xEE",
-    "%EE": "\xEE",
-    "%ef": "\xEF",
-    "%Ef": "\xEF",
-    "%eF": "\xEF",
-    "%EF": "\xEF",
-    "%f0": "\xF0",
-    "%F0": "\xF0",
-    "%f1": "\xF1",
-    "%F1": "\xF1",
-    "%f2": "\xF2",
-    "%F2": "\xF2",
-    "%f3": "\xF3",
-    "%F3": "\xF3",
-    "%f4": "\xF4",
-    "%F4": "\xF4",
-    "%f5": "\xF5",
-    "%F5": "\xF5",
-    "%f6": "\xF6",
-    "%F6": "\xF6",
-    "%f7": "\xF7",
-    "%F7": "\xF7",
-    "%f8": "\xF8",
-    "%F8": "\xF8",
-    "%f9": "\xF9",
-    "%F9": "\xF9",
-    "%fa": "\xFA",
-    "%Fa": "\xFA",
-    "%fA": "\xFA",
-    "%FA": "\xFA",
-    "%fb": "\xFB",
-    "%Fb": "\xFB",
-    "%fB": "\xFB",
-    "%FB": "\xFB",
-    "%fc": "\xFC",
-    "%Fc": "\xFC",
-    "%fC": "\xFC",
-    "%FC": "\xFC",
-    "%fd": "\xFD",
-    "%Fd": "\xFD",
-    "%fD": "\xFD",
-    "%FD": "\xFD",
-    "%fe": "\xFE",
-    "%Fe": "\xFE",
-    "%fE": "\xFE",
-    "%FE": "\xFE",
-    "%ff": "\xFF",
-    "%Ff": "\xFF",
-    "%fF": "\xFF",
-    "%FF": "\xFF"
+    "%7f": "",
+    "%7F": "",
+    "%80": "",
+    "%81": "",
+    "%82": "",
+    "%83": "",
+    "%84": "",
+    "%85": "",
+    "%86": "",
+    "%87": "",
+    "%88": "",
+    "%89": "",
+    "%8a": "",
+    "%8A": "",
+    "%8b": "",
+    "%8B": "",
+    "%8c": "",
+    "%8C": "",
+    "%8d": "",
+    "%8D": "",
+    "%8e": "",
+    "%8E": "",
+    "%8f": "",
+    "%8F": "",
+    "%90": "",
+    "%91": "",
+    "%92": "",
+    "%93": "",
+    "%94": "",
+    "%95": "",
+    "%96": "",
+    "%97": "",
+    "%98": "",
+    "%99": "",
+    "%9a": "",
+    "%9A": "",
+    "%9b": "",
+    "%9B": "",
+    "%9c": "",
+    "%9C": "",
+    "%9d": "",
+    "%9D": "",
+    "%9e": "",
+    "%9E": "",
+    "%9f": "",
+    "%9F": "",
+    "%a0": " ",
+    "%A0": " ",
+    "%a1": "¡",
+    "%A1": "¡",
+    "%a2": "¢",
+    "%A2": "¢",
+    "%a3": "£",
+    "%A3": "£",
+    "%a4": "¤",
+    "%A4": "¤",
+    "%a5": "¥",
+    "%A5": "¥",
+    "%a6": "¦",
+    "%A6": "¦",
+    "%a7": "§",
+    "%A7": "§",
+    "%a8": "¨",
+    "%A8": "¨",
+    "%a9": "©",
+    "%A9": "©",
+    "%aa": "ª",
+    "%Aa": "ª",
+    "%aA": "ª",
+    "%AA": "ª",
+    "%ab": "«",
+    "%Ab": "«",
+    "%aB": "«",
+    "%AB": "«",
+    "%ac": "¬",
+    "%Ac": "¬",
+    "%aC": "¬",
+    "%AC": "¬",
+    "%ad": "­",
+    "%Ad": "­",
+    "%aD": "­",
+    "%AD": "­",
+    "%ae": "®",
+    "%Ae": "®",
+    "%aE": "®",
+    "%AE": "®",
+    "%af": "¯",
+    "%Af": "¯",
+    "%aF": "¯",
+    "%AF": "¯",
+    "%b0": "°",
+    "%B0": "°",
+    "%b1": "±",
+    "%B1": "±",
+    "%b2": "²",
+    "%B2": "²",
+    "%b3": "³",
+    "%B3": "³",
+    "%b4": "´",
+    "%B4": "´",
+    "%b5": "µ",
+    "%B5": "µ",
+    "%b6": "¶",
+    "%B6": "¶",
+    "%b7": "·",
+    "%B7": "·",
+    "%b8": "¸",
+    "%B8": "¸",
+    "%b9": "¹",
+    "%B9": "¹",
+    "%ba": "º",
+    "%Ba": "º",
+    "%bA": "º",
+    "%BA": "º",
+    "%bb": "»",
+    "%Bb": "»",
+    "%bB": "»",
+    "%BB": "»",
+    "%bc": "¼",
+    "%Bc": "¼",
+    "%bC": "¼",
+    "%BC": "¼",
+    "%bd": "½",
+    "%Bd": "½",
+    "%bD": "½",
+    "%BD": "½",
+    "%be": "¾",
+    "%Be": "¾",
+    "%bE": "¾",
+    "%BE": "¾",
+    "%bf": "¿",
+    "%Bf": "¿",
+    "%bF": "¿",
+    "%BF": "¿",
+    "%c0": "À",
+    "%C0": "À",
+    "%c1": "Á",
+    "%C1": "Á",
+    "%c2": "Â",
+    "%C2": "Â",
+    "%c3": "Ã",
+    "%C3": "Ã",
+    "%c4": "Ä",
+    "%C4": "Ä",
+    "%c5": "Å",
+    "%C5": "Å",
+    "%c6": "Æ",
+    "%C6": "Æ",
+    "%c7": "Ç",
+    "%C7": "Ç",
+    "%c8": "È",
+    "%C8": "È",
+    "%c9": "É",
+    "%C9": "É",
+    "%ca": "Ê",
+    "%Ca": "Ê",
+    "%cA": "Ê",
+    "%CA": "Ê",
+    "%cb": "Ë",
+    "%Cb": "Ë",
+    "%cB": "Ë",
+    "%CB": "Ë",
+    "%cc": "Ì",
+    "%Cc": "Ì",
+    "%cC": "Ì",
+    "%CC": "Ì",
+    "%cd": "Í",
+    "%Cd": "Í",
+    "%cD": "Í",
+    "%CD": "Í",
+    "%ce": "Î",
+    "%Ce": "Î",
+    "%cE": "Î",
+    "%CE": "Î",
+    "%cf": "Ï",
+    "%Cf": "Ï",
+    "%cF": "Ï",
+    "%CF": "Ï",
+    "%d0": "Ð",
+    "%D0": "Ð",
+    "%d1": "Ñ",
+    "%D1": "Ñ",
+    "%d2": "Ò",
+    "%D2": "Ò",
+    "%d3": "Ó",
+    "%D3": "Ó",
+    "%d4": "Ô",
+    "%D4": "Ô",
+    "%d5": "Õ",
+    "%D5": "Õ",
+    "%d6": "Ö",
+    "%D6": "Ö",
+    "%d7": "×",
+    "%D7": "×",
+    "%d8": "Ø",
+    "%D8": "Ø",
+    "%d9": "Ù",
+    "%D9": "Ù",
+    "%da": "Ú",
+    "%Da": "Ú",
+    "%dA": "Ú",
+    "%DA": "Ú",
+    "%db": "Û",
+    "%Db": "Û",
+    "%dB": "Û",
+    "%DB": "Û",
+    "%dc": "Ü",
+    "%Dc": "Ü",
+    "%dC": "Ü",
+    "%DC": "Ü",
+    "%dd": "Ý",
+    "%Dd": "Ý",
+    "%dD": "Ý",
+    "%DD": "Ý",
+    "%de": "Þ",
+    "%De": "Þ",
+    "%dE": "Þ",
+    "%DE": "Þ",
+    "%df": "ß",
+    "%Df": "ß",
+    "%dF": "ß",
+    "%DF": "ß",
+    "%e0": "à",
+    "%E0": "à",
+    "%e1": "á",
+    "%E1": "á",
+    "%e2": "â",
+    "%E2": "â",
+    "%e3": "ã",
+    "%E3": "ã",
+    "%e4": "ä",
+    "%E4": "ä",
+    "%e5": "å",
+    "%E5": "å",
+    "%e6": "æ",
+    "%E6": "æ",
+    "%e7": "ç",
+    "%E7": "ç",
+    "%e8": "è",
+    "%E8": "è",
+    "%e9": "é",
+    "%E9": "é",
+    "%ea": "ê",
+    "%Ea": "ê",
+    "%eA": "ê",
+    "%EA": "ê",
+    "%eb": "ë",
+    "%Eb": "ë",
+    "%eB": "ë",
+    "%EB": "ë",
+    "%ec": "ì",
+    "%Ec": "ì",
+    "%eC": "ì",
+    "%EC": "ì",
+    "%ed": "í",
+    "%Ed": "í",
+    "%eD": "í",
+    "%ED": "í",
+    "%ee": "î",
+    "%Ee": "î",
+    "%eE": "î",
+    "%EE": "î",
+    "%ef": "ï",
+    "%Ef": "ï",
+    "%eF": "ï",
+    "%EF": "ï",
+    "%f0": "ð",
+    "%F0": "ð",
+    "%f1": "ñ",
+    "%F1": "ñ",
+    "%f2": "ò",
+    "%F2": "ò",
+    "%f3": "ó",
+    "%F3": "ó",
+    "%f4": "ô",
+    "%F4": "ô",
+    "%f5": "õ",
+    "%F5": "õ",
+    "%f6": "ö",
+    "%F6": "ö",
+    "%f7": "÷",
+    "%F7": "÷",
+    "%f8": "ø",
+    "%F8": "ø",
+    "%f9": "ù",
+    "%F9": "ù",
+    "%fa": "ú",
+    "%Fa": "ú",
+    "%fA": "ú",
+    "%FA": "ú",
+    "%fb": "û",
+    "%Fb": "û",
+    "%fB": "û",
+    "%FB": "û",
+    "%fc": "ü",
+    "%Fc": "ü",
+    "%fC": "ü",
+    "%FC": "ü",
+    "%fd": "ý",
+    "%Fd": "ý",
+    "%fD": "ý",
+    "%FD": "ý",
+    "%fe": "þ",
+    "%Fe": "þ",
+    "%fE": "þ",
+    "%FE": "þ",
+    "%ff": "ÿ",
+    "%Ff": "ÿ",
+    "%fF": "ÿ",
+    "%FF": "ÿ"
   };
   function encodedReplacer(match) {
     return EncodedLookup[match];
@@ -4040,7 +4045,8 @@ var require_util2 = __commonJS((exports, module) => {
     if (potentialValue.startsWith("\t") || potentialValue.startsWith(" ") || potentialValue.endsWith("\t") || potentialValue.endsWith(" ")) {
       return false;
     }
-    if (potentialValue.includes("\0") || potentialValue.includes("\r") || potentialValue.includes("\n")) {
+    if (potentialValue.includes("\x00") || potentialValue.includes("\r") || potentialValue.includes(`
+`)) {
       return false;
     }
     return true;
@@ -5115,7 +5121,8 @@ var require_dataURL = __commonJS((exports, module) => {
     return serialization;
   }
   function isHTTPWhiteSpace(char) {
-    return char === "\r" || char === "\n" || char === "\t" || char === " ";
+    return char === "\r" || char === `
+` || char === "\t" || char === " ";
   }
   function removeHTTPWhitespace(str, leading = true, trailing = true) {
     let lead = 0;
@@ -5131,7 +5138,8 @@ var require_dataURL = __commonJS((exports, module) => {
     return str.slice(lead, trail + 1);
   }
   function isASCIIWhitespace(char) {
-    return char === "\r" || char === "\n" || char === "\t" || char === "\f" || char === " ";
+    return char === "\r" || char === `
+` || char === "\t" || char === "\f" || char === " ";
   }
   function removeASCIIWhitespace(str, leading = true, trailing = true) {
     let lead = 0;
@@ -5327,9 +5335,11 @@ var require_file = __commonJS((exports, module) => {
     return bytes;
   }
   function convertLineEndingsNative(s) {
-    let nativeLineEnding = "\n";
+    let nativeLineEnding = `
+`;
     if (process.platform === "win32") {
-      nativeLineEnding = "\r\n";
+      nativeLineEnding = `\r
+`;
     }
     return s.replace(/\r?\n/g, nativeLineEnding);
   }
@@ -5535,21 +5545,29 @@ var require_body = __commonJS((exports, module) => {
       source = new Uint8Array(object.buffer.slice(object.byteOffset, object.byteOffset + object.byteLength));
     } else if (util.isFormDataLike(object)) {
       const boundary = `----formdata-undici-0${`${Math.floor(Math.random() * 100000000000)}`.padStart(11, "0")}`;
-      const prefix = `--${boundary}\r\nContent-Disposition: form-data`;
+      const prefix = `--${boundary}\r
+Content-Disposition: form-data`;
       /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
       const escape = (str) => str.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
-      const normalizeLinefeeds = (value) => value.replace(/\r?\n|\r/g, "\r\n");
+      const normalizeLinefeeds = (value) => value.replace(/\r?\n|\r/g, `\r
+`);
       const blobParts = [];
       const rn = new Uint8Array([13, 10]);
       length = 0;
       let hasUnknownSizeValue = false;
       for (const [name, value] of object) {
         if (typeof value === "string") {
-          const chunk2 = textEncoder.encode(prefix + `; name="${escape(normalizeLinefeeds(name))}"` + `\r\n\r\n${normalizeLinefeeds(value)}\r\n`);
+          const chunk2 = textEncoder.encode(prefix + `; name="${escape(normalizeLinefeeds(name))}"` + `\r
+\r
+${normalizeLinefeeds(value)}\r
+`);
           blobParts.push(chunk2);
           length += chunk2.byteLength;
         } else {
-          const chunk2 = textEncoder.encode(`${prefix}; name="${escape(normalizeLinefeeds(name))}"` + (value.name ? `; filename="${escape(value.name)}"` : "") + "\r\n" + `Content-Type: ${value.type || "application/octet-stream"}\r\n\r\n`);
+          const chunk2 = textEncoder.encode(`${prefix}; name="${escape(normalizeLinefeeds(name))}"` + (value.name ? `; filename="${escape(value.name)}"` : "") + `\r
+` + `Content-Type: ${value.type || "application/octet-stream"}\r
+\r
+`);
           blobParts.push(chunk2, value, rn);
           if (typeof value.size === "number") {
             length += chunk2.byteLength + value.size + rn.byteLength;
@@ -5981,13 +5999,15 @@ var require_request = __commonJS((exports, module) => {
         const [bodyStream, contentType] = extractBody(body);
         if (this.contentType == null) {
           this.contentType = contentType;
-          this.headers += `content-type: ${contentType}\r\n`;
+          this.headers += `content-type: ${contentType}\r
+`;
         }
         this.body = bodyStream.stream;
         this.contentLength = bodyStream.length;
       } else if (util.isBlobLike(body) && this.contentType == null && body.type) {
         this.contentType = body.type;
-        this.headers += `content-type: ${body.type}\r\n`;
+        this.headers += `content-type: ${body.type}\r
+`;
       }
       util.validateHandler(handler, method, upgrade);
       this.servername = util.getServerName(this.host);
@@ -6119,7 +6139,8 @@ var require_request = __commonJS((exports, module) => {
       return request;
     }
     static [kHTTP2CopyHeaders](raw) {
-      const rawHeaders = raw.split("\r\n");
+      const rawHeaders = raw.split(`\r
+`);
       const headers = {};
       for (const header of rawHeaders) {
         const [key, value] = header.split(": ");
@@ -6141,7 +6162,8 @@ var require_request = __commonJS((exports, module) => {
     if (headerCharRegex.exec(val) !== null) {
       throw new InvalidArgumentError(`invalid ${key} header`);
     }
-    return skipAppend ? val : `${key}: ${val}\r\n`;
+    return skipAppend ? val : `${key}: ${val}\r
+`;
   }
   function processHeader(request, key, val, skipAppend = false) {
     if (val && (typeof val === "object" && !Array.isArray(val))) {
@@ -6723,7 +6745,7 @@ var require_constants3 = __commonJS((exports) => {
     FINISH2[FINISH2["UNSAFE"] = 2] = "UNSAFE";
   })(FINISH = exports.FINISH || (exports.FINISH = {}));
   exports.ALPHA = [];
-  for (let i = "A".charCodeAt(0);i <= "Z".charCodeAt(0); i++) {
+  for (let i = 65;i <= 90; i++) {
     exports.ALPHA.push(String.fromCharCode(i));
     exports.ALPHA.push(String.fromCharCode(i + 32));
   }
@@ -6776,7 +6798,7 @@ var require_constants3 = __commonJS((exports) => {
     "9"
   ];
   exports.ALPHANUM = exports.ALPHA.concat(exports.NUM);
-  exports.MARK = ["-", "_", ".", "!", "~", "*", "\'", "(", ")"];
+  exports.MARK = ["-", "_", ".", "!", "~", "*", "'", "(", ")"];
   exports.USERINFO_CHARS = exports.ALPHANUM.concat(exports.MARK).concat(["%", ";", ":", "&", "=", "+", "$", ","]);
   exports.STRICT_URL_CHAR = [
     "!",
@@ -6784,7 +6806,7 @@ var require_constants3 = __commonJS((exports) => {
     "$",
     "%",
     "&",
-    "\'",
+    "'",
     "(",
     ")",
     "*",
@@ -6821,7 +6843,7 @@ var require_constants3 = __commonJS((exports) => {
     "$",
     "%",
     "&",
-    "\'",
+    "'",
     "*",
     "+",
     "-",
@@ -7270,7 +7292,8 @@ var require_client = __commonJS((exports, module) => {
       this[kLocalAddress] = localAddress != null ? localAddress : null;
       this[kResuming] = 0;
       this[kNeedDrain] = 0;
-      this[kHostHeader] = `host: ${this[kUrl].hostname}${this[kUrl].port ? `:${this[kUrl].port}` : ""}\r\n`;
+      this[kHostHeader] = `host: ${this[kUrl].hostname}${this[kUrl].port ? `:${this[kUrl].port}` : ""}\r
+`;
       this[kBodyTimeout] = bodyTimeout != null ? bodyTimeout : 300000;
       this[kHeadersTimeout] = headersTimeout != null ? headersTimeout : 300000;
       this[kStrictContentLength] = strictContentLength == null ? true : strictContentLength;
@@ -8196,18 +8219,24 @@ var require_client = __commonJS((exports, module) => {
     if (blocking) {
       socket[kBlocking] = true;
     }
-    let header = `${method} ${path} HTTP/1.1\r\n`;
+    let header = `${method} ${path} HTTP/1.1\r
+`;
     if (typeof host === "string") {
-      header += `host: ${host}\r\n`;
+      header += `host: ${host}\r
+`;
     } else {
       header += client[kHostHeader];
     }
     if (upgrade) {
-      header += `connection: upgrade\r\nupgrade: ${upgrade}\r\n`;
+      header += `connection: upgrade\r
+upgrade: ${upgrade}\r
+`;
     } else if (client[kPipelining] && !socket[kReset]) {
-      header += "connection: keep-alive\r\n";
+      header += `connection: keep-alive\r
+`;
     } else {
-      header += "connection: close\r\n";
+      header += `connection: close\r
+`;
     }
     if (headers) {
       header += headers;
@@ -8217,16 +8246,21 @@ var require_client = __commonJS((exports, module) => {
     }
     if (!body || bodyLength === 0) {
       if (contentLength === 0) {
-        socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
+        socket.write(`${header}content-length: 0\r
+\r
+`, "latin1");
       } else {
         assert(contentLength === null, "no body must not have content length");
-        socket.write(`${header}\r\n`, "latin1");
+        socket.write(`${header}\r
+`, "latin1");
       }
       request.onRequestSent();
     } else if (util.isBuffer(body)) {
       assert(contentLength === body.byteLength, "buffer body must have content length");
       socket.cork();
-      socket.write(`${header}content-length: ${contentLength}\r\n\r\n`, "latin1");
+      socket.write(`${header}content-length: ${contentLength}\r
+\r
+`, "latin1");
       socket.write(body);
       socket.uncork();
       request.onBodySent(body);
@@ -8523,7 +8557,9 @@ var require_client = __commonJS((exports, module) => {
         h2stream.uncork();
       } else {
         socket.cork();
-        socket.write(`${header}content-length: ${contentLength}\r\n\r\n`, "latin1");
+        socket.write(`${header}content-length: ${contentLength}\r
+\r
+`, "latin1");
         socket.write(buffer);
         socket.uncork();
       }
@@ -8631,13 +8667,18 @@ var require_client = __commonJS((exports, module) => {
           socket[kReset] = true;
         }
         if (contentLength === null) {
-          socket.write(`${header}transfer-encoding: chunked\r\n`, "latin1");
+          socket.write(`${header}transfer-encoding: chunked\r
+`, "latin1");
         } else {
-          socket.write(`${header}content-length: ${contentLength}\r\n\r\n`, "latin1");
+          socket.write(`${header}content-length: ${contentLength}\r
+\r
+`, "latin1");
         }
       }
       if (contentLength === null) {
-        socket.write(`\r\n${len.toString(16)}\r\n`, "latin1");
+        socket.write(`\r
+${len.toString(16)}\r
+`, "latin1");
       }
       this.bytesWritten += len;
       const ret = socket.write(chunk);
@@ -8664,12 +8705,18 @@ var require_client = __commonJS((exports, module) => {
       }
       if (bytesWritten === 0) {
         if (expectsPayload) {
-          socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
+          socket.write(`${header}content-length: 0\r
+\r
+`, "latin1");
         } else {
-          socket.write(`${header}\r\n`, "latin1");
+          socket.write(`${header}\r
+`, "latin1");
         }
       } else if (contentLength === null) {
-        socket.write("\r\n0\r\n\r\n", "latin1");
+        socket.write(`\r
+0\r
+\r
+`, "latin1");
       }
       if (contentLength !== null && bytesWritten !== contentLength) {
         if (client[kStrictContentLength]) {
@@ -10939,7 +10986,7 @@ var require_pending_interceptors_formatter = __commonJS((exports, module) => {
         Origin: origin,
         Path: path,
         "Status code": statusCode,
-        Persistent: persist ? "\u2705" : "\u274C",
+        Persistent: persist ? "✅" : "❌",
         Invocations: timesInvoked,
         Remaining: persist ? Infinity : times - timesInvoked
       }));
@@ -17586,8 +17633,10 @@ var require_oidc_utils = __commonJS((exports) => {
       return __awaiter(this, undefined, undefined, function* () {
         const httpclient = OidcClient.createHttpClient();
         const res = yield httpclient.getJson(id_token_url).catch((error) => {
-          throw new Error(`Failed to get ID Token. \n 
-        Error Code : ${error.statusCode}\n 
+          throw new Error(`Failed to get ID Token. 
+ 
+        Error Code : ${error.statusCode}
+ 
         Error Message: ${error.message}`);
         });
         const id_token = (_a = res.result) === null || _a === undefined ? undefined : _a.value;
@@ -17666,7 +17715,7 @@ var require_summary = __commonJS((exports) => {
         }
         const pathFromEnv = process.env[exports.SUMMARY_ENV_VAR];
         if (!pathFromEnv) {
-          throw new Error(`Unable to find environment variable for \$${exports.SUMMARY_ENV_VAR}. Check if your runtime environment supports job summaries.`);
+          throw new Error(`Unable to find environment variable for $${exports.SUMMARY_ENV_VAR}. Check if your runtime environment supports job summaries.`);
         }
         try {
           yield access(pathFromEnv, fs_1.constants.R_OK | fs_1.constants.W_OK);
@@ -17934,7 +17983,8 @@ var require_core = __commonJS((exports) => {
   }
   exports.getInput = getInput;
   function getMultilineInput(name, options) {
-    const inputs = getInput(name, options).split("\n").filter((x) => x !== "");
+    const inputs = getInput(name, options).split(`
+`).filter((x) => x !== "");
     if (options && options.trimWhitespace === false) {
       return inputs;
     }
@@ -17949,7 +17999,8 @@ var require_core = __commonJS((exports) => {
       return true;
     if (falseValue.includes(val))
       return false;
-    throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}\n` + `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
+    throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}
+` + `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
   }
   exports.getBooleanInput = getBooleanInput;
   function setOutput(name, value) {
@@ -18627,7 +18678,7 @@ var require_dist_node2 = __commonJS((exports, module) => {
     const isBinaryRequest = /application\/octet-stream/i.test(headers.accept);
     if (!isBinaryRequest) {
       if (options.mediaType.format) {
-        headers.accept = headers.accept.split(/,/).map((format) => format.replace(/application\/vnd(\.\w+)(\.v3)?(\.\w+)?(\+json)?$/, `application/vnd\$1\$2.${options.mediaType.format}`)).join(",");
+        headers.accept = headers.accept.split(/,/).map((format) => format.replace(/application\/vnd(\.\w+)(\.v3)?(\.\w+)?(\+json)?$/, `application/vnd$1$2.${options.mediaType.format}`)).join(",");
       }
       if (url.endsWith("/graphql")) {
         if (options.mediaType.previews?.length) {
@@ -19065,7 +19116,8 @@ var require_dist_node6 = __commonJS((exports, module) => {
   var import_request = require_dist_node5();
   function _buildMessageForResponseErrors(data) {
     return `Request failed due to following response errors:
-` + data.errors.map((e) => ` - ${e.message}`).join("\n");
+` + data.errors.map((e) => ` - ${e.message}`).join(`
+`);
   }
   var GraphqlResponseError = class extends Error {
     constructor(request2, headers, response) {
@@ -22319,7 +22371,7 @@ var require_dist_node11 = __commonJS((exports) => {
     const isBinaryRequest = /application\/octet-stream/i.test(headers.accept);
     if (!isBinaryRequest) {
       if (options.mediaType.format) {
-        headers.accept = headers.accept.split(/,/).map((preview) => preview.replace(/application\/vnd(\.\w+)(\.v3)?(\.\w+)?(\+json)?$/, `application/vnd\$1\$2.${options.mediaType.format}`)).join(",");
+        headers.accept = headers.accept.split(/,/).map((preview) => preview.replace(/application\/vnd(\.\w+)(\.v3)?(\.\w+)?(\+json)?$/, `application/vnd$1$2.${options.mediaType.format}`)).join(",");
       }
       if (options.mediaType.previews.length) {
         const previewsFromAcceptHeader = headers.accept.match(/[\w-]+(?=-preview)/g) || [];
@@ -22575,9 +22627,9 @@ var require_tr46 = __commonJS((exports, module) => {
     NONTRANSITIONAL: 1
   };
   function normalize(str) {
-    return str.split("\0").map(function(s) {
+    return str.split("\x00").map(function(s) {
       return s.normalize("NFC");
-    }).join("\0");
+    }).join("\x00");
   }
   function findStatus(val) {
     var start = 0;
@@ -24266,7 +24318,7 @@ var require_lib3 = __commonJS((exports, module) => {
   FetchError.prototype.name = "FetchError";
   var convert;
   try {
-    convert = (()=>{throw new Error(`Cannot require module "encoding"`);})().convert;
+    convert = (()=>{throw new Error("Cannot require module "+"encoding");})().convert;
   } catch (e) {
   }
   var INTERNALS = Symbol("Body internals");
@@ -25477,7 +25529,9 @@ var require_dist_node14 = __commonJS((exports) => {
   var universalUserAgent = require_dist_node();
   var VERSION = "4.8.0";
   function _buildMessageForResponseErrors(data) {
-    return `Request failed due to following response errors:\n` + data.errors.map((e) => ` - ${e.message}`).join("\n");
+    return `Request failed due to following response errors:
+` + data.errors.map((e) => ` - ${e.message}`).join(`
+`);
   }
 
   class GraphqlResponseError extends Error {
@@ -27152,7 +27206,8 @@ var require_stamp = __commonJS((exports) => {
     if (body.includes(fullStamp)) {
       return body;
     } else {
-      return body + "\n" + fullStamp;
+      return body + `
+` + fullStamp;
     }
   }
   exports.attachStampToBody = attachStampToBody;
@@ -27243,7 +27298,8 @@ var init_errors = __esm(() => {
         ...docsPath ? [`Docs: https://abitype.dev${docsPath}`] : [],
         ...details ? [`Details: ${details}`] : [],
         `Version: abitype@${version}`
-      ].join("\n");
+      ].join(`
+`);
       super(message);
       Object.defineProperty(this, "details", {
         enumerable: true,
@@ -28093,7 +28149,8 @@ var init_base = __esm(() => {
         ] : [],
         ...details ? [`Details: ${details}`] : [],
         `Version: ${this.version}`
-      ].join("\n");
+      ].join(`
+`);
       if (args.cause)
         this.cause = args.cause;
       this.details = details;
@@ -28118,7 +28175,8 @@ var init_abi = __esm(() => {
       super([
         "A constructor was not found on the ABI.",
         "Make sure you are using the correct ABI and that the constructor exists on it."
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28134,7 +28192,8 @@ var init_abi = __esm(() => {
       super([
         "Constructor arguments were provided (`args`), but a constructor parameters (`inputs`) were not found on the ABI.",
         "Make sure you are using the correct ABI, and that the `inputs` attribute on the constructor exists."
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28147,7 +28206,8 @@ var init_abi = __esm(() => {
   };
   AbiDecodingDataSizeTooSmallError = class AbiDecodingDataSizeTooSmallError extends BaseError2 {
     constructor({ data, params, size: size2 }) {
-      super([`Data size of ${size2} bytes is too small for given parameters.`].join("\n"), {
+      super([`Data size of ${size2} bytes is too small for given parameters.`].join(`
+`), {
         metaMessages: [
           `Params: (${formatAbiParams(params, { includeName: true })})`,
           `Data:   ${data} (${size2} bytes)`
@@ -28199,7 +28259,8 @@ var init_abi = __esm(() => {
         `ABI encoding array length mismatch for type ${type}.`,
         `Expected length: ${expectedLength}`,
         `Given length: ${givenLength}`
-      ].join("\n"));
+      ].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -28225,7 +28286,8 @@ var init_abi = __esm(() => {
         "ABI encoding params/values length mismatch.",
         `Expected length (params): ${expectedLength}`,
         `Given length (values): ${givenLength}`
-      ].join("\n"));
+      ].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -28240,7 +28302,8 @@ var init_abi = __esm(() => {
         `Encoded error signature "${signature}" not found on ABI.`,
         "Make sure you are using the correct ABI and that the error exists on it.",
         `You can look up the decoded signature here: https://openchain.xyz/signatures?query=${signature}.`
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28277,7 +28340,8 @@ var init_abi = __esm(() => {
         `Encoded event signature "${signature}" not found on ABI.`,
         "Make sure you are using the correct ABI and that the event exists on it.",
         `You can look up the signature here: https://openchain.xyz/signatures?query=${signature}.`
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28293,7 +28357,8 @@ var init_abi = __esm(() => {
       super([
         `Event ${eventName ? `"${eventName}" ` : ""}not found on ABI.`,
         "Make sure you are using the correct ABI and that the event exists on it."
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28309,7 +28374,8 @@ var init_abi = __esm(() => {
       super([
         `Function ${functionName ? `"${functionName}" ` : ""}not found on ABI.`,
         "Make sure you are using the correct ABI and that the function exists on it."
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28326,7 +28392,8 @@ var init_abi = __esm(() => {
         `Function "${functionName}" does not contain any \`outputs\` on ABI.`,
         "Cannot decode function result without knowing what the parameter types are.",
         "Make sure you are using the correct ABI and that the function exists on it."
-      ].join("\n"), {
+      ].join(`
+`), {
         docsPath
       });
       Object.defineProperty(this, "name", {
@@ -28371,7 +28438,8 @@ var init_abi = __esm(() => {
     constructor({ abiItem, data, params, size: size2 }) {
       super([
         `Data size of ${size2} bytes is too small for non-indexed event parameters.`
-      ].join("\n"), {
+      ].join(`
+`), {
         metaMessages: [
           `Params: (${formatAbiParams(params, { includeName: true })})`,
           `Data:   ${data} (${size2} bytes)`
@@ -28417,7 +28485,8 @@ var init_abi = __esm(() => {
     constructor({ abiItem, param }) {
       super([
         `Expected a topic for indexed event parameter${param.name ? ` "${param.name}"` : ""} on event "${formatAbiItem2(abiItem, { includeName: true })}".`
-      ].join("\n"));
+      ].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -28438,7 +28507,8 @@ var init_abi = __esm(() => {
       super([
         `Type "${type}" is not a valid encoding type.`,
         "Please provide a valid ABI type."
-      ].join("\n"), { docsPath });
+      ].join(`
+`), { docsPath });
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -28452,7 +28522,8 @@ var init_abi = __esm(() => {
       super([
         `Type "${type}" is not a valid decoding type.`,
         "Please provide a valid ABI type."
-      ].join("\n"), { docsPath });
+      ].join(`
+`), { docsPath });
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -28463,7 +28534,8 @@ var init_abi = __esm(() => {
   };
   InvalidArrayError = class InvalidArrayError extends BaseError2 {
     constructor(value) {
-      super([`Value "${value}" is not a valid array.`].join("\n"));
+      super([`Value "${value}" is not a valid array.`].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -28477,7 +28549,8 @@ var init_abi = __esm(() => {
       super([
         `"${type}" is not a valid definition type.`,
         'Valid types: "function", "event", "error"'
-      ].join("\n"));
+      ].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -30355,28 +30428,36 @@ var init_formatGwei = __esm(() => {
 // node_modules/viem/_esm/errors/stateOverride.js
 function prettyStateMapping(stateMapping) {
   return stateMapping.reduce((pretty, { slot, value }) => {
-    return `${pretty}        ${slot}: ${value}\n`;
+    return `${pretty}        ${slot}: ${value}
+`;
   }, "");
 }
 function prettyStateOverride(stateOverride) {
   return stateOverride.reduce((pretty, { address, ...state }) => {
-    let val = `${pretty}    ${address}:\n`;
+    let val = `${pretty}    ${address}:
+`;
     if (state.nonce)
-      val += `      nonce: ${state.nonce}\n`;
+      val += `      nonce: ${state.nonce}
+`;
     if (state.balance)
-      val += `      balance: ${state.balance}\n`;
+      val += `      balance: ${state.balance}
+`;
     if (state.code)
-      val += `      code: ${state.code}\n`;
+      val += `      code: ${state.code}
+`;
     if (state.state) {
-      val += "      state:\n";
+      val += `      state:
+`;
       val += prettyStateMapping(state.state);
     }
     if (state.stateDiff) {
-      val += "      stateDiff:\n";
+      val += `      stateDiff:
+`;
       val += prettyStateMapping(state.stateDiff);
     }
     return val;
-  }, "  State Override:\n").slice(0, -1);
+  }, `  State Override:
+`).slice(0, -1);
 }
 var AccountStateConflictError, StateAssignmentConflictError;
 var init_stateOverride = __esm(() => {
@@ -30413,7 +30494,8 @@ function prettyPrint(args) {
     return [key, value];
   }).filter(Boolean);
   const maxLength = entries.reduce((acc, [key]) => Math.max(acc, key.length), 0);
-  return entries.map(([key, value]) => `  ${`${key}:`.padEnd(maxLength + 1)}  ${value}`).join("\n");
+  return entries.map(([key, value]) => `  ${`${key}:`.padEnd(maxLength + 1)}  ${value}`).join(`
+`);
 }
 var FeeConflictError, InvalidLegacyVError, InvalidSerializableTransactionError, InvalidStorageKeySizeError, TransactionExecutionError, TransactionNotFoundError, TransactionReceiptNotFoundError, WaitForTransactionReceiptTimeoutError;
 var init_transaction = __esm(() => {
@@ -30425,7 +30507,8 @@ var init_transaction = __esm(() => {
       super([
         "Cannot specify both a `gasPrice` and a `maxFeePerGas`/`maxPriorityFeePerGas`.",
         "Use `maxFeePerGas`/`maxPriorityFeePerGas` for EIP-1559 compatible networks, and `gasPrice` for others."
-      ].join("\n"));
+      ].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -30593,7 +30676,8 @@ var init_contract = __esm(() => {
         nonce
       });
       if (stateOverride) {
-        prettyArgs += `\n${prettyStateOverride(stateOverride)}`;
+        prettyArgs += `
+${prettyStateOverride(stateOverride)}`;
       }
       super(cause.shortMessage, {
         cause,
@@ -30745,7 +30829,8 @@ var init_contract = __esm(() => {
       super(reason && reason !== "execution reverted" || signature ? [
         `The contract function "${functionName}" reverted with the following ${signature ? "signature" : "reason"}:`,
         reason || signature
-      ].join("\n") : `The contract function "${functionName}" reverted.`, {
+      ].join(`
+`) : `The contract function "${functionName}" reverted.`, {
         cause,
         metaMessages
       });
@@ -31042,7 +31127,8 @@ var init_rpc = __esm(() => {
         shortMessage: [
           "Invalid parameters were provided to the RPC method.",
           "Double check you have provided the correct parameters."
-        ].join("\n")
+        ].join(`
+`)
       });
       Object.defineProperty(this, "name", {
         enumerable: true,
@@ -31085,7 +31171,8 @@ var init_rpc = __esm(() => {
         shortMessage: [
           "Missing or invalid parameters.",
           "Double check you have provided the correct parameters."
-        ].join("\n")
+        ].join(`
+`)
       });
       Object.defineProperty(this, "name", {
         enumerable: true,
@@ -31447,7 +31534,8 @@ var init_node = __esm(() => {
       super([
         `Nonce provided for the transaction ${nonce ? `(${nonce}) ` : ""}is lower than the current nonce of the account.`,
         "Try increasing the nonce or find the latest nonce with `getTransactionCount`."
-      ].join("\n"), { cause });
+      ].join(`
+`), { cause });
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -31483,7 +31571,8 @@ var init_node = __esm(() => {
     constructor({ cause } = {}) {
       super([
         "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account."
-      ].join("\n"), {
+      ].join(`
+`), {
         cause,
         metaMessages: [
           "This error could arise when the account does not have enough funds to:",
@@ -31571,7 +31660,8 @@ var init_node = __esm(() => {
     constructor({ cause, maxPriorityFeePerGas, maxFeePerGas } = {}) {
       super([
         `The provided tip (\`maxPriorityFeePerGas\`${maxPriorityFeePerGas ? ` = ${formatGwei(maxPriorityFeePerGas)} gwei` : ""}) cannot be higher than the fee cap (\`maxFeePerGas\`${maxFeePerGas ? ` = ${formatGwei(maxFeePerGas)} gwei` : ""}).`
-      ].join("\n"), {
+      ].join(`
+`), {
         cause
       });
       Object.defineProperty(this, "name", {
@@ -32356,10 +32446,10 @@ var init_chain = __esm(() => {
   };
   ChainMismatchError = class ChainMismatchError extends BaseError2 {
     constructor({ chain, currentChainId }) {
-      super(`The current chain of the wallet (id: ${currentChainId}) does not match the target chain for the transaction (id: ${chain.id} \u2013 ${chain.name}).`, {
+      super(`The current chain of the wallet (id: ${currentChainId}) does not match the target chain for the transaction (id: ${chain.id} – ${chain.name}).`, {
         metaMessages: [
           `Current Chain ID:  ${currentChainId}`,
-          `Expected Chain ID: ${chain.id} \u2013 ${chain.name}`
+          `Expected Chain ID: ${chain.id} – ${chain.name}`
         ]
       });
       Object.defineProperty(this, "name", {
@@ -32375,7 +32465,8 @@ var init_chain = __esm(() => {
       super([
         "No chain was provided to the request.",
         "Please provide a chain with the `chain` argument on the Action, or by supplying a `chain` to WalletClient."
-      ].join("\n"));
+      ].join(`
+`));
       Object.defineProperty(this, "name", {
         enumerable: true,
         configurable: true,
@@ -34963,11 +35054,11 @@ var require_balanced_match = __commonJS((exports, module) => {
 var require_brace_expansion = __commonJS((exports, module) => {
   var balanced = require_balanced_match();
   module.exports = expandTop;
-  var escSlash = "\0SLASH" + Math.random() + "\0";
-  var escOpen = "\0OPEN" + Math.random() + "\0";
-  var escClose = "\0CLOSE" + Math.random() + "\0";
-  var escComma = "\0COMMA" + Math.random() + "\0";
-  var escPeriod = "\0PERIOD" + Math.random() + "\0";
+  var escSlash = "\x00SLASH" + Math.random() + "\x00";
+  var escOpen = "\x00OPEN" + Math.random() + "\x00";
+  var escClose = "\x00CLOSE" + Math.random() + "\x00";
+  var escComma = "\x00COMMA" + Math.random() + "\x00";
+  var escPeriod = "\x00PERIOD" + Math.random() + "\x00";
   function numeric(str) {
     return parseInt(str, 10) == str ? parseInt(str, 10) : str.charCodeAt(0);
   }
@@ -35109,7 +35200,7 @@ var require_brace_expansion = __commonJS((exports, module) => {
 });
 
 // src/bin/action.ts
-var import_core2 = __toESM(require_core(), 1);
+var import_core3 = __toESM(require_core(), 1);
 var import_github = __toESM(require_github(), 1);
 var import_comment = __toESM(require_dist2(), 1);
 import assert5 from "node:assert";
@@ -35182,7 +35273,8 @@ function createDedent(options) {
         result += values[i];
       }
     }
-    const lines = result.split("\n");
+    const lines = result.split(`
+`);
     let mindent = null;
     for (const l of lines) {
       const m = l.match(/^(\s+)\S+/);
@@ -35197,11 +35289,13 @@ function createDedent(options) {
     }
     if (mindent !== null) {
       const m = mindent;
-      result = lines.map((l) => l[0] === " " || l[0] === "\t" ? l.slice(m) : l).join("\n");
+      result = lines.map((l) => l[0] === " " || l[0] === "\t" ? l.slice(m) : l).join(`
+`);
     }
     result = result.trim();
     if (escapeSpecialCharacters) {
-      result = result.replace(/\\n/g, "\n");
+      result = result.replace(/\\n/g, `
+`);
     }
     return result;
   }
@@ -35327,7 +35421,8 @@ function markdownTable(table, options = {}) {
     }
     lines.push(options.delimiterEnd === false ? line.join("").replace(/ +$/, "") : line.join(""));
   }
-  return lines.join("\n");
+  return lines.join(`
+`);
 }
 function serialize(value) {
   return value === null || value === undefined ? "" : String(value);
@@ -36861,7 +36956,8 @@ class AccountNotFoundError extends BaseError2 {
     super([
       "Could not find an Account to execute with this Action.",
       "Please provide an Account with the `account` argument on the Action, or by supplying an `account` to the WalletClient."
-    ].join("\n"), {
+    ].join(`
+`), {
       docsPath: docsPath6,
       docsSlug: "account"
     });
@@ -39739,7 +39835,8 @@ function watchPendingTransactions(client, { batch = true, onError, onTransaction
 function parseSiweMessage(message) {
   const { scheme, statement, ...prefix } = message.match(prefixRegex)?.groups ?? {};
   const { chainId, expirationTime, issuedAt, notBefore, requestId, ...suffix } = message.match(suffixRegex)?.groups ?? {};
-  const resources = message.split("Resources:")[1]?.split("\n- ").slice(1);
+  const resources = message.split("Resources:")[1]?.split(`
+- `).slice(1);
   return {
     ...prefix,
     ...suffix,
@@ -40306,6 +40403,9 @@ class EthereumClient {
     });
   }
 }
+// src/periphery/forge/index.ts
+var import_core = __toESM(require_core(), 1);
+
 // node_modules/@deno/shim-deno/dist/index.mjs
 var import_which = __toESM(require_lib4(), 1);
 var import_which2 = __toESM(require_lib4(), 1);
@@ -40837,15 +40937,15 @@ var env = {
     return { ...process.env };
   }
 };
-var invalidKeyChars = ["=", "\0"].map((c) => c.charCodeAt(0));
-var invalidValueChar = "\0".charCodeAt(0);
+var invalidKeyChars = ["=", "\x00"].map((c) => c.charCodeAt(0));
+var invalidValueChar = 0;
 function assertValidKey(key) {
   if (key.length === 0) {
     throw new TypeError("Key is an empty string.");
   }
   for (let i = 0;i < key.length; i++) {
     if (invalidKeyChars.includes(key.charCodeAt(i))) {
-      const char = key.charCodeAt(i) === "\0".charCodeAt(0) ? "\\0" : key[i];
+      const char = key.charCodeAt(i) === 0 ? "\\0" : key[i];
       throw new TypeError(`Key contains invalid characters: "${char}"`);
     }
   }
@@ -40882,7 +40982,8 @@ var resources = function resources2() {
   console.warn([
     "Deno.resources() shim returns a dummy object that does not update.",
     "If you think this is a mistake, raise an issue at https://github.com/denoland/node_deno_shims/issues"
-  ].join("\n"));
+  ].join(`
+`));
   return {};
 };
 function chain(fn, cleanup) {
@@ -43214,7 +43315,7 @@ function relative(from, to) {
   }
 }
 var WHITESPACE_ENCODINGS = {
-  "	": "%09",
+  "\t": "%09",
   "\n": "%0A",
   "\v": "%0B",
   "\f": "%0C",
@@ -43315,11 +43416,11 @@ function _globToRegExp(c, glob, {
             else if (value === "alpha")
               segment += "A-Za-z";
             else if (value === "ascii")
-              segment += "\0-\x7F";
+              segment += "\x00-";
             else if (value === "blank")
-              segment += "	 ";
+              segment += "\t ";
             else if (value === "cntrl")
-              segment += "\0-\x1F\x7F";
+              segment += "\x00-\x1F";
             else if (value === "digit")
               segment += "\\d";
             else if (value === "graph")
@@ -43329,7 +43430,7 @@ function _globToRegExp(c, glob, {
             else if (value === "print")
               segment += " -~";
             else if (value === "punct") {
-              segment += `!"#$%&'()*+,\\-./:;<=>?@[\\\\\\]^_\u2018{|}~`;
+              segment += `!"#$%&'()*+,\\-./:;<=>?@[\\\\\\]^_‘{|}~`;
             } else if (value === "space")
               segment += "\\s\v";
             else if (value === "upper")
@@ -43454,7 +43555,7 @@ function _globToRegExp(c, glob, {
     }
     j = i;
   }
-  regExpString = `^${regExpString}\$`;
+  regExpString = `^${regExpString}$`;
   return new RegExp(regExpString, caseInsensitive ? "i" : "");
 }
 var constants2 = {
@@ -43499,8 +43600,8 @@ function normalizeGlob(glob, { globstar = false } = {}) {
     return normalize(glob);
   }
   const s = SEPARATOR_PATTERN.source;
-  const badParentPattern = new RegExp(`(?<=(${s}|^)\\*\\*${s})\\.\\.(?=${s}|\$)`, "g");
-  return normalize(glob.replace(badParentPattern, "\0")).replace(/\0/g, "..");
+  const badParentPattern = new RegExp(`(?<=(${s}|^)\\*\\*${s})\\.\\.(?=${s}|$)`, "g");
+  return normalize(glob.replace(badParentPattern, "\x00")).replace(/\0/g, "..");
 }
 function joinGlobs(globs, { extended = true, globstar = false } = {}) {
   if (!globstar || globs.length === 0) {
@@ -43749,8 +43850,8 @@ function normalizeGlob2(glob, { globstar = false } = {}) {
     return normalize2(glob);
   }
   const s = SEPARATOR_PATTERN2.source;
-  const badParentPattern = new RegExp(`(?<=(${s}|^)\\*\\*${s})\\.\\.(?=${s}|\$)`, "g");
-  return normalize2(glob.replace(badParentPattern, "\0")).replace(/\0/g, "..");
+  const badParentPattern = new RegExp(`(?<=(${s}|^)\\*\\*${s})\\.\\.(?=${s}|$)`, "g");
+  return normalize2(glob.replace(badParentPattern, "\x00")).replace(/\0/g, "..");
 }
 function joinGlobs2(globs, { extended = true, globstar = false } = {}) {
   if (!globstar || globs.length === 0) {
@@ -43864,8 +43965,8 @@ function writerFromStreamWriter(streamWriter) {
 var DEFAULT_BUF_SIZE = 4096;
 var MIN_BUF_SIZE = 16;
 var MAX_CONSECUTIVE_EMPTY_READS = 100;
-var CR = "\r".charCodeAt(0);
-var LF = "\n".charCodeAt(0);
+var CR = 13;
+var LF = 10;
 var BufferFullError = class extends Error {
   partial;
   name = "BufferFullError";
@@ -44805,7 +44906,8 @@ var staticText = {
     const { columns, rows } = size3 ?? main_exports.consoleSize();
     const newText = wasmInstance.static_text_render_once(items, columns, rows);
     if (newText != null) {
-      main_exports.stderr.writeSync(encoder3.encode(newText + "\n"));
+      main_exports.stderr.writeSync(encoder3.encode(newText + `
+`));
     }
   },
   clear(size3) {
@@ -44864,7 +44966,7 @@ function innerConfirm(opts) {
 }
 function render(state) {
   return [
-    bold(blue(state.title)) + " " + (state.hasCompleted ? "" : state.default == null ? "(Y/N) " : state.default ? "(Y/n) " : "(y/N) ") + state.inputText + (state.hasCompleted ? "" : "\u2588")
+    bold(blue(state.title)) + " " + (state.hasCompleted ? "" : state.default == null ? "(Y/N) " : state.default ? "(Y/n) " : "(y/N) ") + state.inputText + (state.hasCompleted ? "" : "█")
   ];
 }
 function multiSelect(opts) {
@@ -45076,7 +45178,8 @@ var ProgressBar = class {
     if (removeProgressBar(this.#pb)) {
       this.#state.hasCompleted = true;
       if (this.#noClear) {
-        const text = renderProgressBar(this.#state, safeConsoleSize()).map((item) => typeof item === "string" ? item : item.text).join("\n");
+        const text = renderProgressBar(this.#state, safeConsoleSize()).map((item) => typeof item === "string" ? item : item.text).join(`
+`);
         this.#onLog(text);
       }
     }
@@ -45107,7 +45210,7 @@ var ProgressBar = class {
     }
   }
 };
-var tickStrings = ["\u280B", "\u2819", "\u2839", "\u2838", "\u283C", "\u2834", "\u2826", "\u2827", "\u2807", "\u280F"];
+var tickStrings = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 function renderProgressBar(state, size3) {
   if (state.hasCompleted) {
     let text = "";
@@ -45227,7 +45330,7 @@ function render3(state) {
     inputText = `${masked}${unmasked}`;
   }
   return [
-    bold(blue(state.title)) + " " + inputText + (state.hasCompleted ? "" : "\u2588")
+    bold(blue(state.title)) + " " + inputText + (state.hasCompleted ? "" : "█")
   ];
 }
 function select(opts) {
@@ -45912,12 +46015,14 @@ function handleError2(context, err) {
 function executePrintEnv(env2, args2) {
   const isWindows4 = main_exports.build.os === "windows";
   if (args2.length === 0) {
-    return Object.entries(env2).map(([key, val]) => `${isWindows4 ? key.toUpperCase() : key}=${val}`).join("\n");
+    return Object.entries(env2).map(([key, val]) => `${isWindows4 ? key.toUpperCase() : key}=${val}`).join(`
+`);
   } else {
     if (isWindows4) {
       args2 = args2.map((arg) => arg.toUpperCase());
     }
-    return Object.entries(env2).filter(([key]) => args2.includes(key)).map(([_key, val]) => val).join("\n");
+    return Object.entries(env2).filter(([key]) => args2.includes(key)).map(([_key, val]) => val).join(`
+`);
   }
 }
 function pwdCommand(context) {
@@ -46263,7 +46368,8 @@ var ShellPipeWriter = class {
     return this.writeAll(encoder22.encode(text));
   }
   writeLine(text) {
-    return this.writeText(text + "\n");
+    return this.writeText(text + `
+`);
   }
 };
 var CapturingBufferWriter = class {
@@ -46298,7 +46404,7 @@ var CapturingBufferWriterSync = class {
     return nWritten;
   }
 };
-var lineFeedCharCode = "\n".charCodeAt(0);
+var lineFeedCharCode = 10;
 var InheritStaticTextBypassWriter = class {
   #buffer;
   #innerWriter;
@@ -47993,12 +48099,12 @@ function* walkSync(root, { maxDepth = Infinity, includeFiles = true, includeDirs
 var isWindows3 = main_exports.build.os === "windows";
 function split2(path) {
   const s = SEPARATOR_PATTERN3.source;
-  const segments = path.replace(new RegExp(`^${s}|${s}\$`, "g"), "").split(SEPARATOR_PATTERN3);
+  const segments = path.replace(new RegExp(`^${s}|${s}$`, "g"), "").split(SEPARATOR_PATTERN3);
   const isAbsolute_ = isAbsolute3(path);
   return {
     segments,
     isAbsolute: isAbsolute_,
-    hasTrailingSep: !!path.match(new RegExp(`${s}\$`)),
+    hasTrailingSep: !!path.match(new RegExp(`${s}$`)),
     winRoot: isWindows3 && isAbsolute_ ? segments.shift() : undefined
   };
 }
@@ -48155,7 +48261,7 @@ function* expandGlobSync(glob, { root, exclude = [], includeDirs = true, extende
   yield* currentMatches;
 }
 var _a;
-var PERIOD_CHAR_CODE = ".".charCodeAt(0);
+var PERIOD_CHAR_CODE = 46;
 function createPath(path) {
   if (path instanceof Path) {
     return path;
@@ -48653,7 +48759,8 @@ var Path = class {
   #writeTextWithEndNewLine(text, options) {
     return this.#withFileForWriting(options, async (file) => {
       await file.writeText(text);
-      await file.writeText("\n");
+      await file.writeText(`
+`);
     });
   }
   async append(data, options) {
@@ -48721,7 +48828,8 @@ var Path = class {
   #writeTextWithEndNewLineSync(text, options) {
     this.#withFileForWritingSync(options, (file) => {
       file.writeTextSync(text);
-      file.writeTextSync("\n");
+      file.writeTextSync(`
+`);
     });
   }
   #withFileForAppendingSync(options, action) {
@@ -50301,7 +50409,7 @@ function templateInner(strings, exprs, escape) {
             handleReadableStream(() => {
               const stream3 = expr[symbols.readable]?.();
               if (!(stream3 instanceof ReadableStream2)) {
-                throw new Error(`Expected a ReadableStream or an object with a [\$.symbols.readable] method that returns a ReadableStream at expression ${i + 1}/${exprsCount}.`);
+                throw new Error(`Expected a ReadableStream or an object with a [$.symbols.readable] method that returns a ReadableStream at expression ${i + 1}/${exprsCount}.`);
               }
               return stream3;
             });
@@ -50362,7 +50470,7 @@ function templateInner(strings, exprs, escape) {
             handleWritableStream(() => {
               const stream3 = expr[symbols.writable]?.();
               if (!(stream3 instanceof WritableStream2)) {
-                throw new Error(`Expected a WritableStream or an object with a [\$.symbols.writable] method that returns a WritableStream at expression ${i + 1}/${exprsCount}.`);
+                throw new Error(`Expected a WritableStream or an object with a [$.symbols.writable] method that returns a WritableStream at expression ${i + 1}/${exprsCount}.`);
               }
               return stream3;
             });
@@ -50771,7 +50879,8 @@ function build$FromState(state) {
       return combinedText;
     } else {
       const indentText = "  ".repeat(state.indentLevel.value);
-      return combinedText.split(/\n/).map((l) => `${indentText}${l}`).join("\n");
+      return combinedText.split(/\n/).map((l) => `${indentText}${l}`).join(`
+`);
     }
   }
   function logStep(firstArg, data, colourize, logger2) {
@@ -50801,7 +50910,8 @@ async function deployContract2({
   from,
   cwd: cwd2
 }) {
-  const result = await $`forge create --rpc-url ${rpc} --from ${from} ${contractName} --unlocked --json`.cwd(cwd2).json();
+  const result = await $`forge create  --broadcast --rpc-url ${rpc} --from ${from} ${contractName} --unlocked --json`.cwd(cwd2).json();
+  import_core.default.info(`Deployed spell ${contractName} to address ${result.deployedTo}`);
   return result.deployedTo;
 }
 
@@ -51005,10 +51115,10 @@ function getConfig(getEnvVariable, spellsRepoPath) {
 }
 
 // src/config/environments/action.ts
-var import_core = __toESM(require_core(), 1);
+var import_core2 = __toESM(require_core(), 1);
 import assert4 from "node:assert";
 function getRequiredGithubInput(key) {
-  const value = import_core.default.getInput(key);
+  const value = import_core2.default.getInput(key);
   assert4(value, `Missing required github input: ${key}`);
   return value;
 }
@@ -51411,7 +51521,7 @@ class AST {
       return body;
     }
     const flags = (this.#options.nocase ? "i" : "") + (uflag ? "u" : "");
-    return Object.assign(new RegExp(`^${re}\$`, flags), {
+    return Object.assign(new RegExp(`^${re}$`, flags), {
       _src: re,
       _glob: glob
     });
@@ -52045,7 +52155,8 @@ class Minimatch {
         }
         while (fr < fl) {
           var swallowee = file[fr];
-          this.debug("\nglobstar while", file, fr, pattern, pr, swallowee);
+          this.debug(`
+globstar while`, file, fr, pattern, pr, swallowee);
           if (this.matchOne(file.slice(fr), pattern.slice(pr), partial)) {
             this.debug("globstar found match!", fr, fl, swallowee);
             return true;
@@ -52059,7 +52170,8 @@ class Minimatch {
           }
         }
         if (partial) {
-          this.debug("\n>>> no match, partial?", file, fr, pattern, pr);
+          this.debug(`
+>>> no match, partial?`, file, fr, pattern, pr);
           if (fr === fl) {
             return true;
           }
@@ -56321,13 +56433,13 @@ function getFilenameWithoutExtension(fullPath) {
 async function main() {
   const config = getConfig(getRequiredGithubInput, process.cwd());
   const allPendingSpellNames = findPendingSpells(process.cwd());
-  import_core2.default.info(`Pending spells: ${allPendingSpellNames.join(", ")}`);
+  import_core3.default.info(`Pending spells: ${allPendingSpellNames.join(", ")}`);
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)));
   await postGithubComment(results);
-  import_core2.default.info(`Results: ${JSON.stringify(results)}`);
+  import_core3.default.info(`Results: ${JSON.stringify(results)}`);
 }
 await main().catch((error) => {
-  import_core2.default.setFailed(error);
+  import_core3.default.setFailed(error);
 });
 var uniqueAppId = "spark-spells-action";
 async function postGithubComment(results) {
@@ -56346,7 +56458,7 @@ async function postGithubComment(results) {
 
   <sub>Deployed from ${sha} on ${now}</sub>
   `;
-  await import_comment.createCommentOrUpdate({ githubToken: import_core2.default.getInput("github-token"), message, uniqueAppId });
+  await import_comment.createCommentOrUpdate({ githubToken: import_core3.default.getInput("github-token"), message, uniqueAppId });
 }
 function getPrSha() {
   const context = import_github.default.context;
