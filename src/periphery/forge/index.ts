@@ -12,6 +12,5 @@ export async function deployContract({
     .cwd(cwd)
     .json()
   core.info(`Deployed spell ${contractName} to address ${result.deployedTo}`)
-  core.debug(`Deploy result: ${result}`)
   return result.deployedTo
 }
