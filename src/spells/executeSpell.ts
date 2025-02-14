@@ -1,46 +1,42 @@
 import assert from 'node:assert'
-import { type Address, encodeFunctionData } from 'viem'
+import { TestnetClient } from '@marsfoundation/common-testnets'
+import { type Address } from 'viem'
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 import { NetworkConfig } from '../config'
-import { IEthereumClient } from '../periphery/ethereum'
 
 interface ExecuteSpellArgs {
   spellAddress: Address
   network: NetworkConfig
-  ethereumClient: IEthereumClient
+  client: TestnetClient
 }
 
-export async function executeSpell({ spellAddress, network, ethereumClient }: ExecuteSpellArgs): Promise<void> {
-  const originalSpellExecutorBytecode = await ethereumClient.getBytecode({
+export async function executeSpell({ spellAddress, network, client }: ExecuteSpellArgs): Promise<void> {
+  const originalSpellExecutorBytecode = await client.getCode({
     address: network.sparkSpellExecutor,
   })
 
-  const spellBytecode = await ethereumClient.getBytecode({
+  const spellBytecode = await client.getCode({
     address: spellAddress,
   })
   assert(spellBytecode, `Spell not deployed (address=${spellAddress})`)
-  await ethereumClient.setBytecode({
-    address: network.sparkSpellExecutor,
-    bytecode: spellBytecode,
-  })
+  await client.setCode(network.sparkSpellExecutor, spellBytecode)
 
-  await ethereumClient.sendTransaction({
+  const account = privateKeyToAccount(generatePrivateKey())
+
+  await client.assertWriteContract({
     to: network.sparkSpellExecutor,
-    data: encodeFunctionData({
-      abi: [
-        {
-          inputs: [],
-          name: 'execute',
-          outputs: [],
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-      ],
-      functionName: 'execute',
-    }),
+    abi: [
+      {
+        inputs: [],
+        name: 'execute',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+    functionName: 'execute',
+    account,
   })
 
-  await ethereumClient.setBytecode({
-    address: network.sparkSpellExecutor,
-    bytecode: originalSpellExecutorBytecode,
-  })
+  await client.setCode(network.sparkSpellExecutor, originalSpellExecutorBytecode!)
 }

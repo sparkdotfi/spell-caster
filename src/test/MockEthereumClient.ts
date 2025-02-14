@@ -1,29 +1,32 @@
 import { spyOn } from 'bun:test'
+import { TestnetClient } from '@marsfoundation/common-testnets'
 import { type Address, type Hex } from 'viem'
-import { IEthereumClient } from '../periphery/ethereum'
 
-export function getMockEthereumClient(contracts: ContractsMap = {}): MockEthereumClient {
-  const ethereumClient = new MockEthereumClient({ ...contracts }) // @note: deep copy to avoid mutation
+export function getMockEthereumClient(contracts: ContractsMap = {}): TestnetClient {
+  const ethereumClient = new MockTestnetClient({ ...contracts }) // @note: deep copy to avoid mutation
 
   // @todo: automate by spying every function on the prototype
-  spyOn(ethereumClient, 'getBytecode')
-  spyOn(ethereumClient, 'setBytecode')
-  spyOn(ethereumClient, 'sendTransaction')
+  spyOn(ethereumClient, 'getCode')
+  spyOn(ethereumClient, 'setCode')
+  spyOn(ethereumClient, 'assertWriteContract')
 
-  return ethereumClient
+  return ethereumClient as any
 }
 
 type ContractsMap = Record<Address, Hex | undefined>
 
-class MockEthereumClient implements IEthereumClient {
+class MockTestnetClient implements Partial<TestnetClient> {
   constructor(public readonly contracts = {} as ContractsMap) {}
 
-  async setBytecode(args: { address: Address; bytecode: Hex }): Promise<void> {
-    this.contracts[args.address] = args.bytecode
+  async setCode(address: Address, bytecode: Hex): Promise<void> {
+    this.contracts[address] = bytecode
   }
-  async getBytecode(args: { address: Address }): Promise<Hex | undefined> {
+
+  async getCode(args: { address: Address }): Promise<Hex | undefined> {
     return this.contracts[args.address]
   }
 
-  async sendTransaction(_args: { to: Address; data: Hex }): Promise<void> {}
+  async assertWriteContract(): Promise<Hex> {
+    return '0x1234'
+  }
 }
