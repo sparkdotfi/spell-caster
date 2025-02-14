@@ -40256,6 +40256,30 @@ var chainConfig = {
   serializers
 };
 
+// node_modules/viem/_esm/chains/definitions/arbitrum.js
+var arbitrum = /* @__PURE__ */ defineChain({
+  id: 42161,
+  name: "Arbitrum One",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://arb1.arbitrum.io/rpc"]
+    }
+  },
+  blockExplorers: {
+    default: {
+      name: "Arbiscan",
+      url: "https://arbiscan.io",
+      apiUrl: "https://api.arbiscan.io/api"
+    }
+  },
+  contracts: {
+    multicall3: {
+      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      blockCreated: 7654707
+    }
+  }
+});
 // node_modules/viem/_esm/chains/definitions/base.js
 var sourceId = 1;
 var base = /* @__PURE__ */ defineChain({
@@ -51049,6 +51073,8 @@ function getChainIdFromSpellName(spellName) {
       return gnosis.id;
     case "Base":
       return base.id;
+    case "ArbitrumOne":
+      return arbitrum.id;
     default:
       throw new Error(`Unknown chain name: ${name}`);
   }
@@ -51107,6 +51133,11 @@ function getConfig(getEnvVariable, spellsRepoPath) {
         name: "base",
         chainId: base.id,
         sparkSpellExecutor: "0xF93B7122450A50AF3e5A76E1d546e95Ac1d0F579"
+      },
+      [arbitrum.id]: {
+        name: "arbitrum",
+        chainId: arbitrum.id,
+        sparkSpellExecutor: "0x65d946e533748A998B1f0E430803e39A6388f7a1"
       }
     },
     deployer: zeroAddress,
