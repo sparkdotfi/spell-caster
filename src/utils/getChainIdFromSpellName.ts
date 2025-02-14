@@ -1,4 +1,4 @@
-import { base, gnosis, mainnet, arbitrum } from 'viem/chains'
+import { arbitrum, base, gnosis, mainnet } from 'viem/chains'
 
 export function getChainIdFromSpellName(spellName: string): number {
   const regex = /^Spark([a-zA-Z]+)_\d+$/

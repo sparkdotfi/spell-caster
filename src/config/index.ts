@@ -1,5 +1,5 @@
 import { type Address, zeroAddress } from 'viem'
-import { base, gnosis, mainnet, arbitrum } from 'viem/chains'
+import { arbitrum, base, gnosis, mainnet } from 'viem/chains'
 
 export interface Config {
   tenderly: TenderlyConfig
