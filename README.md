@@ -10,8 +10,8 @@ Spell Caster can be run as CLI (for local testing) or configured as GitHub Actio
 bun install # only first time
 # fill out .env based on .env.example
 
-# bun src/index.ts --root <spark-spells-root-path> <spell-name>
-bun src/index.ts --root ../spark-spell SparkEthereum_20240627
+# bun src/bin/cli.ts --root <spark-spells-root-path> <spell-name>
+bun src/bin/cli.ts --root ../spark-spell SparkEthereum_20240627
 ```
 
 ## Running as Github Action

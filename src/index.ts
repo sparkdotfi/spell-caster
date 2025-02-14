@@ -1,9 +1,8 @@
 import assert from 'node:assert'
+import { TenderlyTestnetFactory, getRandomChainId } from '@marsfoundation/common-testnets'
 import { Config } from './config'
-import { EthereumClient } from './periphery/ethereum'
 import { deployContract } from './periphery/forge'
 import { buildAppUrl } from './periphery/spark-app'
-import { createTenderlyVNet, getRandomChainId } from './periphery/tenderly'
 import { executeSpell } from './spells/executeSpell'
 import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
 
@@ -17,33 +16,38 @@ export interface ForkAndExecuteSpellReturn {
 
 export async function forkAndExecuteSpell(spellName: string, config: Config): Promise<ForkAndExecuteSpellReturn> {
   const originChainId = getChainIdFromSpellName(spellName)
-  const chain = config.networks[originChainId]
-  assert(chain, `Chain not found for chainId: ${originChainId}`)
-  const forkChainId = getRandomChainId()
+  const chainConfig = config.networks[originChainId]
+  assert(chainConfig, `Chain not found for chainId: ${originChainId}`)
 
-  const rpc = await createTenderlyVNet({
+  const tenderlyFactory = new TenderlyTestnetFactory({
     account: config.tenderly.account,
     apiKey: config.tenderly.apiKey,
     project: config.tenderly.project,
-    originChainId: originChainId,
+  })
+  const forkChainId = getRandomChainId(chainConfig.chain.id)
+  const result = await tenderlyFactory.create({
+    id: `spell-caster-${chainConfig.chain.id}`,
+    originChain: chainConfig.chain,
     forkChainId,
   })
-  const ethereumClient = new EthereumClient(rpc.adminRpcUrl, forkChainId, config.deployer)
+  assert(result.publicRpcUrl)
 
   const spellAddress = await deployContract({
     contractName: spellName,
-    rpc: rpc.adminRpcUrl,
+    rpc: result.rpcUrl,
     from: config.deployer,
     cwd: config.spellsRepoPath,
   })
 
-  await executeSpell({ spellAddress, network: chain, ethereumClient })
+  await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
+
+  await result.cleanup()
 
   return {
     spellName,
     originChainId,
-    forkRpc: rpc.publicRpcUrl,
+    forkRpc: result.publicRpcUrl,
     forkChainId,
-    appUrl: buildAppUrl({ rpc: rpc.publicRpcUrl, originChainId }),
+    appUrl: buildAppUrl({ rpc: result.publicRpcUrl, originChainId }),
   }
 }
