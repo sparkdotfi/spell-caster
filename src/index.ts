@@ -39,7 +39,7 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
     cwd: config.spellsRepoPath,
   })
 
-  await executeSpell({ spellAddress, network: chainConfig, client: result.client })
+  await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
 
   await result.cleanup()
 

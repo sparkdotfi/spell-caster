@@ -9,6 +9,7 @@ import { executeSpell } from './executeSpell'
 describe(executeSpell.name, () => {
   test('replaces the code of the executor with a code of a spell', async () => {
     const spellAddress = randomAddress('spell')
+    const deployer = randomAddress('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
@@ -17,13 +18,14 @@ describe(executeSpell.name, () => {
     const contracts = { [spellAddress]: hexStringToHex(asciiToHex('spell-bytecode')) }
     const ethereumClient = getMockEthereumClient(contracts)
 
-    await executeSpell({ spellAddress, network, client: ethereumClient })
+    await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
 
     expect(ethereumClient.setCode).toHaveBeenCalledWith(network.sparkSpellExecutor, contracts[spellAddress])
   })
 
   test('restores the code of the executor when done', async () => {
     const spellAddress = randomAddress('spell')
+    const deployer = randomAddress('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
@@ -35,7 +37,7 @@ describe(executeSpell.name, () => {
     }
     const ethereumClient = getMockEthereumClient(contracts)
 
-    await executeSpell({ spellAddress, network, client: ethereumClient })
+    await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
 
     expect(await ethereumClient.getCode({ address: network.sparkSpellExecutor })).toBe(
       contracts[network.sparkSpellExecutor]!,
@@ -44,6 +46,7 @@ describe(executeSpell.name, () => {
 
   test('executes a spell', async () => {
     const spellAddress = randomAddress('spell')
+    const deployer = randomAddress('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
@@ -52,7 +55,7 @@ describe(executeSpell.name, () => {
     const contracts = { [spellAddress]: hexStringToHex(asciiToHex('spell-bytecode')) }
     const ethereumClient = getMockEthereumClient(contracts)
 
-    await executeSpell({ spellAddress, network, client: ethereumClient })
+    await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
     ;(expect as any)(ethereumClient.assertWriteContract).toHaveBeenCalled({
       functionName: 'execute',
       to: spellAddress,
@@ -70,6 +73,7 @@ describe(executeSpell.name, () => {
 
   test('throws if spell not deployed', async () => {
     const spellAddress = randomAddress('spell')
+    const deployer = randomAddress('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
@@ -78,7 +82,7 @@ describe(executeSpell.name, () => {
     const contracts = { [spellAddress]: undefined }
     const ethereumClient = getMockEthereumClient(contracts)
 
-    expect(async () => await executeSpell({ spellAddress, network, client: ethereumClient })).toThrowError(
+    expect(async () => await executeSpell({ spellAddress, network, client: ethereumClient, deployer })).toThrowError(
       'Spell not deployed',
     )
   })

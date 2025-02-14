@@ -1,16 +1,16 @@
 import assert from 'node:assert'
 import { TestnetClient } from '@marsfoundation/common-testnets'
 import { type Address } from 'viem'
-import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 import { NetworkConfig } from '../config'
 
 interface ExecuteSpellArgs {
   spellAddress: Address
   network: NetworkConfig
   client: TestnetClient
+  deployer: Address
 }
 
-export async function executeSpell({ spellAddress, network, client }: ExecuteSpellArgs): Promise<void> {
+export async function executeSpell({ spellAddress, network, client, deployer }: ExecuteSpellArgs): Promise<void> {
   const originalSpellExecutorBytecode = await client.getCode({
     address: network.sparkSpellExecutor,
   })
@@ -20,8 +20,6 @@ export async function executeSpell({ spellAddress, network, client }: ExecuteSpe
   })
   assert(spellBytecode, `Spell not deployed (address=${spellAddress})`)
   await client.setCode(network.sparkSpellExecutor, spellBytecode)
-
-  const account = privateKeyToAccount(generatePrivateKey())
 
   await client.assertWriteContract({
     to: network.sparkSpellExecutor,
@@ -35,7 +33,7 @@ export async function executeSpell({ spellAddress, network, client }: ExecuteSpe
       },
     ],
     functionName: 'execute',
-    account,
+    account: deployer,
   })
 
   await client.setCode(network.sparkSpellExecutor, originalSpellExecutorBytecode!)
