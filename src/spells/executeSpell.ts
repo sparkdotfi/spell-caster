@@ -1,13 +1,13 @@
 import assert from 'node:assert'
 import { TestnetClient } from '@marsfoundation/common-testnets'
-import { type Address } from 'viem'
+import { CheckedAddress } from '@marsfoundation/common-universal'
 import { NetworkConfig } from '../config'
 
 interface ExecuteSpellArgs {
-  spellAddress: Address
+  spellAddress: CheckedAddress
   network: NetworkConfig
   client: TestnetClient
-  deployer: Address
+  deployer: CheckedAddress
 }
 
 export async function executeSpell({ spellAddress, network, client, deployer }: ExecuteSpellArgs): Promise<void> {

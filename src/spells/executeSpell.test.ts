@@ -1,21 +1,20 @@
 import { describe, expect, test } from 'bun:test'
+import { CheckedAddress, Hex } from '@marsfoundation/common-universal'
 import { mainnet } from 'viem/chains'
 import { NetworkConfig } from '../config'
 import { getMockEthereumClient } from '../test/MockEthereumClient'
-import { randomAddress } from '../test/addressUtils'
-import { asciiToHex, hexStringToHex } from '../test/hexUtils'
 import { executeSpell } from './executeSpell'
 
 describe(executeSpell.name, () => {
   test('replaces the code of the executor with a code of a spell', async () => {
-    const spellAddress = randomAddress('spell')
-    const deployer = randomAddress('deployer')
+    const spellAddress = CheckedAddress.random('spell')
+    const deployer = CheckedAddress.random('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
-      sparkSpellExecutor: randomAddress('executor'),
+      sparkSpellExecutor: CheckedAddress.random('executor'),
     }
-    const contracts = { [spellAddress]: hexStringToHex(asciiToHex('spell-bytecode')) }
+    const contracts = { [spellAddress]: Hex.random('spell-bytecode') }
     const ethereumClient = getMockEthereumClient(contracts)
 
     await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
@@ -24,16 +23,16 @@ describe(executeSpell.name, () => {
   })
 
   test('restores the code of the executor when done', async () => {
-    const spellAddress = randomAddress('spell')
-    const deployer = randomAddress('deployer')
+    const spellAddress = CheckedAddress.random('spell')
+    const deployer = CheckedAddress.random('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
-      sparkSpellExecutor: randomAddress('executor'),
+      sparkSpellExecutor: CheckedAddress.random('executor'),
     }
     const contracts = {
-      [spellAddress]: hexStringToHex(asciiToHex('spell-bytecode')),
-      [network.sparkSpellExecutor]: hexStringToHex(asciiToHex('executor-bytecode')),
+      [spellAddress]: Hex.random('spell-bytecode'),
+      [network.sparkSpellExecutor]: Hex.random('executor-bytecode'),
     }
     const ethereumClient = getMockEthereumClient(contracts)
 
@@ -45,14 +44,14 @@ describe(executeSpell.name, () => {
   })
 
   test('executes a spell', async () => {
-    const spellAddress = randomAddress('spell')
-    const deployer = randomAddress('deployer')
+    const spellAddress = CheckedAddress.random('spell')
+    const deployer = CheckedAddress.random('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
-      sparkSpellExecutor: randomAddress('executor'),
+      sparkSpellExecutor: CheckedAddress.random('executor'),
     }
-    const contracts = { [spellAddress]: hexStringToHex(asciiToHex('spell-bytecode')) }
+    const contracts = { [spellAddress]: Hex.random('spell-bytecode') }
     const ethereumClient = getMockEthereumClient(contracts)
 
     await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
@@ -72,12 +71,12 @@ describe(executeSpell.name, () => {
   })
 
   test('throws if spell not deployed', async () => {
-    const spellAddress = randomAddress('spell')
-    const deployer = randomAddress('deployer')
+    const spellAddress = CheckedAddress.random('spell')
+    const deployer = CheckedAddress.random('deployer')
     const network: NetworkConfig = {
       name: 'mainnet',
       chain: mainnet,
-      sparkSpellExecutor: randomAddress('executor'),
+      sparkSpellExecutor: CheckedAddress.random('executor'),
     }
     const contracts = { [spellAddress]: undefined }
     const ethereumClient = getMockEthereumClient(contracts)

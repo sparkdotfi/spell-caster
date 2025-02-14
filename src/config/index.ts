@@ -1,10 +1,11 @@
-import { type Address, Chain, zeroAddress } from 'viem'
+import { CheckedAddress } from '@marsfoundation/common-universal'
+import { type Address, Chain } from 'viem'
 import { arbitrum, base, gnosis, mainnet } from 'viem/chains'
 
 export interface Config {
   tenderly: TenderlyConfig
   networks: Record<string, NetworkConfig>
-  deployer: Address
+  deployer: CheckedAddress
   spellsRepoPath: string
 }
 
@@ -49,7 +50,7 @@ export function getConfig(getEnvVariable: (key: string) => string, spellsRepoPat
         sparkSpellExecutor: '0x65d946e533748A998B1f0E430803e39A6388f7a1',
       },
     },
-    deployer: zeroAddress,
+    deployer: CheckedAddress.ZERO(),
     spellsRepoPath,
   }
 }
