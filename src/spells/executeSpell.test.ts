@@ -55,7 +55,6 @@ describe(executeSpell.name, () => {
     const ethereumClient = getMockEthereumClient(contracts)
 
     await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
-    
     ;(expect as any)(ethereumClient.assertWriteContract).toHaveBeenCalled({
       functionName: 'execute',
       to: spellAddress,
