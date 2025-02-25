@@ -89689,6 +89689,9 @@ function getTenderlyClient(rpcUrl, chain, forkChainId) {
           method: "tenderly_setCode",
           params: [addr.toString(), code]
         });
+      },
+      async setNextBlockBaseFee(_) {
+        throw new Error("Method not supported");
       }
     };
   }).extend(walletActions).extend(publicActions).extend(extendWithTestnetHelpers);
@@ -90015,9 +90018,12 @@ var mainnet = /* @__PURE__ */ defineChain({
 // node_modules/@marsfoundation/common-testnets/dist/esm/helpers/replaceSafeOwner.js
 var sentinel = CheckedAddress("0x0000000000000000000000000000000000000001");
 // node_modules/@marsfoundation/common-testnets/dist/esm/helpers/getRandomChainId.js
-function getRandomChainId(originChainId) {
-  return Number.parseInt(`${originChainId}3030${Date.now()}`);
+function getRandomChainId() {
+  const uniquePostfix = Math.floor(Math.random() * longestSafePostfix);
+  const paddedPostfix = uniquePostfix.toString().padStart(longestSafePostfix.toString().length, "0");
+  return Number.parseInt(`7357${paddedPostfix}`);
 }
+var longestSafePostfix = 99999;
 // src/periphery/forge/index.ts
 var import_core = __toESM(require_core(), 1);
 
@@ -100595,7 +100601,7 @@ async function forkAndExecuteSpell(spellName, config) {
     apiKey: config.tenderly.apiKey,
     project: config.tenderly.project
   });
-  const forkChainId = getRandomChainId(chainConfig2.chain.id);
+  const forkChainId = getRandomChainId();
   const result = await tenderlyFactory.create({
     id: `spell-caster-${chainConfig2.chain.id}`,
     originChain: chainConfig2.chain,
