@@ -24,7 +24,7 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
     apiKey: config.tenderly.apiKey,
     project: config.tenderly.project,
   })
-  const forkChainId = getRandomChainId(chainConfig.chain.id)
+  const forkChainId = getRandomChainId()
   const result = await tenderlyFactory.create({
     id: `spell-caster-${chainConfig.chain.id}`,
     originChain: chainConfig.chain,
