@@ -1,5 +1,5 @@
 import core from '@actions/core'
-import { CheckedAddress } from '@marsfoundation/common-universal'
+import { CheckedAddress } from '@sparkdotfi/common-universal'
 import { $ } from 'dax-sh'
 import { Address } from 'viem'
 

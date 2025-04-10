@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { CheckedAddress, Hex } from '@marsfoundation/common-universal'
+import { CheckedAddress, Hex } from '@sparkdotfi/common-universal'
 import { mainnet } from 'viem/chains'
 import { NetworkConfig } from '../config'
 import { getMockEthereumClient } from '../test/MockEthereumClient'

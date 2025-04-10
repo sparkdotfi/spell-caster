@@ -1,5 +1,7 @@
 import assert from 'node:assert'
-import { TenderlyTestnetFactory, getRandomChainId } from '@marsfoundation/common-testnets'
+import { TenderlyTestnetFactory, getRandomChainId } from '@sparkdotfi/common-testnets'
+import { HttpClient } from '@sparkdotfi/common-universal/http-client'
+import { Logger } from '@sparkdotfi/common-universal/logger'
 import { Config } from './config'
 import { deployContract } from './periphery/forge'
 import { buildAppUrl } from './periphery/spark-app'
@@ -19,11 +21,14 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
   const chainConfig = config.networks[originChainId]
   assert(chainConfig, `Chain not found for chainId: ${originChainId}`)
 
-  const tenderlyFactory = new TenderlyTestnetFactory({
-    account: config.tenderly.account,
-    apiKey: config.tenderly.apiKey,
-    project: config.tenderly.project,
-  })
+  const tenderlyFactory = new TenderlyTestnetFactory(
+    {
+      account: config.tenderly.account,
+      apiKey: config.tenderly.apiKey,
+      project: config.tenderly.project,
+    },
+    new HttpClient(Logger.SILENT),
+  )
   const forkChainId = getRandomChainId()
   const result = await tenderlyFactory.create({
     id: `spell-caster-${chainConfig.chain.id}`,
