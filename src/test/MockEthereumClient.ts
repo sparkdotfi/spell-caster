@@ -1,6 +1,7 @@
 import { spyOn } from 'bun:test'
-import { TestnetClient } from '@marsfoundation/common-testnets'
-import { type Address, type Hex } from 'viem'
+import { TestnetClient } from '@sparkdotfi/common-testnets'
+import { Hash } from '@sparkdotfi/common-universal'
+import { type Address, type Hex, WaitForTransactionReceiptReturnType } from 'viem'
 
 export function getMockEthereumClient(contracts: ContractsMap = {}): TestnetClient {
   const ethereumClient = new MockTestnetClient({ ...contracts }) // @note: deep copy to avoid mutation
@@ -26,7 +27,7 @@ class MockTestnetClient implements Partial<TestnetClient> {
     return this.contracts[args.address]
   }
 
-  async assertWriteContract(): Promise<Hex> {
-    return '0x1234'
+  async assertWriteContract(): Promise<WaitForTransactionReceiptReturnType> {
+    return { transactionHash: Hash.random() } as any
   }
 }

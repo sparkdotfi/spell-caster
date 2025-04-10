@@ -1,6 +1,6 @@
 import assert from 'node:assert'
-import { TestnetClient } from '@marsfoundation/common-testnets'
-import { CheckedAddress } from '@marsfoundation/common-universal'
+import { TestnetClient } from '@sparkdotfi/common-testnets'
+import { CheckedAddress } from '@sparkdotfi/common-universal'
 import { NetworkConfig } from '../config'
 
 interface ExecuteSpellArgs {
@@ -22,7 +22,7 @@ export async function executeSpell({ spellAddress, network, client, deployer }: 
   await client.setCode(network.sparkSpellExecutor, spellBytecode)
 
   await client.assertWriteContract({
-    to: network.sparkSpellExecutor,
+    address: network.sparkSpellExecutor,
     abi: [
       {
         inputs: [],
