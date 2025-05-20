@@ -1,6 +1,6 @@
 import { CheckedAddress } from '@sparkdotfi/common-universal'
 import { type Address, Chain } from 'viem'
-import { arbitrum, base, gnosis, mainnet } from 'viem/chains'
+import { arbitrum, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
 
 export interface Config {
   tenderly: TenderlyConfig
@@ -48,6 +48,16 @@ export function getConfig(getEnvVariable: (key: string) => string, spellsRepoPat
         name: 'arbitrum',
         chain: arbitrum,
         sparkSpellExecutor: '0x65d946e533748A998B1f0E430803e39A6388f7a1',
+      },
+      [optimism.id]: {
+        name: 'optimism',
+        chain: optimism,
+        sparkSpellExecutor: '0x205216D89a00FeB2a73273ceecD297BAf89d576d',
+      },
+      [unichain.id]: {
+        name: 'unichain',
+        chain: unichain,
+        sparkSpellExecutor: '0xb037C43b433964A2017cd689f535BEb6B0531473',
       },
     },
     deployer: CheckedAddress.ZERO(),

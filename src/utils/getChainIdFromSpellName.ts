@@ -1,4 +1,4 @@
-import { arbitrum, base, gnosis, mainnet } from 'viem/chains'
+import { arbitrum, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
 
 export function getChainIdFromSpellName(spellName: string): number {
   const regex = /^Spark([a-zA-Z]+)_\d+$/
@@ -21,6 +21,10 @@ export function getChainIdFromSpellName(spellName: string): number {
       return base.id
     case 'ArbitrumOne':
       return arbitrum.id
+    case 'Optimism':
+      return optimism.id
+    case 'Unichain':
+      return unichain.id
     default:
       throw new Error(`Unknown chain name: ${name}`)
   }
