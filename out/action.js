@@ -100103,6 +100103,97 @@ var mainnet = /* @__PURE__ */ defineChain({
     }
   }
 });
+// node_modules/viem/_esm/chains/definitions/optimism.js
+var sourceId2 = 1;
+var optimism = /* @__PURE__ */ defineChain({
+  ...chainConfig,
+  id: 10,
+  name: "OP Mainnet",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://mainnet.optimism.io"]
+    }
+  },
+  blockExplorers: {
+    default: {
+      name: "Optimism Explorer",
+      url: "https://optimistic.etherscan.io",
+      apiUrl: "https://api-optimistic.etherscan.io/api"
+    }
+  },
+  contracts: {
+    ...chainConfig.contracts,
+    disputeGameFactory: {
+      [sourceId2]: {
+        address: "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
+      }
+    },
+    l2OutputOracle: {
+      [sourceId2]: {
+        address: "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      }
+    },
+    multicall3: {
+      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      blockCreated: 4286263
+    },
+    portal: {
+      [sourceId2]: {
+        address: "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+      }
+    },
+    l1StandardBridge: {
+      [sourceId2]: {
+        address: "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      }
+    }
+  },
+  sourceId: sourceId2
+});
+// node_modules/viem/_esm/chains/definitions/unichain.js
+var sourceId3 = 1;
+var unichain = /* @__PURE__ */ defineChain({
+  ...chainConfig,
+  id: 130,
+  name: "Unichain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://mainnet.unichain.org/"]
+    }
+  },
+  blockExplorers: {
+    default: {
+      name: "Uniscan",
+      url: "https://uniscan.xyz",
+      apiUrl: "https://api.uniscan.xyz/api"
+    }
+  },
+  contracts: {
+    ...chainConfig.contracts,
+    multicall3: {
+      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      blockCreated: 0
+    },
+    disputeGameFactory: {
+      [sourceId3]: {
+        address: "0x2F12d621a16e2d3285929C9996f478508951dFe4"
+      }
+    },
+    portal: {
+      [sourceId3]: {
+        address: "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
+      }
+    },
+    l1StandardBridge: {
+      [sourceId3]: {
+        address: "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      }
+    }
+  },
+  sourceId: sourceId3
+});
 // node_modules/@sparkdotfi/common-nodejs/dist/env/getEnv.js
 var import_dotenv = __toESM(require_main2(), 1);
 // node_modules/@sparkdotfi/common-testnets/dist/helpers/replaceSafeOwner.js
@@ -111781,6 +111872,10 @@ function getChainIdFromSpellName(spellName) {
       return base.id;
     case "ArbitrumOne":
       return arbitrum.id;
+    case "Optimism":
+      return optimism.id;
+    case "Unichain":
+      return unichain.id;
     default:
       throw new Error(`Unknown chain name: ${name}`);
   }
@@ -111848,6 +111943,16 @@ function getConfig(getEnvVariable, spellsRepoPath) {
         name: "arbitrum",
         chain: arbitrum,
         sparkSpellExecutor: "0x65d946e533748A998B1f0E430803e39A6388f7a1"
+      },
+      [optimism.id]: {
+        name: "optimism",
+        chain: optimism,
+        sparkSpellExecutor: "0x205216D89a00FeB2a73273ceecD297BAf89d576d"
+      },
+      [unichain.id]: {
+        name: "unichain",
+        chain: unichain,
+        sparkSpellExecutor: "0xb037C43b433964A2017cd689f535BEb6B0531473"
       }
     },
     deployer: CheckedAddress.ZERO(),
