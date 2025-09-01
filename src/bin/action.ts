@@ -5,12 +5,12 @@ import { createCommentOrUpdate } from '@superactions/comment'
 import dedent from 'dedent'
 import { markdownTable } from 'markdown-table'
 import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '..'
-import { getConfig } from '../config'
-import { getRequiredGithubInput } from '../config/environments/action'
+import { buildDependencies } from '../buildDependencies'
+import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
 import { findPendingSpells } from '../spells/findPendingSpells'
 
 async function main(): Promise<void> {
-  const config = getConfig(getRequiredGithubInput, process.cwd())
+  const { reportSender, config } = buildDependencies()
 
   const allPendingSpellNames = findPendingSpells(process.cwd())
   core.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)
@@ -18,6 +18,9 @@ async function main(): Promise<void> {
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
   await postGithubComment(results)
+
+  const report = prepareSlackNotification(results)
+  reportSender.send([report])
 
   core.info(`Results: ${JSON.stringify(results)}`)
 }

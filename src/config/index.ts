@@ -1,16 +1,17 @@
-import { CheckedAddress } from '@sparkdotfi/common-universal'
+import { CheckedAddress, SparkDomain } from '@sparkdotfi/common-universal'
 import { type Address, Chain } from 'viem'
 import { arbitrum, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
 
 export interface Config {
   tenderly: TenderlyConfig
+  slackWebhookUrl: string | undefined
   networks: Record<string, NetworkConfig>
   deployer: CheckedAddress
   spellsRepoPath: string
 }
 
 export interface NetworkConfig {
-  name: string
+  name: SparkDomain
   chain: Chain
   sparkSpellExecutor: Address
 }
@@ -21,13 +22,14 @@ export interface TenderlyConfig {
   apiKey: string
 }
 
-export function getConfig(getEnvVariable: (key: string) => string, spellsRepoPath: string): Config {
+export function getConfig(getEnvVariable: (key: string, fallback?: string) => string, spellsRepoPath: string): Config {
   return {
     tenderly: {
       account: getEnvVariable('TENDERLY_ACCOUNT'),
       project: getEnvVariable('TENDERLY_PROJECT'),
       apiKey: getEnvVariable('TENDERLY_API_KEY'),
     },
+    slackWebhookUrl: getEnvVariable('SLACK_WEBHOOK_URL', '') || undefined,
     networks: {
       [mainnet.id]: {
         name: 'mainnet',

@@ -1,7 +1,5 @@
-import assert from 'node:assert'
+import { getEnv } from '@sparkdotfi/common-nodejs/env'
 
-export function getRequiredShellEnv(key: string): string {
-  const value = process.env[key]
-  assert(value, `Missing required environment variable: ${key}`)
-  return value
-}
+const env = getEnv()
+
+export const getRequiredShellEnv = env.string
