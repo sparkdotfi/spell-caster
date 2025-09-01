@@ -12,8 +12,9 @@ export function prepareSlackNotification(results: ForkAndExecuteSpellReturn[]): 
 
 function spellSection(result: ForkAndExecuteSpellReturn): ContentBlock[] {
   return [
-    templating.text(`- ${result.spellName}`),
+    templating.text(`- ${result.spellName} |`),
     templating.link(result.appUrl, 'App URL'),
+    templating.text('|'),
     templating.link(result.forkRpc, 'RPC URL'),
     templating.newLine,
   ]
