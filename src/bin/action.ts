@@ -2,6 +2,7 @@ import assert from 'node:assert'
 import core from '@actions/core'
 import github from '@actions/github'
 import { createCommentOrUpdate } from '@superactions/comment'
+import { CreateOrUpdateReponse } from '@superactions/comment/dist/github/types'
 import dedent from 'dedent'
 import { markdownTable } from 'markdown-table'
 import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '..'
@@ -32,7 +33,7 @@ await main().catch((error) => {
 })
 
 const uniqueAppId = 'spark-spells-action'
-async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<{ status: 'created' | 'updated' }> {
+async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<CreateOrUpdateReponse> {
   const now = new Date().toISOString()
   const sha = getPrSha()
   const table = [
@@ -48,11 +49,11 @@ async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<
 
   <sub>Deployed from ${sha} on ${now}</sub>
   `
-  return (await createCommentOrUpdate({
+  return await createCommentOrUpdate({
     githubToken: core.getInput('github-token'),
     message,
     uniqueAppId: uniqueAppId,
-  })) as any
+  })
 }
 
 function getPrSha(): string {

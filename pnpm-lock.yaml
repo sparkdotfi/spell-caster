@@ -30,8 +30,8 @@ importers:
         specifier: 0.2.0-20250829.1df52afb
         version: 0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@superactions/comment':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.2
+        version: 0.1.2
       dax-sh:
         specifier: ^0.41.0
         version: 0.41.0
@@ -306,8 +306,8 @@ packages:
       viem: ^2.0.0
       zod: ^3.0
 
-  '@superactions/comment@0.1.1':
-    resolution: {integrity: sha512-8EN4KnRyVIUbIHcr3IFZWmutzdsm0/2ihAQutTpztn76nnHaIY0UW3lH6rGrhi1atwvRK0RH5zZ0JYzP0wyxwQ==}
+  '@superactions/comment@0.1.2':
+    resolution: {integrity: sha512-NFMblF1f3Eo5ZUo8cd6p8HM1+pVKSCdQEJBsCvAzAytKHYTK7DbzRD63F3pXpAiUI8Uvtmb4ykm3y//jLA8bTg==}
 
   '@types/bun@1.2.20':
     resolution: {integrity: sha512-dX3RGzQ8+KgmMw7CsW4xT5ITBSCrSbfHc36SNT31EOUg/LA9JWq0VDdEXDRSe1InVWpd2yLUM1FUF/kEOyTzYA==}
@@ -977,7 +977,7 @@ snapshots:
       viem: 2.33.3(typescript@5.9.2)(zod@3.25.76)
       zod: 3.25.76
 
-  '@superactions/comment@0.1.1':
+  '@superactions/comment@0.1.2':
     dependencies:
       '@actions/core': 1.11.1
       '@actions/github': 5.1.1
