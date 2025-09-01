@@ -27,8 +27,6 @@ export class ReportSender {
       return [consoleReporter]
     }
 
-    this.wehbookUrl
-
     return [consoleReporter, new SlackReporter({ apiUrl: this.wehbookUrl }, this.httpClient)]
   }
 }
