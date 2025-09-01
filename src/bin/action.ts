@@ -17,10 +17,12 @@ async function main(): Promise<void> {
 
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
-  await postGithubComment(results)
+  const { status } = await postGithubComment(results)
 
-  const report = prepareSlackNotification(results)
-  reportSender.send([report])
+  if (status === 'created') {
+    const report = prepareSlackNotification(results)
+    reportSender.send([report])
+  }
 
   core.info(`Results: ${JSON.stringify(results)}`)
 }
@@ -30,7 +32,7 @@ await main().catch((error) => {
 })
 
 const uniqueAppId = 'spark-spells-action'
-async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<void> {
+async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<{ status: 'created' | 'updated' }> {
   const now = new Date().toISOString()
   const sha = getPrSha()
   const table = [
@@ -46,7 +48,11 @@ async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<
 
   <sub>Deployed from ${sha} on ${now}</sub>
   `
-  await createCommentOrUpdate({ githubToken: core.getInput('github-token'), message, uniqueAppId: uniqueAppId })
+  return (await createCommentOrUpdate({
+    githubToken: core.getInput('github-token'),
+    message,
+    uniqueAppId: uniqueAppId,
+  })) as any
 }
 
 function getPrSha(): string {
