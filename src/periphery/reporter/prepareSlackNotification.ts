@@ -1,5 +1,5 @@
 import { ContentBlock, Report, templating } from '@sparkdotfi/common-reporters'
-import { ForkAndExecuteSpellReturn } from '../..'
+import { ForkAndExecuteSpellReturn } from '../../forkAndExecuteSpell'
 
 export function prepareSlackNotification(results: ForkAndExecuteSpellReturn[]): Report {
   const data = results.flatMap(spellSection)

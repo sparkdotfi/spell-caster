@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import { parseArgs } from 'node:util'
-import { forkAndExecuteSpell } from '..'
 import { getConfig } from '../config'
-import { cliEnv } from '../config/environments/cliEnv'
+import { cliEnv } from '../config/environment/cliEnv'
+import { forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { ensureAbsolutePath } from '../utils/fs'
 
 async function main() {

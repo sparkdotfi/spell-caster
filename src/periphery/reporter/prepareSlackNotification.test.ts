@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { templating } from '@sparkdotfi/common-reporters'
-import { ForkAndExecuteSpellReturn } from '../..'
+import { ForkAndExecuteSpellReturn } from '../../forkAndExecuteSpell'
 import { prepareSlackNotification } from './prepareSlackNotification'
 
 describe(prepareSlackNotification.name, () => {

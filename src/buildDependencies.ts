@@ -2,7 +2,7 @@ import core from '@actions/core'
 import { HttpClient } from '@sparkdotfi/common-universal/http-client'
 import { LogFormatterPretty, Logger, LoggerTransport } from '@sparkdotfi/common-universal/logger'
 import { Config, getConfig } from './config'
-import { ActionEnv } from './config/environments/ActionEnv'
+import { ActionEnv } from './config/environment/ActionEnv'
 import { ReportSender } from './periphery/reporter/ReportSender'
 
 export interface Dependencies {

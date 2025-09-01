@@ -5,8 +5,8 @@ import { createCommentOrUpdate } from '@superactions/comment'
 import { CreateOrUpdateReponse } from '@superactions/comment/dist/github/types'
 import dedent from 'dedent'
 import { markdownTable } from 'markdown-table'
-import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '..'
 import { buildDependencies } from '../buildDependencies'
+import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
 import { findPendingSpells } from '../spells/findPendingSpells'
 
@@ -22,7 +22,7 @@ async function main(): Promise<void> {
 
   if (status === 'created') {
     const report = prepareSlackNotification(results)
-    reportSender.send([report])
+    await reportSender.send([report])
   }
 
   core.info(`Results: ${JSON.stringify(results)}`)
