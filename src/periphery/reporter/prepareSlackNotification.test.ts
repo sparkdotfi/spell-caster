@@ -40,4 +40,9 @@ describe(prepareSlackNotification.name, () => {
       ],
     })
   })
+
+  test('returns undefined if no results', () => {
+    const result = prepareSlackNotification([])
+    expect(result).toBeUndefined()
+  })
 })

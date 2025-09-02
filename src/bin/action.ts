@@ -33,7 +33,9 @@ async function main(): Promise<void> {
   const addedSpellsResults = results.filter((result) => allAddedSpellNames.includes(result.spellName))
   const report = prepareSlackNotification(addedSpellsResults)
 
-  await reportSender.send([report])
+  if (report) {
+    await reportSender.send([report])
+  }
 }
 
 await main().catch((error) => {
