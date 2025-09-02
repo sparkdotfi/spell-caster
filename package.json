@@ -12,7 +12,8 @@
     "bump-common-packages": "pnpm update '@sparkdotfi/*@latest' && pnpm install"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "mocha": "^11.7.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
