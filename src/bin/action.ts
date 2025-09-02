@@ -11,10 +11,10 @@ import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNoti
 import { findPendingSpells } from '../spells/findPendingSpells'
 
 async function main(): Promise<void> {
-  const { reportSender, config } = buildDependencies()
+  const { reportSender, config, logger } = buildDependencies()
 
   const allPendingSpellNames = findPendingSpells(process.cwd())
-  core.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)
+  logger.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)
 
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
@@ -25,7 +25,7 @@ async function main(): Promise<void> {
     await reportSender.send([report])
   }
 
-  core.info(`Results: ${JSON.stringify(results)}`)
+  logger.info(`Results: ${JSON.stringify(results)}`)
 }
 
 await main().catch((error) => {
