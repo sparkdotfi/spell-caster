@@ -33,7 +33,7 @@ export function getConfig(env: IEnv, spellsRepoPath: string): Config {
     },
 
     slackWebhookUrl: env.optionalString('SLACK_WEBHOOK_URL'),
-    githubToken: env.string('GITHUB_TOKEN'),
+    githubToken: env.string('github-token'),
 
     networks: {
       [mainnet.id]: {
