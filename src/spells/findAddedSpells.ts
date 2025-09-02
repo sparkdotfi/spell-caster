@@ -7,7 +7,7 @@ export async function findAddedSpells(githubToken: string, logger: Logger): Prom
   const context = github.context
 
   if (context.eventName !== 'pull_request') {
-    logger.info('Not a pull request')
+    logger.warn('Not a pull request')
     return []
   }
 
@@ -16,7 +16,6 @@ export async function findAddedSpells(githubToken: string, logger: Logger): Prom
     repo: context.repo.repo,
     pull_number: context.issue.number,
   })
-  logger.info(`All files of pr: ${JSON.stringify(files)}`)
 
   const addedProposalFiles = files.filter(
     (file) =>

@@ -15,25 +15,25 @@ async function main(): Promise<void> {
   const { reportSender, config, logger } = buildActionDependencies()
 
   const allPendingSpellNames = findPendingSpells(process.cwd())
-  logger.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)
-
-  const allAddedSpellNames = await findAddedSpells(config.githubToken, logger)
-  logger.info(`Added spells: ${allAddedSpellNames.join(', ')}`)
+  logger.info(`All pending spells: ${allPendingSpellNames.join(', ')}`)
 
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
-  const addedSpellsResults = results.filter((result) => allAddedSpellNames.includes(result.spellName))
-
-  logger.info(`Added spells results: ${JSON.stringify(addedSpellsResults)}`)
-
   const { status } = await postGithubComment(results)
 
-  if (status === 'created') {
-    const report = prepareSlackNotification(addedSpellsResults)
-    await reportSender.send([report])
+  logger.info(`Results: ${JSON.stringify(results)}`)
+
+  if (status === 'updated') {
+    return
   }
 
-  logger.info(`Results: ${JSON.stringify(results)}`)
+  const allAddedSpellNames = await findAddedSpells(config.githubToken, logger)
+  logger.info(`Newly added spells: ${allAddedSpellNames.join(', ')}`)
+
+  const addedSpellsResults = results.filter((result) => allAddedSpellNames.includes(result.spellName))
+  const report = prepareSlackNotification(addedSpellsResults)
+
+  await reportSender.send([report])
 }
 
 await main().catch((error) => {
