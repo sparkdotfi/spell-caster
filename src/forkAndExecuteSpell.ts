@@ -6,6 +6,7 @@ import { Config } from './config'
 import { deployContract } from './periphery/forge'
 import { buildAppUrl } from './periphery/spark-app'
 import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
+import { executeSpell } from './spells/executeSpell'
 
 export interface ForkAndExecuteSpellReturn {
   spellName: string
@@ -36,14 +37,14 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
   })
   assert(result.publicRpcUrl)
 
-  await deployContract({
+  const spellAddress = await deployContract({
     contractName: spellName,
     rpc: result.rpcUrl,
     from: config.deployer,
     cwd: config.spellsRepoPath,
   })
 
-  // await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
+  await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
 
   await result.cleanup()
 
