@@ -55,9 +55,9 @@ describe(executeSpell.name, () => {
     const ethereumClient = getMockEthereumClient(contracts)
 
     await executeSpell({ spellAddress, network, client: ethereumClient, deployer })
-    ;(expect as any)(ethereumClient.assertWriteContract).toHaveBeenCalled({
+    expect(ethereumClient.assertWriteContract).toHaveBeenCalledWith({
       functionName: 'execute',
-      to: spellAddress,
+      address: network.sparkSpellExecutor,
       abi: [
         {
           inputs: [],
@@ -67,6 +67,7 @@ describe(executeSpell.name, () => {
           type: 'function',
         },
       ],
+      account: deployer,
     })
   })
 
