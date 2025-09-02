@@ -14,6 +14,9 @@ inputs:
   TENDERLY_API_KEY:
     description: 'Tenderly credentials'
     required: true
+  SLACK_WEBHOOK_URL:
+    description: 'Slack webhook URL'
+    required: false
 
 runs:
   using: node20
