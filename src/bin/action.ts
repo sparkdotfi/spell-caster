@@ -5,13 +5,13 @@ import { createCommentOrUpdate } from '@superactions/comment'
 import { CreateOrUpdateReponse } from '@superactions/comment/dist/github/types'
 import dedent from 'dedent'
 import { markdownTable } from 'markdown-table'
-import { buildDependencies } from '../buildDependencies'
+import { buildActionDependencies } from '../buildDependencies'
 import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
 import { findPendingSpells } from '../spells/findPendingSpells'
 
 async function main(): Promise<void> {
-  const { reportSender, config, logger } = buildDependencies()
+  const { reportSender, config, logger } = buildActionDependencies()
 
   const allPendingSpellNames = findPendingSpells(process.cwd())
   logger.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)

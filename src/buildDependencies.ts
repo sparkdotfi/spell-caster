@@ -11,7 +11,7 @@ export interface Dependencies {
   config: Config
 }
 
-export function buildDependencies() {
+export function buildActionDependencies() {
   const actionsTransport: LoggerTransport = {
     debug: (message: string | object) => core.debug(message.toString()),
     log: (message: string | object) => core.info(message.toString()),
