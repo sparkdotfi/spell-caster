@@ -8,6 +8,7 @@ import { markdownTable } from 'markdown-table'
 import { buildActionDependencies } from '../buildDependencies'
 import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
+import { findAddedSpells } from '../spells/findAddedSpells'
 import { findPendingSpells } from '../spells/findPendingSpells'
 
 async function main(): Promise<void> {
@@ -16,12 +17,19 @@ async function main(): Promise<void> {
   const allPendingSpellNames = findPendingSpells(process.cwd())
   logger.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)
 
+  const allAddedSpellNames = await findAddedSpells(config.githubToken, logger)
+  logger.info(`Added spells: ${allAddedSpellNames.join(', ')}`)
+
   const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
+
+  const addedSpellsResults = results.filter((result) => allAddedSpellNames.includes(result.spellName))
+
+  logger.info(`Added spells results: ${JSON.stringify(addedSpellsResults)}`)
 
   const { status } = await postGithubComment(results)
 
   if (status === 'created') {
-    const report = prepareSlackNotification(results)
+    const report = prepareSlackNotification(addedSpellsResults)
     await reportSender.send([report])
   }
 

@@ -1,4 +1,4 @@
-import { ConsoleReporter, IReporter, Report, SlackReporter } from '@sparkdotfi/common-reporters'
+import { ConsoleReporter, IReporter, Report } from '@sparkdotfi/common-reporters'
 import { HttpClient } from '@sparkdotfi/common-universal/http-client'
 import { Logger } from '@sparkdotfi/common-universal/logger'
 
@@ -29,6 +29,7 @@ export class ReportSender {
       return [consoleReporter]
     }
 
-    return [consoleReporter, new SlackReporter({ apiUrl: this.wehbookUrl }, this.httpClient)]
+    // return [consoleReporter, new SlackReporter({ apiUrl: this.wehbookUrl }, this.httpClient)]
+    return [consoleReporter]
   }
 }
