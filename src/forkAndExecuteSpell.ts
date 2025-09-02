@@ -5,7 +5,6 @@ import { Logger } from '@sparkdotfi/common-universal/logger'
 import { Config } from './config'
 import { deployContract } from './periphery/forge'
 import { buildAppUrl } from './periphery/spark-app'
-import { executeSpell } from './spells/executeSpell'
 import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
 
 export interface ForkAndExecuteSpellReturn {
@@ -37,14 +36,14 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
   })
   assert(result.publicRpcUrl)
 
-  const spellAddress = await deployContract({
+  await deployContract({
     contractName: spellName,
     rpc: result.rpcUrl,
     from: config.deployer,
     cwd: config.spellsRepoPath,
   })
 
-  await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
+  // await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
 
   await result.cleanup()
 

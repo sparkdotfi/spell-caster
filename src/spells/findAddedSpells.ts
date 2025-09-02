@@ -19,10 +19,11 @@ export async function findAddedSpells(githubToken: string, logger: Logger): Prom
 
   const addedProposalFiles = files.filter(
     (file) =>
-      file.status === 'added' &&
-      file.filename.endsWith('.sol') &&
-      !file.filename.includes('.t.sol') &&
-      file.filename.includes('src/proposals'),
+      file.status === 'added' ||
+      (file.status === 'renamed' &&
+        file.filename.endsWith('.sol') &&
+        !file.filename.includes('.t.sol') &&
+        file.filename.includes('src/proposals')),
   )
 
   return addedProposalFiles.map((file) => getFilenameWithoutExtension(file.filename))
