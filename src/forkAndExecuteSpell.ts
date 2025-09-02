@@ -5,8 +5,8 @@ import { Logger } from '@sparkdotfi/common-universal/logger'
 import { Config } from './config'
 import { deployContract } from './periphery/forge'
 import { buildAppUrl } from './periphery/spark-app'
-import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
 import { executeSpell } from './spells/executeSpell'
+import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
 
 export interface ForkAndExecuteSpellReturn {
   spellName: string
