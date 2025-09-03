@@ -15,8 +15,6 @@ jobs:
       - run: bun install
       - run: bun build:action
 
-      - run: git reset --hard
-
       - uses: ActionwareIO/branch-push-action@action
         with:
           branch: action
