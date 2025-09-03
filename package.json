@@ -8,8 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "fix": "bun run check:fix && bun run test && bun run typecheck",
-    "build:action": "bun build src/bin/action.ts --outdir=out --target=node",
-    "bump-common-packages": "pnpm update '@sparkdotfi/*@latest' && pnpm install"
+    "build:action": "bun build src/bin/action.ts --outdir=out --target=node"
   },
   "devDependencies": {
     "@types/bun": "latest",
