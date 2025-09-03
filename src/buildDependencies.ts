@@ -33,7 +33,7 @@ export function buildActionDependencies() {
   const config = getConfig(actionEnv, process.cwd())
 
   const httpClient = new HttpClient({}, logger)
-  const reportSender = new ReportSender(config.slackWebhookUrl, logger, httpClient)
+  const reportSender = new ReportSender(config.secrets.slackWebhookUrl, logger, httpClient)
 
   return {
     logger,

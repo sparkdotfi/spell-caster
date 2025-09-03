@@ -5,8 +5,10 @@ import { IEnv } from './environment/IEnv'
 
 export interface Config {
   tenderly: TenderlyConfig
-  slackWebhookUrl: string | undefined
-  githubToken: string
+  secrets: {
+    slackWebhookUrl: string | undefined
+    githubToken: string
+  }
   networks: Record<string, NetworkConfig>
   deployer: CheckedAddress
   spellsRepoPath: string
@@ -31,10 +33,10 @@ export function getConfig(env: IEnv, spellsRepoPath: string): Config {
       project: env.string('TENDERLY_PROJECT'),
       apiKey: env.string('TENDERLY_API_KEY'),
     },
-
-    slackWebhookUrl: env.optionalString('SLACK_WEBHOOK_URL'),
-    githubToken: env.string('github-token'),
-
+    secrets: {
+      slackWebhookUrl: env.optionalString('SLACK_WEBHOOK_URL'),
+      githubToken: env.string('github-token'),
+    },
     networks: {
       [mainnet.id]: {
         name: 'mainnet',

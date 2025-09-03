@@ -13,12 +13,12 @@ import { findModifiedSpells } from '../spells/findModifiedSpells'
 async function main(): Promise<void> {
   const { reportSender, config, logger } = buildActionDependencies()
 
-  const modifiedSpellNames = await findModifiedSpells(config.githubToken, logger)
+  const modifiedSpellNames = await findModifiedSpells(config.secrets.githubToken, logger)
   logger.info(`Modified spells: ${modifiedSpellNames.join(', ')}`)
 
   const forkResults = await Promise.all(modifiedSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
-  const { status } = await postGithubComment(forkResults)
+  const { status } = await postGithubComment(forkResults, config.secrets.githubToken)
 
   logger.info(`Results: ${JSON.stringify(forkResults)}`)
 
@@ -38,7 +38,10 @@ await main().catch((error) => {
 })
 
 const uniqueAppId = 'spark-spells-action'
-async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<CreateOrUpdateReponse> {
+async function postGithubComment(
+  results: ForkAndExecuteSpellReturn[],
+  githubToken: string,
+): Promise<CreateOrUpdateReponse> {
   const now = new Date().toISOString()
   const sha = getPrSha()
   const table = [
@@ -55,7 +58,7 @@ async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<
   <sub>Deployed from ${sha} on ${now}</sub>
   `
   return await createCommentOrUpdate({
-    githubToken: core.getInput('github-token'),
+    githubToken,
     message,
     uniqueAppId: uniqueAppId,
   })
