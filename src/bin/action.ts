@@ -16,6 +16,10 @@ async function main(): Promise<void> {
   const modifiedSpellNames = await findModifiedSpells(config.secrets.githubToken, logger)
   logger.info(`Modified spells: ${modifiedSpellNames.join(', ')}`)
 
+  if (modifiedSpellNames.length === 0) {
+    return
+  }
+
   const forkResults = await Promise.all(modifiedSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
   const { status } = await postGithubComment(forkResults, config.secrets.githubToken)
