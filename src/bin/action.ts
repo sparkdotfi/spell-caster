@@ -8,30 +8,25 @@ import { markdownTable } from 'markdown-table'
 import { buildActionDependencies } from '../buildDependencies'
 import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
-import { findAddedSpells } from '../spells/findAddedSpells'
-import { findPendingSpells } from '../spells/findPendingSpells'
+import { findModifiedSpells } from '../spells/findModifiedSpells'
 
 async function main(): Promise<void> {
   const { reportSender, config, logger } = buildActionDependencies()
 
-  const allPendingSpellNames = findPendingSpells(process.cwd())
-  logger.info(`All pending spells: ${allPendingSpellNames.join(', ')}`)
+  const modifiedSpellNames = await findModifiedSpells(config.githubToken, logger)
+  logger.info(`Modified spells: ${modifiedSpellNames.join(', ')}`)
 
-  const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
+  const forkResults = await Promise.all(modifiedSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
-  const { status } = await postGithubComment(results)
+  const { status } = await postGithubComment(forkResults)
 
-  logger.info(`Results: ${JSON.stringify(results)}`)
+  logger.info(`Results: ${JSON.stringify(forkResults)}`)
 
   if (status === 'updated') {
     return
   }
 
-  const allAddedSpellNames = await findAddedSpells(config.githubToken, logger)
-  logger.info(`Newly added spells: ${allAddedSpellNames.join(', ')}`)
-
-  const addedSpellsResults = results.filter((result) => allAddedSpellNames.includes(result.spellName))
-  const report = prepareSlackNotification(addedSpellsResults)
+  const report = prepareSlackNotification(forkResults)
 
   if (report) {
     await reportSender.send([report])

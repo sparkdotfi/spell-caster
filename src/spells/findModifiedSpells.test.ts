@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { getFilenameWithoutExtension } from './findPendingSpells'
+import { getFilenameWithoutExtension } from './findModifiedSpells'
 
 describe(getFilenameWithoutExtension.name, () => {
   test('gets filename without extension from a full path', () => {

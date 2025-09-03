@@ -9,7 +9,7 @@ export function prepareSlackNotification(results: ForkAndExecuteSpellReturn[]): 
   const data = results.flatMap(spellSection)
 
   return {
-    title: 'New spell is ready for review',
+    title: 'Spell is ready for review',
     content: data,
   }
 }

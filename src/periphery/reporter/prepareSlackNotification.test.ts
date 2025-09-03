@@ -25,7 +25,7 @@ describe(prepareSlackNotification.name, () => {
     const result = prepareSlackNotification(mockResults)
 
     expect(result).toEqual({
-      title: 'New spell is ready for review',
+      title: 'Spell is ready for review',
       content: [
         templating.text('- TestSpell1 |'),
         templating.link('https://app1.example.com', 'App URL'),
