@@ -1,18 +1,23 @@
-import { CheckedAddress } from '@sparkdotfi/common-universal'
-import { type Address, Chain } from 'viem'
+import { CheckedAddress, SparkDomain } from '@sparkdotfi/common-universal'
+import { Chain } from 'viem'
 import { arbitrum, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
+import { IEnv } from './environment/IEnv'
 
 export interface Config {
   tenderly: TenderlyConfig
+  secrets: {
+    slackWebhookUrl: string | undefined
+    githubToken: string
+  }
   networks: Record<string, NetworkConfig>
   deployer: CheckedAddress
   spellsRepoPath: string
 }
 
 export interface NetworkConfig {
-  name: string
+  name: SparkDomain
   chain: Chain
-  sparkSpellExecutor: Address
+  sparkSpellExecutor: CheckedAddress
 }
 
 export interface TenderlyConfig {
@@ -21,43 +26,47 @@ export interface TenderlyConfig {
   apiKey: string
 }
 
-export function getConfig(getEnvVariable: (key: string) => string, spellsRepoPath: string): Config {
+export function getConfig(env: IEnv, spellsRepoPath: string): Config {
   return {
     tenderly: {
-      account: getEnvVariable('TENDERLY_ACCOUNT'),
-      project: getEnvVariable('TENDERLY_PROJECT'),
-      apiKey: getEnvVariable('TENDERLY_API_KEY'),
+      account: env.string('TENDERLY_ACCOUNT'),
+      project: env.string('TENDERLY_PROJECT'),
+      apiKey: env.string('TENDERLY_API_KEY'),
+    },
+    secrets: {
+      slackWebhookUrl: env.optionalString('SLACK_WEBHOOK_URL'),
+      githubToken: env.string('github-token'),
     },
     networks: {
       [mainnet.id]: {
         name: 'mainnet',
         chain: mainnet,
-        sparkSpellExecutor: '0x3300f198988e4C9C63F75dF86De36421f06af8c4',
+        sparkSpellExecutor: CheckedAddress('0x3300f198988e4C9C63F75dF86De36421f06af8c4'),
       },
       [gnosis.id]: {
         name: 'gnosis',
         chain: gnosis,
-        sparkSpellExecutor: '0xc4218C1127cB24a0D6c1e7D25dc34e10f2625f5A',
+        sparkSpellExecutor: CheckedAddress('0xc4218C1127cB24a0D6c1e7D25dc34e10f2625f5A'),
       },
       [base.id]: {
         name: 'base',
         chain: base,
-        sparkSpellExecutor: '0xF93B7122450A50AF3e5A76E1d546e95Ac1d0F579',
+        sparkSpellExecutor: CheckedAddress('0xF93B7122450A50AF3e5A76E1d546e95Ac1d0F579'),
       },
       [arbitrum.id]: {
         name: 'arbitrum',
         chain: arbitrum,
-        sparkSpellExecutor: '0x65d946e533748A998B1f0E430803e39A6388f7a1',
+        sparkSpellExecutor: CheckedAddress('0x65d946e533748A998B1f0E430803e39A6388f7a1'),
       },
       [optimism.id]: {
         name: 'optimism',
         chain: optimism,
-        sparkSpellExecutor: '0x205216D89a00FeB2a73273ceecD297BAf89d576d',
+        sparkSpellExecutor: CheckedAddress('0x205216D89a00FeB2a73273ceecD297BAf89d576d'),
       },
       [unichain.id]: {
         name: 'unichain',
         chain: unichain,
-        sparkSpellExecutor: '0xb037C43b433964A2017cd689f535BEb6B0531473',
+        sparkSpellExecutor: CheckedAddress('0xb037C43b433964A2017cd689f535BEb6B0531473'),
       },
     },
     deployer: CheckedAddress.ZERO(),

@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import { parseArgs } from 'node:util'
-import { forkAndExecuteSpell } from '..'
 import { getConfig } from '../config'
-import { getRequiredShellEnv } from '../config/environments/cli'
+import { cliEnv } from '../config/environment/cliEnv'
+import { forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { ensureAbsolutePath } from '../utils/fs'
 
 async function main() {
@@ -21,7 +21,7 @@ async function main() {
   assert(spellName, 'Pass spell name as an argument ex. SparkEthereum_20240627')
   assert(rootPath, 'Pass root path as an argument ex. --root /path/to/spark-spells')
 
-  const config = getConfig(getRequiredShellEnv, ensureAbsolutePath(rootPath))
+  const config = getConfig(cliEnv, ensureAbsolutePath(rootPath))
 
   console.log(`Executing spell ${spellName}`)
   const { forkRpc, appUrl } = await forkAndExecuteSpell(spellName, config)

@@ -1,6 +1,6 @@
 import { spyOn } from 'bun:test'
 import { TestnetClient } from '@sparkdotfi/common-testnets'
-import { Hash } from '@sparkdotfi/common-universal'
+import { Hash256 } from '@sparkdotfi/common-universal'
 import { type Address, type Hex, WaitForTransactionReceiptReturnType } from 'viem'
 
 export function getMockEthereumClient(contracts: ContractsMap = {}): TestnetClient {
@@ -28,6 +28,6 @@ class MockTestnetClient implements Partial<TestnetClient> {
   }
 
   async assertWriteContract(): Promise<WaitForTransactionReceiptReturnType> {
-    return { transactionHash: Hash.random() } as any
+    return { transactionHash: Hash256.random() } as any
   }
 }

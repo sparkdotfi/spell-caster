@@ -24,5 +24,3 @@ jobs:
       - run: bun typecheck
       
       - run: bun build:action # dry run build
-
-      

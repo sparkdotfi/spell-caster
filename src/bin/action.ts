@@ -2,24 +2,39 @@ import assert from 'node:assert'
 import core from '@actions/core'
 import github from '@actions/github'
 import { createCommentOrUpdate } from '@superactions/comment'
+import { CreateOrUpdateReponse } from '@superactions/comment/dist/github/types'
 import dedent from 'dedent'
 import { markdownTable } from 'markdown-table'
-import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '..'
-import { getConfig } from '../config'
-import { getRequiredGithubInput } from '../config/environments/action'
-import { findPendingSpells } from '../spells/findPendingSpells'
+import { buildActionDependencies } from '../buildDependencies'
+import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '../forkAndExecuteSpell'
+import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
+import { findModifiedSpells } from '../spells/findModifiedSpells'
 
 async function main(): Promise<void> {
-  const config = getConfig(getRequiredGithubInput, process.cwd())
+  const { reportSender, config, logger } = buildActionDependencies()
 
-  const allPendingSpellNames = findPendingSpells(process.cwd())
-  core.info(`Pending spells: ${allPendingSpellNames.join(', ')}`)
+  const modifiedSpellNames = await findModifiedSpells(config.secrets.githubToken, logger)
+  logger.info(`Modified spells: ${modifiedSpellNames.join(', ')}`)
 
-  const results = await Promise.all(allPendingSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
+  if (modifiedSpellNames.length === 0) {
+    return
+  }
 
-  await postGithubComment(results)
+  const forkResults = await Promise.all(modifiedSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
-  core.info(`Results: ${JSON.stringify(results)}`)
+  const { status } = await postGithubComment(forkResults, config.secrets.githubToken)
+
+  logger.info(`Results: ${JSON.stringify(forkResults)}`)
+
+  if (status === 'updated') {
+    return
+  }
+
+  const report = prepareSlackNotification(forkResults)
+
+  if (report) {
+    await reportSender.send([report])
+  }
 }
 
 await main().catch((error) => {
@@ -27,7 +42,10 @@ await main().catch((error) => {
 })
 
 const uniqueAppId = 'spark-spells-action'
-async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<void> {
+async function postGithubComment(
+  results: ForkAndExecuteSpellReturn[],
+  githubToken: string,
+): Promise<CreateOrUpdateReponse> {
   const now = new Date().toISOString()
   const sha = getPrSha()
   const table = [
@@ -43,7 +61,11 @@ async function postGithubComment(results: ForkAndExecuteSpellReturn[]): Promise<
 
   <sub>Deployed from ${sha} on ${now}</sub>
   `
-  await createCommentOrUpdate({ githubToken: core.getInput('github-token'), message, uniqueAppId: uniqueAppId })
+  return await createCommentOrUpdate({
+    githubToken,
+    message,
+    uniqueAppId: uniqueAppId,
+  })
 }
 
 function getPrSha(): string {
