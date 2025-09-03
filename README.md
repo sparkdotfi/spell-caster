@@ -17,6 +17,7 @@ bun src/bin/cli.ts --root ../spark-spell SparkEthereum_20240627
 ## Running as Github Action
 
 Presents results as GitHub PR comment.
+Optionally sends slack message when `SLACK_WEBHOOK_URL` provided.
 
 ```yml
       - name: Spell Caster
@@ -26,6 +27,7 @@ Presents results as GitHub PR comment.
           TENDERLY_API_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
           TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
           TENDERLY_ACCOUNT: ${{ secrets.TENDERLY_USER }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 ```
 
 ## Developing

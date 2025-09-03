@@ -11,7 +11,8 @@
     "build:action": "bun build src/bin/action.ts --outdir=out --target=node"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "mocha": "^11.7.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -20,10 +21,11 @@
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
     "@biomejs/biome": "^1.8.3",
-    "@sparkdotfi/common-nodejs": "0.2.0-20250410.bb651d8-canary",
-    "@sparkdotfi/common-testnets": "0.2.0-20250410.bb651d8-canary",
-    "@sparkdotfi/common-universal": "0.2.0-20250410.bb651d8-canary",
-    "@superactions/comment": "^0.1.1",
+    "@sparkdotfi/common-nodejs": "0.2.0-20250827.4b8d107e",
+    "@sparkdotfi/common-reporters": "0.2.0-20250827.4b8d107e",
+    "@sparkdotfi/common-testnets": "0.2.0-20250827.4b8d107e",
+    "@sparkdotfi/common-universal": "0.2.0-20250829.1df52afb",
+    "@superactions/comment": "^0.1.2",
     "dax-sh": "^0.41.0",
     "dedent": "^1.5.3",
     "fetch-retry": "^6.0.0",
