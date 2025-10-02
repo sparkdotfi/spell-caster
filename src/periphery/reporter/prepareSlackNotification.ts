@@ -7,7 +7,7 @@ export function prepareSlackNotification(results: ForkAndExecuteSpellReturn[], c
     return
   }
 
-  const data = results.flatMap((result) => spellSection(result))
+  const data = results.flatMap(spellSection)
 
   const prUrl = context.payload.pull_request?.html_url
   const prContent = prUrl ? templating.link(prUrl, 'PR URL') : templating.text('')
