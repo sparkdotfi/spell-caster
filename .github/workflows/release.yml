@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - andrzej/add-spell-pr-link
 
 jobs:
   deploy:
@@ -17,7 +17,7 @@ jobs:
 
       - uses: ActionwareIO/branch-push-action@action
         with:
-          branch: action
+          branch: action-test
           files: |
             README.md
             action.yml
