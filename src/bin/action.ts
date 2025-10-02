@@ -30,7 +30,7 @@ async function main(): Promise<void> {
     return
   }
 
-  const report = prepareSlackNotification(forkResults)
+  const report = prepareSlackNotification(forkResults, github.context)
 
   if (report) {
     await reportSender.send([report])
