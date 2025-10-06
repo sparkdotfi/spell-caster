@@ -1,9 +1,18 @@
 import { describe, expect, test } from 'bun:test'
+import { Context } from '@actions/github/lib/context'
 import { templating } from '@sparkdotfi/common-reporters'
 import { ForkAndExecuteSpellReturn } from '../../forkAndExecuteSpell'
 import { prepareSlackNotification } from './prepareSlackNotification'
 
 describe(prepareSlackNotification.name, () => {
+  const mockContext = {
+    payload: {
+      pull_request: {
+        html_url: 'https://pr.example.com',
+      },
+    },
+  } as Context
+
   test('formats two reports', () => {
     const mockResults: ForkAndExecuteSpellReturn[] = [
       {
@@ -22,10 +31,10 @@ describe(prepareSlackNotification.name, () => {
       },
     ]
 
-    const result = prepareSlackNotification(mockResults)
+    const result = prepareSlackNotification(mockResults, mockContext)
 
     expect(result).toEqual({
-      title: 'Spell is ready for review',
+      title: 'Spell PR is ready for review',
       content: [
         templating.text('- TestSpell1 |'),
         templating.link('https://app1.example.com', 'App URL'),
@@ -37,12 +46,13 @@ describe(prepareSlackNotification.name, () => {
         templating.text('|'),
         templating.link('https://fork2.example.com', 'RPC URL'),
         templating.newLine,
+        templating.link('https://pr.example.com', 'PR URL'),
       ],
     })
   })
 
   test('returns undefined if no results', () => {
-    const result = prepareSlackNotification([])
+    const result = prepareSlackNotification([], mockContext)
     expect(result).toBeUndefined()
   })
 })
