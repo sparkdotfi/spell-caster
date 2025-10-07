@@ -132510,14 +132510,16 @@ async function forkAndExecuteSpell(spellName, config) {
 }
 
 // src/periphery/reporter/prepareSlackNotification.ts
-function prepareSlackNotification(results) {
+function prepareSlackNotification(results, context) {
   if (results.length === 0) {
     return;
   }
   const data = results.flatMap(spellSection);
+  const prUrl = context.payload.pull_request?.html_url;
+  const prContent = prUrl ? templating.link(prUrl, "PR URL") : templating.text("");
   return {
-    title: "Spell is ready for review",
-    content: data
+    title: "Spell PR is ready for review",
+    content: [...data, prContent]
   };
 }
 function spellSection(result) {
@@ -132567,7 +132569,7 @@ async function main() {
   if (status === "updated") {
     return;
   }
-  const report = prepareSlackNotification(forkResults);
+  const report = prepareSlackNotification(forkResults, import_github.default.context);
   if (report) {
     await reportSender.send([report]);
   }
