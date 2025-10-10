@@ -1,6 +1,6 @@
 import { CheckedAddress, SparkDomain } from '@sparkdotfi/common-universal'
 import { Chain } from 'viem'
-import { arbitrum, base, gnosis, mainnet, optimism, unichain, avalanche } from 'viem/chains'
+import { arbitrum, avalanche, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
 import { IEnv } from './environment/IEnv'
 
 export interface Config {
