@@ -1,6 +1,6 @@
 import { CheckedAddress, SparkDomain } from '@sparkdotfi/common-universal'
 import { Chain } from 'viem'
-import { arbitrum, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
+import { arbitrum, avalanche, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
 import { IEnv } from './environment/IEnv'
 
 export interface Config {
@@ -67,6 +67,11 @@ export function getConfig(env: IEnv, spellsRepoPath: string): Config {
         name: 'unichain',
         chain: unichain,
         sparkSpellExecutor: CheckedAddress('0xb037C43b433964A2017cd689f535BEb6B0531473'),
+      },
+      [avalanche.id]: {
+        name: 'avalanche',
+        chain: avalanche,
+        sparkSpellExecutor: CheckedAddress('0x7566DEbC906C17338524A414343fA61BcA26A843'),
       },
     },
     deployer: CheckedAddress.ZERO(),
