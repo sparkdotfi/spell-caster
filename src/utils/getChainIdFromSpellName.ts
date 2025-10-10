@@ -25,6 +25,8 @@ export function getChainIdFromSpellName(spellName: string): number {
       return optimism.id
     case 'Unichain':
       return unichain.id
+    case 'Avalanche':
+      return avalanche.id
     default:
       throw new Error(`Unknown chain name: ${name}`)
   }
