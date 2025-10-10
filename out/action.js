@@ -120904,6 +120904,32 @@ var arbitrum = /* @__PURE__ */ defineChain({
     }
   }
 });
+// node_modules/viem/_esm/chains/definitions/avalanche.js
+var avalanche = /* @__PURE__ */ defineChain({
+  id: 43114,
+  name: "Avalanche",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Avalanche",
+    symbol: "AVAX"
+  },
+  rpcUrls: {
+    default: { http: ["https://api.avax.network/ext/bc/C/rpc"] }
+  },
+  blockExplorers: {
+    default: {
+      name: "SnowTrace",
+      url: "https://snowtrace.io",
+      apiUrl: "https://api.snowtrace.io"
+    }
+  },
+  contracts: {
+    multicall3: {
+      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      blockCreated: 11907934
+    }
+  }
+});
 // node_modules/viem/_esm/chains/definitions/base.js
 var sourceId = 1;
 var base = /* @__PURE__ */ defineChain({
@@ -121433,6 +121459,11 @@ function getConfig(env2, spellsRepoPath) {
         name: "unichain",
         chain: unichain,
         sparkSpellExecutor: CheckedAddress("0xb037C43b433964A2017cd689f535BEb6B0531473")
+      },
+      [avalanche.id]: {
+        name: "avalanche",
+        chain: avalanche,
+        sparkSpellExecutor: CheckedAddress("0x7566DEbC906C17338524A414343fA61BcA26A843")
       }
     },
     deployer: CheckedAddress.ZERO(),
@@ -132470,6 +132501,8 @@ function getChainIdFromSpellName(spellName) {
       return optimism.id;
     case "Unichain":
       return unichain.id;
+    case "Avalanche":
+      return avalanche.id;
     default:
       throw new Error(`Unknown chain name: ${name}`);
   }
