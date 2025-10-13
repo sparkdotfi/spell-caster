@@ -25,7 +25,7 @@
     "@sparkdotfi/common-nodejs": "0.2.0-20251013.77f0fb53",
     "@sparkdotfi/common-reporters": "0.2.0-20251013.77f0fb53",
     "@sparkdotfi/common-testnets": "0.2.0-20251013.77f0fb53",
-    "@sparkdotfi/common-universal": "0.2.0-20251013.77f0fb53",
+    "@sparkdotfi/common-universal": "0.2.0-20251013.08e37192-canary",
     "@superactions/comment": "^0.1.2",
     "dax-sh": "^0.41.0",
     "dedent": "^1.5.3",

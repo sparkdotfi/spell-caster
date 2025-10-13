@@ -19,16 +19,16 @@ importers:
         version: 1.9.4
       '@sparkdotfi/common-nodejs':
         specifier: 0.2.0-20251013.77f0fb53
-        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
+        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
       '@sparkdotfi/common-reporters':
         specifier: 0.2.0-20251013.77f0fb53
-        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)
+        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)
       '@sparkdotfi/common-testnets':
         specifier: 0.2.0-20251013.77f0fb53
-        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(mocha@11.7.2)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(mocha@11.7.2)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@sparkdotfi/common-universal':
-        specifier: 0.2.0-20251013.77f0fb53
-        version: 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+        specifier: 0.2.0-20251013.08e37192-canary
+        version: 0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@superactions/comment':
         specifier: ^0.1.2
         version: 0.1.2
@@ -305,8 +305,8 @@ packages:
       viem: ^2.0.0
       zod: ^3.0
 
-  '@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53':
-    resolution: {integrity: sha512-n4eGiPDZsCvr3fDC+LntcFaGjKtC0GVwsE6S0DiF0ItLjrsILr69qPlNnVAA/PtUWaKOf8JquVpPOv2peWSIww==}
+  '@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary':
+    resolution: {integrity: sha512-JXH/NE1HqM0oyuYhw3cMf/0J07wYRv4neBkoJOjAC3w2ntZHwOrB1OwJY4kcdTfIuhRK/Z3U2ifkpZjoEZh1ag==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       bignumber.js: ^9.1.2
@@ -1137,25 +1137,25 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))':
+  '@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))':
     dependencies:
-      '@sparkdotfi/common-universal': 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+      '@sparkdotfi/common-universal': 0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       dotenv: 16.6.1
       uuid: 11.1.0
 
-  '@sparkdotfi/common-reporters@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)':
+  '@sparkdotfi/common-reporters@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)':
     dependencies:
       '@pagerduty/pdjs': 2.2.4
-      '@sparkdotfi/common-universal': 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+      '@sparkdotfi/common-universal': 0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@types/mocha': 10.0.10
       zod: 3.25.76
     transitivePeerDependencies:
       - encoding
 
-  '@sparkdotfi/common-testnets@0.2.0-20251013.77f0fb53(@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(mocha@11.7.2)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
+  '@sparkdotfi/common-testnets@0.2.0-20251013.77f0fb53(@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(mocha@11.7.2)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
-      '@sparkdotfi/common-nodejs': 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
-      '@sparkdotfi/common-universal': 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+      '@sparkdotfi/common-nodejs': 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
+      '@sparkdotfi/common-universal': 0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       execa: 9.6.0
       get-port: 7.1.0
       mocha: 11.7.2
@@ -1164,7 +1164,7 @@ snapshots:
       viem-deal: 2.0.4(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))
       zod: 3.25.76
 
-  '@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
+  '@sparkdotfi/common-universal@0.2.0-20251013.08e37192-canary(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
       bignumber.js: 9.3.1
       chalk: 5.6.2
