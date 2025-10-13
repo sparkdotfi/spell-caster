@@ -29194,7 +29194,7 @@ var init_base = __esm(() => {
 });
 
 // node_modules/viem/_esm/errors/abi.js
-var AbiConstructorNotFoundError, AbiConstructorParamsNotFoundError, AbiDecodingDataSizeTooSmallError, AbiDecodingZeroDataError, AbiEncodingArrayLengthMismatchError, AbiEncodingBytesSizeMismatchError, AbiEncodingLengthMismatchError, AbiErrorSignatureNotFoundError, AbiEventSignatureEmptyTopicsError, AbiEventSignatureNotFoundError, AbiEventNotFoundError, AbiFunctionNotFoundError, AbiFunctionOutputsNotFoundError, AbiItemAmbiguityError, BytesSizeMismatchError, DecodeLogDataMismatch, DecodeLogTopicsMismatch, InvalidAbiEncodingTypeError, InvalidAbiDecodingTypeError, InvalidArrayError, InvalidDefinitionTypeError;
+var AbiConstructorNotFoundError, AbiConstructorParamsNotFoundError, AbiDecodingDataSizeTooSmallError, AbiDecodingZeroDataError, AbiEncodingArrayLengthMismatchError, AbiEncodingBytesSizeMismatchError, AbiEncodingLengthMismatchError, AbiErrorSignatureNotFoundError, AbiEventSignatureEmptyTopicsError, AbiEventSignatureNotFoundError, AbiEventNotFoundError, AbiFunctionNotFoundError, AbiFunctionOutputsNotFoundError, AbiFunctionSignatureNotFoundError, AbiItemAmbiguityError, BytesSizeMismatchError, DecodeLogDataMismatch, DecodeLogTopicsMismatch, InvalidAbiEncodingTypeError, InvalidAbiDecodingTypeError, InvalidArrayError, InvalidDefinitionTypeError;
 var init_abi = __esm(() => {
   init_formatAbiItem2();
   init_size();
@@ -29363,6 +29363,19 @@ var init_abi = __esm(() => {
 `), {
         docsPath,
         name: "AbiFunctionOutputsNotFoundError"
+      });
+    }
+  };
+  AbiFunctionSignatureNotFoundError = class AbiFunctionSignatureNotFoundError extends BaseError2 {
+    constructor(signature, { docsPath }) {
+      super([
+        `Encoded function signature "${signature}" not found on ABI.`,
+        "Make sure you are using the correct ABI and that the function exists on it.",
+        `You can look up the signature here: https://openchain.xyz/signatures?query=${signature}.`
+      ].join(`
+`), {
+        docsPath,
+        name: "AbiFunctionSignatureNotFoundError"
       });
     }
   };
@@ -31786,7 +31799,7 @@ ${prettyStateOverride(stateOverride)}`;
 });
 
 // node_modules/viem/_esm/errors/request.js
-var HttpRequestError, RpcRequestError, TimeoutError;
+var HttpRequestError, RpcRequestError, TimeoutError2;
 var init_request = __esm(() => {
   init_base();
   HttpRequestError = class HttpRequestError extends BaseError2 {
@@ -31855,7 +31868,7 @@ var init_request = __esm(() => {
       this.data = error.data;
     }
   };
-  TimeoutError = class TimeoutError extends BaseError2 {
+  TimeoutError2 = class TimeoutError2 extends BaseError2 {
     constructor({ body, url }) {
       super("The request took too long to respond.", {
         details: "The request timed out.",
@@ -36030,10 +36043,10 @@ var require_common = __commonJS((exports) => {
     url.search = combinedParameters.toString();
     return url;
   }
-  function applyTimeout(init, timeout) {
-    if (!timeout)
+  function applyTimeout(init, timeout3) {
+    if (!timeout3)
       return init;
-    const timer = setTimeout(() => {}, timeout);
+    const timer = setTimeout(() => {}, timeout3);
     return {
       ...init,
       requestTimer: timer
@@ -36051,7 +36064,7 @@ var require_api2 = __commonJS((exports) => {
     if (!apiParameters.endpoint && !apiParameters.url) {
       return partialCall(apiParameters);
     }
-    const types3 = {
+    const types5 = {
       bearer: "Bearer ",
       token: "Token token="
     };
@@ -36061,7 +36074,7 @@ var require_api2 = __commonJS((exports) => {
       ...rest,
       headers: {
         Accept: `application/vnd.pagerduty+json;version=${version4}`,
-        Authorization: `${types3[tokenType]}${token}`,
+        Authorization: `${types5[tokenType]}${token}`,
         ...rest.headers
       }
     };
@@ -37795,7 +37808,7 @@ var require_abi = __commonJS((exports) => {
   }
   exports.AbiFunctionOutputsNotFoundError = AbiFunctionOutputsNotFoundError2;
 
-  class AbiFunctionSignatureNotFoundError extends base_js_1.BaseError {
+  class AbiFunctionSignatureNotFoundError2 extends base_js_1.BaseError {
     constructor(signature, { docsPath: docsPath6 }) {
       super([
         `Encoded function signature "${signature}" not found on ABI.`,
@@ -37808,7 +37821,7 @@ var require_abi = __commonJS((exports) => {
       });
     }
   }
-  exports.AbiFunctionSignatureNotFoundError = AbiFunctionSignatureNotFoundError;
+  exports.AbiFunctionSignatureNotFoundError = AbiFunctionSignatureNotFoundError2;
 
   class AbiItemAmbiguityError2 extends base_js_1.BaseError {
     constructor(x, y2) {
@@ -39516,18 +39529,18 @@ var require_getAbiItem = __commonJS((exports) => {
       const targetParameter = targetParameters[parameterIndex];
       if (sourceParameter.type === "tuple" && targetParameter.type === "tuple" && "components" in sourceParameter && "components" in targetParameter)
         return getAmbiguousTypes3(sourceParameter.components, targetParameter.components, args[parameterIndex]);
-      const types4 = [sourceParameter.type, targetParameter.type];
+      const types6 = [sourceParameter.type, targetParameter.type];
       const ambiguous = (() => {
-        if (types4.includes("address") && types4.includes("bytes20"))
+        if (types6.includes("address") && types6.includes("bytes20"))
           return true;
-        if (types4.includes("address") && types4.includes("string"))
+        if (types6.includes("address") && types6.includes("string"))
           return (0, isAddress_js_1.isAddress)(args[parameterIndex], { strict: false });
-        if (types4.includes("address") && types4.includes("bytes"))
+        if (types6.includes("address") && types6.includes("bytes"))
           return (0, isAddress_js_1.isAddress)(args[parameterIndex], { strict: false });
         return false;
       })();
       if (ambiguous)
-        return types4;
+        return types6;
     }
     return;
   }
@@ -40938,7 +40951,7 @@ var require_request3 = __commonJS((exports) => {
   }
   exports.SocketClosedError = SocketClosedError;
 
-  class TimeoutError2 extends base_js_1.BaseError {
+  class TimeoutError3 extends base_js_1.BaseError {
     constructor({ body, url }) {
       super("The request took too long to respond.", {
         details: "The request timed out.",
@@ -40947,7 +40960,7 @@ var require_request3 = __commonJS((exports) => {
       });
     }
   }
-  exports.TimeoutError = TimeoutError2;
+  exports.TimeoutError = TimeoutError3;
 });
 
 // node_modules/viem/_cjs/errors/rpc.js
@@ -49134,7 +49147,7 @@ var require_createTransport = __commonJS((exports) => {
   exports.createTransport = createTransport2;
   var buildRequest_js_1 = require_buildRequest();
   var uid_js_1 = require_uid();
-  function createTransport2({ key, methods, name, request, retryCount = 3, retryDelay = 150, timeout, type }, value) {
+  function createTransport2({ key, methods, name, request, retryCount = 3, retryDelay = 150, timeout: timeout3, type }, value) {
     const uid2 = (0, uid_js_1.uid)();
     return {
       config: {
@@ -49144,7 +49157,7 @@ var require_createTransport = __commonJS((exports) => {
         request,
         retryCount,
         retryDelay,
-        timeout,
+        timeout: timeout3,
         type
       },
       request: (0, buildRequest_js_1.buildRequest)(request, { methods, retryCount, retryDelay, uid: uid2 }),
@@ -49184,7 +49197,7 @@ var require_fallback = __commonJS((exports) => {
   var createTransport_js_1 = require_createTransport();
   function fallback(transports_, config = {}) {
     const { key = "fallback", name = "Fallback", rank = false, shouldThrow: shouldThrow_ = shouldThrow, retryCount, retryDelay } = config;
-    return ({ chain, pollingInterval = 4000, timeout, ...rest }) => {
+    return ({ chain, pollingInterval = 4000, timeout: timeout3, ...rest }) => {
       let transports = transports_;
       let onResponse = () => {};
       const transport = (0, createTransport_js_1.createTransport)({
@@ -49197,7 +49210,7 @@ var require_fallback = __commonJS((exports) => {
               ...rest,
               chain,
               retryCount: 0,
-              timeout
+              timeout: timeout3
             });
             try {
               const response = await transport2.request({
@@ -49269,12 +49282,12 @@ var require_fallback = __commonJS((exports) => {
     }
     return false;
   }
-  function rankTransports({ chain, interval = 4000, onTransports, ping, sampleCount = 10, timeout = 1000, transports, weights = {} }) {
+  function rankTransports({ chain, interval = 4000, onTransports, ping, sampleCount = 10, timeout: timeout3 = 1000, transports, weights = {} }) {
     const { stability: stabilityWeight = 0.7, latency: latencyWeight = 0.3 } = weights;
     const samples = [];
     const rankTransports_ = async () => {
       const sample = await Promise.all(transports.map(async (transport) => {
-        const transport_ = transport({ chain, retryCount: 0, timeout });
+        const transport_ = transport({ chain, retryCount: 0, timeout: timeout3 });
         const start = Date.now();
         let end;
         let success;
@@ -49335,20 +49348,20 @@ var require_transport = __commonJS((exports) => {
 var require_withTimeout = __commonJS((exports) => {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.withTimeout = withTimeout3;
-  function withTimeout3(fn, { errorInstance = new Error("timed out"), timeout, signal }) {
+  function withTimeout3(fn, { errorInstance = new Error("timed out"), timeout: timeout3, signal }) {
     return new Promise((resolve, reject) => {
       (async () => {
         let timeoutId;
         try {
           const controller = new AbortController;
-          if (timeout > 0) {
+          if (timeout3 > 0) {
             timeoutId = setTimeout(() => {
               if (signal) {
                 controller.abort();
               } else {
                 reject(errorInstance);
               }
-            }, timeout);
+            }, timeout3);
           }
           resolve(await fn({ signal: controller?.signal || null }));
         } catch (err) {
@@ -49392,7 +49405,7 @@ var require_http = __commonJS((exports) => {
   function getHttpRpcClient2(url, options = {}) {
     return {
       async request(params) {
-        const { body, onRequest = options.onRequest, onResponse = options.onResponse, timeout = options.timeout ?? 1e4 } = params;
+        const { body, onRequest = options.onRequest, onResponse = options.onResponse, timeout: timeout3 = options.timeout ?? 1e4 } = params;
         const fetchOptions = {
           ...options.fetchOptions ?? {},
           ...params.fetchOptions ?? {}
@@ -49416,7 +49429,7 @@ var require_http = __commonJS((exports) => {
                 ...headers
               },
               method: method || "POST",
-              signal: signal_ || (timeout > 0 ? signal : null)
+              signal: signal_ || (timeout3 > 0 ? signal : null)
             };
             const request = new Request(url, init);
             const args = await onRequest?.(request, init) ?? { ...init, url };
@@ -49424,7 +49437,7 @@ var require_http = __commonJS((exports) => {
             return response2;
           }, {
             errorInstance: new request_js_1.TimeoutError({ body, url }),
-            timeout,
+            timeout: timeout3,
             signal: true
           });
           if (onResponse)
@@ -49482,7 +49495,7 @@ var require_http2 = __commonJS((exports) => {
     return ({ chain, retryCount: retryCount_, timeout: timeout_ }) => {
       const { batchSize = 1000, wait: wait2 = 0 } = typeof batch === "object" ? batch : {};
       const retryCount = config.retryCount ?? retryCount_;
-      const timeout = timeout_ ?? config.timeout ?? 1e4;
+      const timeout3 = timeout_ ?? config.timeout ?? 1e4;
       const url_ = url || chain?.rpcUrls.default.http[0];
       if (!url_)
         throw new transport_js_1.UrlRequiredError;
@@ -49490,7 +49503,7 @@ var require_http2 = __commonJS((exports) => {
         fetchOptions,
         onRequest: onFetchRequest,
         onResponse: onFetchResponse,
-        timeout
+        timeout: timeout3
       });
       return (0, createTransport_js_1.createTransport)({
         key,
@@ -49527,7 +49540,7 @@ var require_http2 = __commonJS((exports) => {
         },
         retryCount,
         retryDelay,
-        timeout,
+        timeout: timeout3,
         type: "http"
       }, {
         fetchOptions,
@@ -50649,14 +50662,14 @@ var require_socket = __commonJS((exports) => {
               onError?.(error2);
             }
           },
-          requestAsync({ body, timeout = 1e4 }) {
+          requestAsync({ body, timeout: timeout3 = 1e4 }) {
             return (0, withTimeout_js_1.withTimeout)(() => new Promise((onResponse, onError) => this.request({
               body,
               onError,
               onResponse
             })), {
               errorInstance: new request_js_1.TimeoutError({ body, url }),
-              timeout
+              timeout: timeout3
             });
           },
           requests,
@@ -51632,7 +51645,7 @@ var require_receiver2 = __commonJS((exports, module) => {
 // node_modules/ws/lib/sender.js
 var require_sender = __commonJS((exports, module) => {
   var { Duplex } = __require("stream");
-  var { randomFillSync: randomFillSync2 } = __require("crypto");
+  var { randomFillSync } = __require("crypto");
   var PerMessageDeflate = require_permessage_deflate();
   var { EMPTY_BUFFER, kWebSocket, NOOP } = require_constants6();
   var { isBlob, isValidStatusCode } = require_validation();
@@ -51676,7 +51689,7 @@ var require_sender = __commonJS((exports, module) => {
             if (randomPool === undefined) {
               randomPool = Buffer.alloc(RANDOM_POOL_SIZE);
             }
-            randomFillSync2(randomPool, 0, RANDOM_POOL_SIZE);
+            randomFillSync(randomPool, 0, RANDOM_POOL_SIZE);
             randomPoolPointer = 0;
           }
           mask[0] = randomPool[randomPoolPointer++];
@@ -53647,10 +53660,10 @@ var require_compat = __commonJS((exports) => {
     });
     return socketClient;
   }
-  async function webSocketAsync(socketClient, { body, timeout = 1e4 }) {
+  async function webSocketAsync(socketClient, { body, timeout: timeout3 = 1e4 }) {
     return socketClient.requestAsync({
       body,
-      timeout
+      timeout: timeout3
     });
   }
   async function getSocket(url) {
@@ -53686,8 +53699,8 @@ var require_typedData = __commonJS((exports) => {
   exports.InvalidDomainError = InvalidDomainError2;
 
   class InvalidPrimaryTypeError2 extends base_js_1.BaseError {
-    constructor({ primaryType, types: types4 }) {
-      super(`Invalid primary type \`${primaryType}\` must be one of \`${JSON.stringify(Object.keys(types4))}\`.`, {
+    constructor({ primaryType, types: types6 }) {
+      super(`Invalid primary type \`${primaryType}\` must be one of \`${JSON.stringify(Object.keys(types6))}\`.`, {
         docsPath: "/api/glossary/Errors#typeddatainvalidprimarytypeerror",
         metaMessages: ["Check that the primary type is a key in `types`."]
       });
@@ -53720,7 +53733,7 @@ var require_hashTypedData = __commonJS((exports) => {
   var typedData_js_1 = require_typedData2();
   function hashTypedData2(parameters) {
     const { domain = {}, message, primaryType } = parameters;
-    const types4 = {
+    const types6 = {
       EIP712Domain: (0, typedData_js_1.getTypesForEIP712Domain)({ domain }),
       ...parameters.types
     };
@@ -53728,43 +53741,43 @@ var require_hashTypedData = __commonJS((exports) => {
       domain,
       message,
       primaryType,
-      types: types4
+      types: types6
     });
     const parts = ["0x1901"];
     if (domain)
       parts.push(hashDomain2({
         domain,
-        types: types4
+        types: types6
       }));
     if (primaryType !== "EIP712Domain")
       parts.push(hashStruct2({
         data: message,
         primaryType,
-        types: types4
+        types: types6
       }));
     return (0, keccak256_js_1.keccak256)((0, concat_js_1.concat)(parts));
   }
-  function hashDomain2({ domain, types: types4 }) {
+  function hashDomain2({ domain, types: types6 }) {
     return hashStruct2({
       data: domain,
       primaryType: "EIP712Domain",
-      types: types4
+      types: types6
     });
   }
-  function hashStruct2({ data, primaryType, types: types4 }) {
+  function hashStruct2({ data, primaryType, types: types6 }) {
     const encoded = encodeData3({
       data,
       primaryType,
-      types: types4
+      types: types6
     });
     return (0, keccak256_js_1.keccak256)(encoded);
   }
-  function encodeData3({ data, primaryType, types: types4 }) {
+  function encodeData3({ data, primaryType, types: types6 }) {
     const encodedTypes = [{ type: "bytes32" }];
-    const encodedValues = [hashType2({ primaryType, types: types4 })];
-    for (const field of types4[primaryType]) {
+    const encodedValues = [hashType2({ primaryType, types: types6 })];
+    for (const field of types6[primaryType]) {
       const [type, value] = encodeField2({
-        types: types4,
+        types: types6,
         name: field.name,
         type: field.type,
         value: data[field.name]
@@ -53774,37 +53787,37 @@ var require_hashTypedData = __commonJS((exports) => {
     }
     return (0, encodeAbiParameters_js_1.encodeAbiParameters)(encodedTypes, encodedValues);
   }
-  function hashType2({ primaryType, types: types4 }) {
-    const encodedHashType = (0, toHex_js_1.toHex)(encodeType2({ primaryType, types: types4 }));
+  function hashType2({ primaryType, types: types6 }) {
+    const encodedHashType = (0, toHex_js_1.toHex)(encodeType2({ primaryType, types: types6 }));
     return (0, keccak256_js_1.keccak256)(encodedHashType);
   }
-  function encodeType2({ primaryType, types: types4 }) {
+  function encodeType2({ primaryType, types: types6 }) {
     let result = "";
-    const unsortedDeps = findTypeDependencies2({ primaryType, types: types4 });
+    const unsortedDeps = findTypeDependencies2({ primaryType, types: types6 });
     unsortedDeps.delete(primaryType);
     const deps = [primaryType, ...Array.from(unsortedDeps).sort()];
     for (const type of deps) {
-      result += `${type}(${types4[type].map(({ name, type: t2 }) => `${t2} ${name}`).join(",")})`;
+      result += `${type}(${types6[type].map(({ name, type: t2 }) => `${t2} ${name}`).join(",")})`;
     }
     return result;
   }
-  function findTypeDependencies2({ primaryType: primaryType_, types: types4 }, results = new Set) {
+  function findTypeDependencies2({ primaryType: primaryType_, types: types6 }, results = new Set) {
     const match = primaryType_.match(/^\w*/u);
     const primaryType = match?.[0];
-    if (results.has(primaryType) || types4[primaryType] === undefined) {
+    if (results.has(primaryType) || types6[primaryType] === undefined) {
       return results;
     }
     results.add(primaryType);
-    for (const field of types4[primaryType]) {
-      findTypeDependencies2({ primaryType: field.type, types: types4 }, results);
+    for (const field of types6[primaryType]) {
+      findTypeDependencies2({ primaryType: field.type, types: types6 }, results);
     }
     return results;
   }
-  function encodeField2({ types: types4, name, type, value }) {
-    if (types4[type] !== undefined) {
+  function encodeField2({ types: types6, name, type, value }) {
+    if (types6[type] !== undefined) {
       return [
         { type: "bytes32" },
-        (0, keccak256_js_1.keccak256)(encodeData3({ data: value, primaryType: type, types: types4 }))
+        (0, keccak256_js_1.keccak256)(encodeData3({ data: value, primaryType: type, types: types6 }))
       ];
     }
     if (type === "bytes") {
@@ -53819,7 +53832,7 @@ var require_hashTypedData = __commonJS((exports) => {
       const typeValuePairs = value.map((item) => encodeField2({
         name,
         type: parsedType,
-        types: types4,
+        types: types6,
         value: item
       }));
       return [
@@ -53848,7 +53861,7 @@ var require_typedData2 = __commonJS((exports) => {
   var hashTypedData_js_1 = require_hashTypedData();
   var stringify_js_1 = require_stringify();
   function serializeTypedData2(parameters) {
-    const { domain: domain_, message: message_, primaryType, types: types4 } = parameters;
+    const { domain: domain_, message: message_, primaryType, types: types6 } = parameters;
     const normalizeData = (struct, data_) => {
       const data = { ...data_ };
       for (const param of struct) {
@@ -53859,21 +53872,21 @@ var require_typedData2 = __commonJS((exports) => {
       return data;
     };
     const domain = (() => {
-      if (!types4.EIP712Domain)
+      if (!types6.EIP712Domain)
         return {};
       if (!domain_)
         return {};
-      return normalizeData(types4.EIP712Domain, domain_);
+      return normalizeData(types6.EIP712Domain, domain_);
     })();
     const message = (() => {
       if (primaryType === "EIP712Domain")
         return;
-      return normalizeData(types4[primaryType], message_);
+      return normalizeData(types6[primaryType], message_);
     })();
-    return (0, stringify_js_1.stringify)({ domain, message, primaryType, types: types4 });
+    return (0, stringify_js_1.stringify)({ domain, message, primaryType, types: types6 });
   }
   function validateTypedData2(parameters) {
-    const { domain, message, primaryType, types: types4 } = parameters;
+    const { domain, message, primaryType, types: types6 } = parameters;
     const validateData = (struct, data) => {
       for (const param of struct) {
         const { name, type } = param;
@@ -53897,23 +53910,23 @@ var require_typedData2 = __commonJS((exports) => {
               givenSize: (0, size_js_1.size)(value)
             });
         }
-        const struct2 = types4[type];
+        const struct2 = types6[type];
         if (struct2) {
           validateReference2(type);
           validateData(struct2, value);
         }
       }
     };
-    if (types4.EIP712Domain && domain) {
+    if (types6.EIP712Domain && domain) {
       if (typeof domain !== "object")
         throw new typedData_js_1.InvalidDomainError({ domain });
-      validateData(types4.EIP712Domain, domain);
+      validateData(types6.EIP712Domain, domain);
     }
     if (primaryType !== "EIP712Domain") {
-      if (types4[primaryType])
-        validateData(types4[primaryType], message);
+      if (types6[primaryType])
+        validateData(types6[primaryType], message);
       else
-        throw new typedData_js_1.InvalidPrimaryTypeError({ primaryType, types: types4 });
+        throw new typedData_js_1.InvalidPrimaryTypeError({ primaryType, types: types6 });
     }
   }
   function getTypesForEIP712Domain2({ domain }) {
@@ -53948,13 +53961,13 @@ var require_typedData2 = __commonJS((exports) => {
 // node_modules/viem/_cjs/utils/abi/decodeFunctionData.js
 var require_decodeFunctionData = __commonJS((exports) => {
   Object.defineProperty(exports, "__esModule", { value: true });
-  exports.decodeFunctionData = decodeFunctionData;
+  exports.decodeFunctionData = decodeFunctionData2;
   var abi_js_1 = require_abi();
   var slice_js_1 = require_slice();
   var toFunctionSelector_js_1 = require_toFunctionSelector();
   var decodeAbiParameters_js_1 = require_decodeAbiParameters();
   var formatAbiItem_js_1 = require_formatAbiItem2();
-  function decodeFunctionData(parameters) {
+  function decodeFunctionData2(parameters) {
     const { abi: abi2, data } = parameters;
     const signature = (0, slice_js_1.slice)(data, 0, 4);
     const description = abi2.find((x) => x.type === "function" && signature === (0, toFunctionSelector_js_1.toFunctionSelector)((0, formatAbiItem_js_1.formatAbiItem)(x)));
@@ -54048,15 +54061,15 @@ var require_encodePacked = __commonJS((exports) => {
   var pad_js_1 = require_pad();
   var toHex_js_1 = require_toHex();
   var regex_js_1 = require_regex2();
-  function encodePacked2(types4, values) {
-    if (types4.length !== values.length)
+  function encodePacked2(types6, values) {
+    if (types6.length !== values.length)
       throw new abi_js_1.AbiEncodingLengthMismatchError({
-        expectedLength: types4.length,
+        expectedLength: types6.length,
         givenLength: values.length
       });
     const data = [];
-    for (let i3 = 0;i3 < types4.length; i3++) {
-      const type = types4[i3];
+    for (let i3 = 0;i3 < types6.length; i3++) {
+      const type = types6[i3];
       const value = values[i3];
       data.push(encode4(type, value));
     }
@@ -54862,13 +54875,13 @@ var require_recoverTypedDataAddress = __commonJS((exports) => {
   var hashTypedData_js_1 = require_hashTypedData();
   var recoverAddress_js_1 = require_recoverAddress();
   async function recoverTypedDataAddress(parameters) {
-    const { domain, message, primaryType, signature, types: types4 } = parameters;
+    const { domain, message, primaryType, signature, types: types6 } = parameters;
     return (0, recoverAddress_js_1.recoverAddress)({
       hash: (0, hashTypedData_js_1.hashTypedData)({
         domain,
         message,
         primaryType,
-        types: types4
+        types: types6
       }),
       signature
     });
@@ -54907,13 +54920,13 @@ var require_verifyTypedData = __commonJS((exports) => {
   var isAddressEqual_js_1 = require_isAddressEqual();
   var recoverTypedDataAddress_js_1 = require_recoverTypedDataAddress();
   async function verifyTypedData2(parameters) {
-    const { address, domain, message, primaryType, signature, types: types4 } = parameters;
+    const { address, domain, message, primaryType, signature, types: types6 } = parameters;
     return (0, isAddressEqual_js_1.isAddressEqual)((0, getAddress_js_1.getAddress)(address), await (0, recoverTypedDataAddress_js_1.recoverTypedDataAddress)({
       domain,
       message,
       primaryType,
       signature,
-      types: types4
+      types: types6
     }));
   }
 });
@@ -57862,22 +57875,22 @@ var require_abiItem2 = __commonJS((exports) => {
       const targetParameter = targetParameters[parameterIndex];
       if (sourceParameter.type === "tuple" && targetParameter.type === "tuple" && "components" in sourceParameter && "components" in targetParameter)
         return getAmbiguousTypes3(sourceParameter.components, targetParameter.components, args[parameterIndex]);
-      const types4 = [sourceParameter.type, targetParameter.type];
+      const types6 = [sourceParameter.type, targetParameter.type];
       const ambiguous = (() => {
-        if (types4.includes("address") && types4.includes("bytes20"))
+        if (types6.includes("address") && types6.includes("bytes20"))
           return true;
-        if (types4.includes("address") && types4.includes("string"))
+        if (types6.includes("address") && types6.includes("string"))
           return Address.validate(args[parameterIndex], {
             strict: false
           });
-        if (types4.includes("address") && types4.includes("bytes"))
+        if (types6.includes("address") && types6.includes("bytes"))
           return Address.validate(args[parameterIndex], {
             strict: false
           });
         return false;
       })();
       if (ambiguous)
-        return types4;
+        return types6;
     }
     return;
   }
@@ -58857,15 +58870,15 @@ var require_AbiParameters = __commonJS((exports) => {
       return "0x";
     return data;
   }
-  function encodePacked2(types4, values) {
-    if (types4.length !== values.length)
+  function encodePacked2(types6, values) {
+    if (types6.length !== values.length)
       throw new LengthMismatchError2({
-        expectedLength: types4.length,
+        expectedLength: types6.length,
         givenLength: values.length
       });
     const data = [];
-    for (let i3 = 0;i3 < types4.length; i3++) {
-      const type = types4[i3];
+    for (let i3 = 0;i3 < types6.length; i3++) {
+      const type = types6[i3];
       const value = values[i3];
       data.push(encodePacked2.encode(type, value));
     }
@@ -59487,8 +59500,8 @@ var require_verifyTypedData2 = __commonJS((exports) => {
   var hashTypedData_js_1 = require_hashTypedData();
   var verifyHash_js_1 = require_verifyHash2();
   async function verifyTypedData2(client, parameters) {
-    const { address, factory, factoryData, signature, message, primaryType, types: types4, domain, ...callRequest } = parameters;
-    const hash2 = (0, hashTypedData_js_1.hashTypedData)({ message, primaryType, types: types4, domain });
+    const { address, factory, factoryData, signature, message, primaryType, types: types6, domain, ...callRequest } = parameters;
+    const hash2 = (0, hashTypedData_js_1.hashTypedData)({ message, primaryType, types: types6, domain });
     return (0, verifyHash_js_1.verifyHash)(client, {
       address,
       factory,
@@ -59617,14 +59630,14 @@ var require_waitForTransactionReceipt = __commonJS((exports) => {
   var getTransaction_js_1 = require_getTransaction();
   var getTransactionReceipt_js_1 = require_getTransactionReceipt();
   var watchBlockNumber_js_1 = require_watchBlockNumber();
-  async function waitForTransactionReceipt2(client, { confirmations = 1, hash: hash2, onReplaced, pollingInterval = client.pollingInterval, retryCount = 6, retryDelay = ({ count }) => ~~(1 << count) * 200, timeout = 180000 }) {
+  async function waitForTransactionReceipt2(client, { confirmations = 1, hash: hash2, onReplaced, pollingInterval = client.pollingInterval, retryCount = 6, retryDelay = ({ count }) => ~~(1 << count) * 200, timeout: timeout3 = 180000 }) {
     const observerId = (0, stringify_js_1.stringify)(["waitForTransactionReceipt", client.uid, hash2]);
     let transaction;
     let replacedTransaction;
     let receipt;
     let retrying = false;
     const { promise, resolve, reject } = (0, withResolvers_js_1.withResolvers)();
-    const timer = timeout ? setTimeout(() => reject(new transaction_js_1.WaitForTransactionReceiptTimeoutError({ hash: hash2 })), timeout) : undefined;
+    const timer = timeout3 ? setTimeout(() => reject(new transaction_js_1.WaitForTransactionReceiptTimeoutError({ hash: hash2 })), timeout3) : undefined;
     const _unobserve = (0, observe_js_1.observe)(observerId, { onReplaced, resolve, reject }, (emit) => {
       const _unwatch = (0, getAction_js_1.getAction)(client, watchBlockNumber_js_1.watchBlockNumber, "watchBlockNumber")({
         emitMissed: true,
@@ -61100,14 +61113,14 @@ var require_signTypedData = __commonJS((exports) => {
         docsPath: "/docs/actions/wallet/signTypedData"
       });
     const account = (0, parseAccount_js_1.parseAccount)(account_);
-    const types4 = {
+    const types6 = {
       EIP712Domain: (0, typedData_js_1.getTypesForEIP712Domain)({ domain }),
       ...parameters.types
     };
-    (0, typedData_js_1.validateTypedData)({ domain, message, primaryType, types: types4 });
+    (0, typedData_js_1.validateTypedData)({ domain, message, primaryType, types: types6 });
     if (account.signTypedData)
-      return account.signTypedData({ domain, message, primaryType, types: types4 });
-    const typedData = (0, typedData_js_1.serializeTypedData)({ domain, message, primaryType, types: types4 });
+      return account.signTypedData({ domain, message, primaryType, types: types6 });
+    const typedData = (0, typedData_js_1.serializeTypedData)({ domain, message, primaryType, types: types6 });
     return client.request({
       method: "eth_signTypedData_v4",
       params: [account.address, typedData]
@@ -61223,7 +61236,7 @@ var require_webSocket2 = __commonJS((exports) => {
     const { keepAlive, key = "webSocket", methods, name = "WebSocket JSON-RPC", reconnect, retryDelay } = config;
     return ({ chain, retryCount: retryCount_, timeout: timeout_ }) => {
       const retryCount = config.retryCount ?? retryCount_;
-      const timeout = timeout_ ?? config.timeout ?? 1e4;
+      const timeout3 = timeout_ ?? config.timeout ?? 1e4;
       const url_ = url || chain?.rpcUrls.default.webSocket?.[0];
       const wsRpcClientOpts = { keepAlive, reconnect };
       if (!url_)
@@ -61237,7 +61250,7 @@ var require_webSocket2 = __commonJS((exports) => {
           const rpcClient = await (0, webSocket_js_1.getWebSocketRpcClient)(url_, wsRpcClientOpts);
           const { error, result } = await rpcClient.requestAsync({
             body,
-            timeout
+            timeout: timeout3
           });
           if (error)
             throw new request_js_1.RpcRequestError({
@@ -61249,7 +61262,7 @@ var require_webSocket2 = __commonJS((exports) => {
         },
         retryCount,
         retryDelay,
-        timeout,
+        timeout: timeout3,
         type: "webSocket"
       }, {
         getSocket() {
@@ -91110,10 +91123,10 @@ var require_errors5 = __commonJS((exports, module) => {
     err.pluginImpl = pluginImpl;
     return err;
   }
-  function createTimeoutError(msg, timeout2, file) {
+  function createTimeoutError(msg, timeout4, file) {
     const err = new Error(msg);
     err.code = constants2.TIMEOUT;
-    err.timeout = timeout2;
+    err.timeout = timeout4;
     err.file = file;
     return err;
   }
@@ -95101,7 +95114,7 @@ var require_Promise = __commonJS((exports) => {
         parent.timeout(delay);
       } else {
         var timer = setTimeout(function() {
-          _reject(new TimeoutError2("Promise timed out after " + delay + " ms"));
+          _reject(new TimeoutError3("Promise timed out after " + delay + " ms"));
         }, delay);
         me.always(function() {
           clearTimeout(timer);
@@ -95179,14 +95192,14 @@ var require_Promise = __commonJS((exports) => {
   CancellationError.prototype.constructor = Error;
   CancellationError.prototype.name = "CancellationError";
   Promise2.CancellationError = CancellationError;
-  function TimeoutError2(message) {
+  function TimeoutError3(message) {
     this.message = message || "timeout exceeded";
     this.stack = new Error().stack;
   }
-  TimeoutError2.prototype = new Error;
-  TimeoutError2.prototype.constructor = Error;
-  TimeoutError2.prototype.name = "TimeoutError";
-  Promise2.TimeoutError = TimeoutError2;
+  TimeoutError3.prototype = new Error;
+  TimeoutError3.prototype.constructor = Error;
+  TimeoutError3.prototype.name = "TimeoutError";
+  Promise2.TimeoutError = TimeoutError3;
   exports.Promise = Promise2;
 });
 
@@ -95652,10 +95665,10 @@ var require_WorkerHandler = __commonJS((exports, module) => {
       this.terminating = true;
     }
   };
-  WorkerHandler.prototype.terminateAndNotify = function(force, timeout2) {
+  WorkerHandler.prototype.terminateAndNotify = function(force, timeout4) {
     var resolver = Promise2.defer();
-    if (timeout2) {
-      resolver.promise.timeout(timeout2);
+    if (timeout4) {
+      resolver.promise.timeout(timeout4);
     }
     this.terminate(force, function(err, worker) {
       if (err) {
@@ -95868,7 +95881,7 @@ var require_Pool = __commonJS((exports, module) => {
       this.workers.splice(index2, 1);
     }
   };
-  Pool.prototype.terminate = function(force, timeout2) {
+  Pool.prototype.terminate = function(force, timeout4) {
     var me = this;
     this.tasks.forEach(function(task) {
       task.resolver.reject(new Error("Pool terminated"));
@@ -95882,7 +95895,7 @@ var require_Pool = __commonJS((exports, module) => {
     var promises = [];
     var workers = this.workers.slice();
     workers.forEach(function(worker) {
-      var termPromise = worker.terminateAndNotify(force, timeout2).then(removeWorker).always(function() {
+      var termPromise = worker.terminateAndNotify(force, timeout4).then(removeWorker).always(function() {
         me.onTerminateWorker({
           forkArgs: worker.forkArgs,
           forkOpts: worker.forkOpts,
@@ -97888,7 +97901,7 @@ var require_chokidar = __commonJS((exports) => {
       }
       return error || this.closed;
     }
-    _throttle(actionType, path, timeout2) {
+    _throttle(actionType, path, timeout4) {
       if (!this._throttled.has(actionType)) {
         this._throttled.set(actionType, new Map);
       }
@@ -97910,7 +97923,7 @@ var require_chokidar = __commonJS((exports) => {
           clearTimeout(item.timeoutObject);
         return count;
       };
-      timeoutObject = setTimeout(clear, timeout2);
+      timeoutObject = setTimeout(clear, timeout4);
       const thr = { timeoutObject, clear, count: 0 };
       action.set(path, thr);
       return thr;
@@ -98428,8 +98441,8 @@ var require_ast = __commonJS((exports) => {
   exports.AST = undefined;
   var brace_expressions_js_1 = require_brace_expressions();
   var unescape_js_1 = require_unescape();
-  var types4 = new Set(["!", "?", "+", "*", "@"]);
-  var isExtglobType = (c) => types4.has(c);
+  var types6 = new Set(["!", "?", "+", "*", "@"]);
+  var isExtglobType = (c) => types6.has(c);
   var startNoTraversal = "(?!(?:^|/)\\.\\.?(?:$|/))";
   var startNoDot = "(?!\\.)";
   var addPatternStart = new Set(["[", "."]);
@@ -105953,105 +105966,6 @@ function toAlignment(value) {
 // src/buildDependencies.ts
 var import_core2 = __toESM(require_core(), 1);
 
-// node_modules/remeda/dist/chunk-D6FCK2GA.js
-function u(o, n, a) {
-  let t = (r) => o(r, ...n);
-  return a === undefined ? t : Object.assign(t, { lazy: a, lazyArgs: n });
-}
-
-// node_modules/remeda/dist/chunk-WIMGWYZL.js
-function u2(r, n, o) {
-  let a = r.length - n.length;
-  if (a === 0)
-    return r(...n);
-  if (a === 1)
-    return u(r, n, o);
-  throw new Error("Wrong number of arguments");
-}
-
-// node_modules/remeda/dist/chunk-4ZFFLFWV.js
-function d(...e) {
-  return u2(l, e);
-}
-function l(e, a) {
-  let t = { ...e };
-  for (let [n, o] of Object.entries(t))
-    a(o, n, e) && delete t[n];
-  return t;
-}
-
-// node_modules/remeda/dist/chunk-3ZJAREUD.js
-function i(...e) {
-  return u2(o, e);
-}
-function o(e, r) {
-  let a = {};
-  for (let [n, u3] of Object.entries(e)) {
-    let l2 = r(u3, n, e);
-    a[n] = l2;
-  }
-  return a;
-}
-
-// node_modules/remeda/dist/chunk-567G5ZXL.js
-function a(...n) {
-  return u2(i2, n);
-}
-function i2(n) {
-  let e = typeof n[0] == "bigint" ? 0n : 0;
-  for (let r of n)
-    e += r;
-  return e;
-}
-
-// node_modules/remeda/dist/chunk-5S4PYKVY.js
-function t(...e) {
-  return u2(u3, e);
-}
-var u3 = (e, o2) => ({ ...e, ...o2 });
-
-// node_modules/remeda/dist/chunk-BZNENX2T.js
-function r(o2) {
-  if (typeof o2 != "object" || o2 === null)
-    return false;
-  let e = Object.getPrototypeOf(o2);
-  return e === null || e === Object.prototype;
-}
-
-// node_modules/remeda/dist/chunk-PDQFB3TV.js
-function D(...e) {
-  return u2(s, e);
-}
-function s(e, t2) {
-  let r2 = { ...e, ...t2 };
-  for (let n in t2) {
-    if (!(n in e))
-      continue;
-    let { [n]: i3 } = e;
-    if (!r(i3))
-      continue;
-    let { [n]: c } = t2;
-    r(c) && (r2[n] = s(i3, c));
-  }
-  return r2;
-}
-
-// node_modules/remeda/dist/chunk-XMLUDZIW.js
-function n(e) {
-  return !!e;
-}
-
-// node_modules/remeda/dist/chunk-OP5ZF26D.js
-function p(...e) {
-  return u2(y, e);
-}
-function y(e) {
-  let r2 = {};
-  for (let [n2, o2] of Object.entries(e))
-    r2[o2] = n2;
-  return r2;
-}
-
 // node_modules/zod/lib/index.mjs
 var util;
 (function(util2) {
@@ -106142,8 +106056,8 @@ var ZodParsedType = util.arrayToEnum([
   "set"
 ]);
 var getParsedType = (data) => {
-  const t2 = typeof data;
-  switch (t2) {
+  const t = typeof data;
+  switch (t) {
     case "undefined":
       return ZodParsedType.undefined;
     case "string":
@@ -106244,10 +106158,10 @@ class ZodError extends Error {
           fieldErrors._errors.push(mapper(issue));
         } else {
           let curr = fieldErrors;
-          let i3 = 0;
-          while (i3 < issue.path.length) {
-            const el = issue.path[i3];
-            const terminal = i3 === issue.path.length - 1;
+          let i = 0;
+          while (i < issue.path.length) {
+            const el = issue.path[i];
+            const terminal = i === issue.path.length - 1;
             if (!terminal) {
               curr[el] = curr[el] || { _errors: [] };
             } else {
@@ -106255,7 +106169,7 @@ class ZodError extends Error {
               curr[el]._errors.push(mapper(issue));
             }
             curr = curr[el];
-            i3++;
+            i++;
           }
         }
       }
@@ -106459,12 +106373,12 @@ class ParseStatus {
   }
   static mergeArray(status, results) {
     const arrayValue = [];
-    for (const s2 of results) {
-      if (s2.status === "aborted")
+    for (const s of results) {
+      if (s.status === "aborted")
         return INVALID;
-      if (s2.status === "dirty")
+      if (s.status === "dirty")
         status.dirty();
-      arrayValue.push(s2.value);
+      arrayValue.push(s.value);
     }
     return { status: status.value, value: arrayValue };
   }
@@ -108245,14 +108159,14 @@ class ZodArray extends ZodType {
       }
     }
     if (ctx.common.async) {
-      return Promise.all([...ctx.data].map((item, i3) => {
-        return def.type._parseAsync(new ParseInputLazyPath(ctx, item, ctx.path, i3));
+      return Promise.all([...ctx.data].map((item, i) => {
+        return def.type._parseAsync(new ParseInputLazyPath(ctx, item, ctx.path, i));
       })).then((result2) => {
         return ParseStatus.mergeArray(status, result2);
       });
     }
-    const result = [...ctx.data].map((item, i3) => {
-      return def.type._parseSync(new ParseInputLazyPath(ctx, item, ctx.path, i3));
+    const result = [...ctx.data].map((item, i) => {
+      return def.type._parseSync(new ParseInputLazyPath(ctx, item, ctx.path, i));
     });
     return ParseStatus.mergeArray(status, result);
   }
@@ -108765,17 +108679,17 @@ class ZodDiscriminatedUnion extends ZodType {
     });
   }
 }
-function mergeValues(a2, b) {
-  const aType = getParsedType(a2);
+function mergeValues(a, b) {
+  const aType = getParsedType(a);
   const bType = getParsedType(b);
-  if (a2 === b) {
-    return { valid: true, data: a2 };
+  if (a === b) {
+    return { valid: true, data: a };
   } else if (aType === ZodParsedType.object && bType === ZodParsedType.object) {
     const bKeys = util.objectKeys(b);
-    const sharedKeys = util.objectKeys(a2).filter((key) => bKeys.indexOf(key) !== -1);
-    const newObj = { ...a2, ...b };
+    const sharedKeys = util.objectKeys(a).filter((key) => bKeys.indexOf(key) !== -1);
+    const newObj = { ...a, ...b };
     for (const key of sharedKeys) {
-      const sharedValue = mergeValues(a2[key], b[key]);
+      const sharedValue = mergeValues(a[key], b[key]);
       if (!sharedValue.valid) {
         return { valid: false };
       }
@@ -108783,12 +108697,12 @@ function mergeValues(a2, b) {
     }
     return { valid: true, data: newObj };
   } else if (aType === ZodParsedType.array && bType === ZodParsedType.array) {
-    if (a2.length !== b.length) {
+    if (a.length !== b.length) {
       return { valid: false };
     }
     const newArray = [];
-    for (let index = 0;index < a2.length; index++) {
-      const itemA = a2[index];
+    for (let index = 0;index < a.length; index++) {
+      const itemA = a[index];
       const itemB = b[index];
       const sharedValue = mergeValues(itemA, itemB);
       if (!sharedValue.valid) {
@@ -108797,8 +108711,8 @@ function mergeValues(a2, b) {
       newArray.push(sharedValue.data);
     }
     return { valid: true, data: newArray };
-  } else if (aType === ZodParsedType.date && bType === ZodParsedType.date && +a2 === +b) {
-    return { valid: true, data: a2 };
+  } else if (aType === ZodParsedType.date && bType === ZodParsedType.date && +a === +b) {
+    return { valid: true, data: a };
   } else {
     return { valid: false };
   }
@@ -109097,7 +109011,7 @@ class ZodSet extends ZodType {
       }
       return { status: status.value, value: parsedSet };
     }
-    const elements = [...ctx.data.values()].map((item, i3) => valueType._parse(new ParseInputLazyPath(ctx, item, ctx.path, i3)));
+    const elements = [...ctx.data.values()].map((item, i) => valueType._parse(new ParseInputLazyPath(ctx, item, ctx.path, i)));
     if (ctx.common.async) {
       return Promise.all(elements).then((elements2) => finalizeSet(elements2));
     } else {
@@ -109787,9 +109701,9 @@ class ZodPipeline extends ZodType {
       }
     }
   }
-  static create(a2, b) {
+  static create(a, b) {
     return new ZodPipeline({
-      in: a2,
+      in: a,
       out: b,
       typeName: ZodFirstPartyTypeKind.ZodPipeline
     });
@@ -109819,26 +109733,26 @@ ZodReadonly.create = (type, params) => {
   });
 };
 function cleanParams(params, data) {
-  const p2 = typeof params === "function" ? params(data) : typeof params === "string" ? { message: params } : params;
-  const p22 = typeof p2 === "string" ? { message: p2 } : p2;
-  return p22;
+  const p = typeof params === "function" ? params(data) : typeof params === "string" ? { message: params } : params;
+  const p2 = typeof p === "string" ? { message: p } : p;
+  return p2;
 }
 function custom(check, _params = {}, fatal) {
   if (check)
     return ZodAny.create().superRefine((data, ctx) => {
       var _a, _b;
-      const r2 = check(data);
-      if (r2 instanceof Promise) {
-        return r2.then((r3) => {
+      const r = check(data);
+      if (r instanceof Promise) {
+        return r.then((r2) => {
           var _a2, _b2;
-          if (!r3) {
+          if (!r2) {
             const params = cleanParams(_params, data);
             const _fatal = (_b2 = (_a2 = params.fatal) !== null && _a2 !== undefined ? _a2 : fatal) !== null && _b2 !== undefined ? _b2 : true;
             ctx.addIssue({ code: "custom", ...params, fatal: _fatal });
           }
         });
       }
-      if (!r2) {
+      if (!r) {
         const params = cleanParams(_params, data);
         const _fatal = (_b = (_a = params.fatal) !== null && _a !== undefined ? _a : fatal) !== null && _b !== undefined ? _b : true;
         ctx.addIssue({ code: "custom", ...params, fatal: _fatal });
@@ -110056,6 +109970,137 @@ var z = /* @__PURE__ */ Object.freeze({
   quotelessJson,
   ZodError
 });
+
+// node_modules/@sparkdotfi/common-universal/dist/httpClient/errors.js
+class HttpError extends Error {
+  constructor(method, url, status, textResult) {
+    super(`Failed ${method} ${url}: ${status} - ${textResult}`);
+    Object.defineProperty(this, "method", {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: method
+    });
+    Object.defineProperty(this, "url", {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: url
+    });
+    Object.defineProperty(this, "status", {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: status
+    });
+    Object.defineProperty(this, "textResult", {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: textResult
+    });
+    this.name = "HttpError";
+  }
+}
+var methodSchema = z.union([z.literal("GET"), z.literal("POST"), z.literal("DELETE")]);
+// node_modules/remeda/dist/chunk-D6FCK2GA.js
+function u(o, n, a) {
+  let t = (r) => o(r, ...n);
+  return a === undefined ? t : Object.assign(t, { lazy: a, lazyArgs: n });
+}
+
+// node_modules/remeda/dist/chunk-WIMGWYZL.js
+function u2(r, n, o) {
+  let a = r.length - n.length;
+  if (a === 0)
+    return r(...n);
+  if (a === 1)
+    return u(r, n, o);
+  throw new Error("Wrong number of arguments");
+}
+
+// node_modules/remeda/dist/chunk-4ZFFLFWV.js
+function d(...e) {
+  return u2(l, e);
+}
+function l(e, a) {
+  let t = { ...e };
+  for (let [n, o] of Object.entries(t))
+    a(o, n, e) && delete t[n];
+  return t;
+}
+
+// node_modules/remeda/dist/chunk-3ZJAREUD.js
+function i(...e) {
+  return u2(o, e);
+}
+function o(e, r) {
+  let a = {};
+  for (let [n, u3] of Object.entries(e)) {
+    let l2 = r(u3, n, e);
+    a[n] = l2;
+  }
+  return a;
+}
+
+// node_modules/remeda/dist/chunk-567G5ZXL.js
+function a(...n) {
+  return u2(i2, n);
+}
+function i2(n) {
+  let e = typeof n[0] == "bigint" ? 0n : 0;
+  for (let r of n)
+    e += r;
+  return e;
+}
+
+// node_modules/remeda/dist/chunk-5S4PYKVY.js
+function t(...e) {
+  return u2(u3, e);
+}
+var u3 = (e, o2) => ({ ...e, ...o2 });
+
+// node_modules/remeda/dist/chunk-BZNENX2T.js
+function r(o2) {
+  if (typeof o2 != "object" || o2 === null)
+    return false;
+  let e = Object.getPrototypeOf(o2);
+  return e === null || e === Object.prototype;
+}
+
+// node_modules/remeda/dist/chunk-PDQFB3TV.js
+function D(...e) {
+  return u2(s, e);
+}
+function s(e, t2) {
+  let r2 = { ...e, ...t2 };
+  for (let n in t2) {
+    if (!(n in e))
+      continue;
+    let { [n]: i3 } = e;
+    if (!r(i3))
+      continue;
+    let { [n]: c } = t2;
+    r(c) && (r2[n] = s(i3, c));
+  }
+  return r2;
+}
+
+// node_modules/remeda/dist/chunk-XMLUDZIW.js
+function n(e) {
+  return !!e;
+}
+
+// node_modules/remeda/dist/chunk-OP5ZF26D.js
+function p(...e) {
+  return u2(y, e);
+}
+function y(e) {
+  let r2 = {};
+  for (let [n2, o2] of Object.entries(e))
+    r2[o2] = n2;
+  return r2;
+}
 
 // node_modules/@sparkdotfi/common-universal/dist/assert/AssertionError.js
 class AssertionError extends Error {
@@ -111334,12 +111379,16 @@ async function retry({ fn, delay, shouldRetry: _shouldRetry, maxAttempts, logger
   const shouldRetry = _shouldRetry ?? (() => true);
   let attempt = 0;
   let lastError;
-  while (attempt++ < maxAttempts) {
+  while (true) {
+    attempt++;
     try {
       return await fn();
     } catch (_e) {
       const error = _e;
       lastError = error;
+      if (attempt >= maxAttempts) {
+        break;
+      }
       if (!shouldRetry(error)) {
         logger.debug("Should not retry. Throwing:", error);
         throw error;
@@ -111356,39 +111405,9 @@ function exponentialBackoff(duration) {
   return (attempt) => UnixDuration.fromDurationLike(duration).times(2 ** attempt);
 }
 retry.exponentialBackoff = exponentialBackoff;
-
-// node_modules/@sparkdotfi/common-universal/dist/httpClient/errors.js
-class HttpError extends Error {
-  constructor(method, url, status, textResult) {
-    super(`Failed ${method} ${url}: ${status} - ${textResult}`);
-    Object.defineProperty(this, "method", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: method
-    });
-    Object.defineProperty(this, "url", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: url
-    });
-    Object.defineProperty(this, "status", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: status
-    });
-    Object.defineProperty(this, "textResult", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: textResult
-    });
-    this.name = "HttpError";
-  }
-}
-var methodSchema = z.union([z.literal("GET"), z.literal("POST"), z.literal("DELETE")]);
+retry.lazy = (options) => {
+  return (fn) => () => retry({ ...options, fn });
+};
 
 // node_modules/@sparkdotfi/common-universal/dist/httpClient/fetchRetry.js
 function fetchRetry(options) {
@@ -111491,26 +111510,36 @@ var applicationJsonHeader = {
 function isZodString(schema) {
   return schema instanceof ZodString || schema._def.typeName === "ZodString";
 }
-// node_modules/@sparkdotfi/common-universal/dist/formatters/numberFormatter.js
-function formatWithUnderscores(value) {
-  if (!value.isFinite()) {
-    return "infinity";
+// node_modules/@sparkdotfi/common-universal/dist/async/timeout.js
+function timeout(args) {
+  const { fn, timeout: timeout2, error } = args;
+  const timeoutDuration = UnixDuration.fromDurationLike(timeout2);
+  let rejectTimeoutId;
+  function rejectTimeoutPromise() {
+    return new Promise((_, reject) => {
+      rejectTimeoutId = setTimeout(() => {
+        reject(error ?? new TimeoutError(timeoutDuration));
+      }, Number(timeoutDuration.toMilliseconds()));
+    });
   }
-  return value.toFormat({ decimalSeparator: ".", groupSeparator: "_", groupSize: 3 });
+  return Promise.race([
+    rejectTimeoutPromise(),
+    fn().finally(() => {
+      assert(rejectTimeoutId !== undefined);
+      clearTimeout(rejectTimeoutId);
+    })
+  ]);
 }
-var numberFormatterCompact = new Intl.NumberFormat("en-US", {
-  notation: "compact",
-  compactDisplay: "short",
-  maximumFractionDigits: 2
-});
-function formatCompact(value) {
-  return numberFormatterCompact.format(value.toNumber());
-}
-var numberFormatter = {
-  withUnderscores: formatWithUnderscores,
-  compact: formatCompact
-};
 
+class TimeoutError extends Error {
+  constructor(timeout2) {
+    super(`Timed out after ${timeout2.format()}`);
+    this.name = "TimeoutError";
+  }
+}
+timeout.lazy = (options) => {
+  return (fn) => () => timeout({ ...options, fn });
+};
 // node_modules/bignumber.js/bignumber.mjs
 var isNumeric = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
 var mathceil = Math.ceil;
@@ -112968,6 +112997,186 @@ function bigNumberify(value) {
   assert(!result.isNaN(), `Value argument: ${value} cannot be converted to BigNumber.`);
   return result;
 }
+// node_modules/@sparkdotfi/common-universal/dist/random/Random.js
+class Random {
+  next() {
+    return Math.random();
+  }
+  nextInt(_min, _max) {
+    const min = Math.ceil(_min);
+    const max = Math.floor(_max);
+    return Math.floor(this.next() * (max - min + 1)) + min;
+  }
+}
+// node_modules/@sparkdotfi/common-universal/dist/math/hexUtils.js
+function randomPartialHex(length, random = new Random) {
+  const hexChars = "0123456789abcdef";
+  let hexString = "";
+  for (let i3 = 0;i3 < length; i3++) {
+    const randomIndex = random.nextInt(0, hexChars.length - 1);
+    hexString += hexChars[randomIndex];
+  }
+  return hexString;
+}
+function asciiToHex(input) {
+  const charMap = {
+    a: "a",
+    b: "b",
+    c: "c",
+    d: "d",
+    e: "e",
+    f: "f",
+    g: "6",
+    h: "6",
+    i: "1",
+    j: "1",
+    k: "1",
+    l: "1",
+    m: "6",
+    n: "6",
+    o: "0",
+    p: "6",
+    q: "9",
+    r: "2",
+    s: "5",
+    t: "7",
+    u: "6",
+    v: "7",
+    w: "7",
+    x: "9",
+    y: "7",
+    z: "2",
+    "0": "0",
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7",
+    "8": "8",
+    "9": "9",
+    "-": "0"
+  };
+  return input.split("").map((char) => {
+    const hex = charMap[char.toLowerCase()];
+    assert(hex, `Invalid character: ${char}`);
+    return hex;
+  }).join("");
+}
+// node_modules/@sparkdotfi/common-universal/dist/time/timestamp/timestampLikeToMs.js
+function timestampLikeToMs(value) {
+  if (UnixTimestamp.isInstance(value)) {
+    return value.toMilliseconds();
+  }
+  if ("milliseconds" in value) {
+    return unitToBigInt(value.milliseconds);
+  }
+  const secondsAsBigInt = unitToBigInt(value.seconds);
+  assert(secondsAsBigInt <= YEAR_3000_TIMESTAMP_IN_SECONDS, "Value should be less than or equal to 3000-01-01T00:00:00.000Z. Probably you passed milliseconds instead of seconds.");
+  return secondsAsBigInt * 1000n;
+}
+function unitToBigInt(value) {
+  const valueAsBigNumber = bigNumberify(value);
+  assert(!valueAsBigNumber.dp(), "Value should not have decimal points in its representation");
+  const result = BigInt(valueAsBigNumber.toFixed());
+  assert(result >= 0, "Value should be greater than or equal to 0");
+  return result;
+}
+var YEAR_3000_TIMESTAMP_IN_SECONDS = Math.floor(new Date("3000-01-01T00:00:00.000Z").getTime() / 1000);
+
+// node_modules/@sparkdotfi/common-universal/dist/time/timestamp/UnixTimestamp.js
+class UnixTimestampClass {
+  constructor(value) {
+    Object.defineProperty(this, "milliseconds", {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    this.milliseconds = timestampLikeToMs(value);
+  }
+  plus(duration) {
+    const durationMs = durationLikeToMs(duration);
+    return UnixTimestamp({ milliseconds: this.toMilliseconds() + durationMs });
+  }
+  minus(duration) {
+    const durationMs = durationLikeToMs(duration);
+    const result = this.toMilliseconds() - durationMs;
+    assert(result >= 0, `Cannot sub duration (${durationMs}ms) to UnixTimestamp (${this.toMilliseconds()}ms) - result below zero`);
+    return UnixTimestamp({ milliseconds: result });
+  }
+  since(other) {
+    return UnixDuration({ milliseconds: Number(this.toMilliseconds() - timestampLikeToMs(other)) });
+  }
+  until(other) {
+    return UnixDuration({ milliseconds: Number(timestampLikeToMs(other) - this.toMilliseconds()) });
+  }
+  gt(value) {
+    return this.milliseconds > timestampLikeToMs(value);
+  }
+  gte(value) {
+    return this.milliseconds >= timestampLikeToMs(value);
+  }
+  lt(value) {
+    return this.milliseconds < timestampLikeToMs(value);
+  }
+  lte(value) {
+    return this.milliseconds <= timestampLikeToMs(value);
+  }
+  eq(value) {
+    return this.milliseconds === timestampLikeToMs(value);
+  }
+  toSeconds() {
+    return this.milliseconds / 1000n;
+  }
+  toMilliseconds() {
+    return this.milliseconds;
+  }
+  toDate() {
+    return new Date(Number(this.toMilliseconds()));
+  }
+  static now() {
+    return UnixTimestamp.fromDate(new Date);
+  }
+  static fromDate(date) {
+    return UnixTimestamp({ milliseconds: date.getTime() });
+  }
+  static fromString(dateString) {
+    return UnixTimestamp.fromDate(new Date(dateString));
+  }
+  static fromTimestampLike(value) {
+    return UnixTimestamp({ milliseconds: timestampLikeToMs(value) });
+  }
+  static isInstance(value) {
+    return value instanceof UnixTimestampClass;
+  }
+}
+function UnixTimestampFunction(value) {
+  return new UnixTimestampClass(value);
+}
+Object.setPrototypeOf(UnixTimestampFunction, UnixTimestampClass);
+UnixTimestampFunction.prototype = UnixTimestampClass.prototype;
+var UnixTimestamp = Object.assign(UnixTimestampFunction, UnixTimestampClass);
+// node_modules/@sparkdotfi/common-universal/dist/formatters/numberFormatter.js
+function formatWithUnderscores(value) {
+  if (!value.isFinite()) {
+    return "infinity";
+  }
+  return value.toFormat({ decimalSeparator: ".", groupSeparator: "_", groupSize: 3 });
+}
+var numberFormatterCompact = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  compactDisplay: "short",
+  maximumFractionDigits: 2
+});
+function formatCompact(value) {
+  return numberFormatterCompact.format(value.toNumber());
+}
+var numberFormatter = {
+  withUnderscores: formatWithUnderscores,
+  compact: formatCompact
+};
 
 // node_modules/viem/_esm/utils/getAction.js
 function getAction(client, actionFn, name) {
@@ -115267,7 +115476,7 @@ function shouldRetry(error) {
 }
 
 // node_modules/viem/_esm/clients/transports/createTransport.js
-function createTransport({ key, methods, name, request, retryCount = 3, retryDelay = 150, timeout, type }, value) {
+function createTransport({ key, methods, name, request, retryCount = 3, retryDelay = 150, timeout: timeout2, type }, value) {
   const uid2 = uid();
   return {
     config: {
@@ -115277,7 +115486,7 @@ function createTransport({ key, methods, name, request, retryCount = 3, retryDel
       request,
       retryCount,
       retryDelay,
-      timeout,
+      timeout: timeout2,
       type
     },
     request: buildRequest(request, { methods, retryCount, retryDelay, uid: uid2 }),
@@ -115307,20 +115516,20 @@ init_createBatchScheduler();
 init_request();
 
 // node_modules/viem/_esm/utils/promise/withTimeout.js
-function withTimeout(fn, { errorInstance = new Error("timed out"), timeout, signal }) {
+function withTimeout(fn, { errorInstance = new Error("timed out"), timeout: timeout2, signal }) {
   return new Promise((resolve, reject) => {
     (async () => {
       let timeoutId;
       try {
         const controller = new AbortController;
-        if (timeout > 0) {
+        if (timeout2 > 0) {
           timeoutId = setTimeout(() => {
             if (signal) {
               controller.abort();
             } else {
               reject(errorInstance);
             }
-          }, timeout);
+          }, timeout2);
         }
         resolve(await fn({ signal: controller?.signal || null }));
       } catch (err) {
@@ -115351,7 +115560,7 @@ var idCache = /* @__PURE__ */ createIdStore();
 function getHttpRpcClient(url, options = {}) {
   return {
     async request(params) {
-      const { body, onRequest = options.onRequest, onResponse = options.onResponse, timeout = options.timeout ?? 1e4 } = params;
+      const { body, onRequest = options.onRequest, onResponse = options.onResponse, timeout: timeout2 = options.timeout ?? 1e4 } = params;
       const fetchOptions = {
         ...options.fetchOptions ?? {},
         ...params.fetchOptions ?? {}
@@ -115375,15 +115584,15 @@ function getHttpRpcClient(url, options = {}) {
               ...headers
             },
             method: method || "POST",
-            signal: signal_ || (timeout > 0 ? signal : null)
+            signal: signal_ || (timeout2 > 0 ? signal : null)
           };
           const request = new Request(url, init);
           const args = await onRequest?.(request, init) ?? { ...init, url };
           const response2 = await fetch(args.url ?? url, args);
           return response2;
         }, {
-          errorInstance: new TimeoutError({ body, url }),
-          timeout,
+          errorInstance: new TimeoutError2({ body, url }),
+          timeout: timeout2,
           signal: true
         });
         if (onResponse)
@@ -115414,7 +115623,7 @@ function getHttpRpcClient(url, options = {}) {
       } catch (err) {
         if (err instanceof HttpRequestError)
           throw err;
-        if (err instanceof TimeoutError)
+        if (err instanceof TimeoutError2)
           throw err;
         throw new HttpRequestError({
           body,
@@ -115432,7 +115641,7 @@ function http(url, config = {}) {
   return ({ chain, retryCount: retryCount_, timeout: timeout_ }) => {
     const { batchSize = 1000, wait: wait2 = 0 } = typeof batch === "object" ? batch : {};
     const retryCount = config.retryCount ?? retryCount_;
-    const timeout = timeout_ ?? config.timeout ?? 1e4;
+    const timeout2 = timeout_ ?? config.timeout ?? 1e4;
     const url_ = url || chain?.rpcUrls.default.http[0];
     if (!url_)
       throw new UrlRequiredError;
@@ -115440,7 +115649,7 @@ function http(url, config = {}) {
       fetchOptions,
       onRequest: onFetchRequest,
       onResponse: onFetchResponse,
-      timeout
+      timeout: timeout2
     });
     return createTransport({
       key,
@@ -115477,7 +115686,7 @@ function http(url, config = {}) {
       },
       retryCount,
       retryDelay,
-      timeout,
+      timeout: timeout2,
       type: "http"
     }, {
       fetchOptions,
@@ -116499,6 +116708,26 @@ function getTypesForEIP712Domain({ domain }) {
 function validateReference(type) {
   if (type === "address" || type === "bool" || type === "string" || type.startsWith("bytes") || type.startsWith("uint") || type.startsWith("int"))
     throw new InvalidStructTypeError({ type });
+}
+
+// node_modules/viem/_esm/utils/abi/decodeFunctionData.js
+init_abi();
+init_slice();
+init_toFunctionSelector();
+init_decodeAbiParameters();
+init_formatAbiItem2();
+function decodeFunctionData(parameters) {
+  const { abi: abi2, data } = parameters;
+  const signature = slice(data, 0, 4);
+  const description = abi2.find((x) => x.type === "function" && signature === toFunctionSelector(formatAbiItem2(x)));
+  if (!description)
+    throw new AbiFunctionSignatureNotFoundError(signature, {
+      docsPath: "/docs/contract/decodeFunctionData"
+    });
+  return {
+    functionName: description.name,
+    args: "inputs" in description && description.inputs && description.inputs.length > 0 ? decodeAbiParameters(description.inputs, slice(data, 4)) : undefined
+  };
 }
 
 // node_modules/viem/_esm/utils/index.js
@@ -118981,7 +119210,7 @@ async function waitForTransactionReceipt(client, {
   pollingInterval = client.pollingInterval,
   retryCount = 6,
   retryDelay = ({ count }) => ~~(1 << count) * 200,
-  timeout = 180000
+  timeout: timeout2 = 180000
 }) {
   const observerId = stringify(["waitForTransactionReceipt", client.uid, hash2]);
   let transaction;
@@ -118989,7 +119218,7 @@ async function waitForTransactionReceipt(client, {
   let receipt;
   let retrying = false;
   const { promise, resolve, reject } = withResolvers();
-  const timer = timeout ? setTimeout(() => reject(new WaitForTransactionReceiptTimeoutError({ hash: hash2 })), timeout) : undefined;
+  const timer = timeout2 ? setTimeout(() => reject(new WaitForTransactionReceiptTimeoutError({ hash: hash2 })), timeout2) : undefined;
   const _unobserve = observe(observerId, { onReplaced, resolve, reject }, (emit) => {
     const _unwatch = getAction(client, watchBlockNumber, "watchBlockNumber")({
       emitMissed: true,
@@ -120453,7 +120682,58 @@ function BaseNumberFunction(value) {
 Object.setPrototypeOf(BaseNumberFunction, BaseNumberClass);
 BaseNumberFunction.prototype = BaseNumberClass.prototype;
 var BaseNumber = Object.assign(BaseNumberFunction, BaseNumberClass);
+// node_modules/@sparkdotfi/common-universal/dist/types/CheckedAddress.js
+function CheckedAddress(value) {
+  if (!isAddress(value)) {
+    throw new Error(`Invalid address: ${value}`);
+  }
+  return getAddress(value);
+}
+CheckedAddress.random = (asciiPrefix = "", random) => {
+  const constantAddressPrefix = "00000000";
+  const hexPrefix = asciiToHex(asciiPrefix);
+  const postfixLength = 40 - hexPrefix.length - constantAddressPrefix.length;
+  assert(postfixLength >= 0, `Prefix too long: ${asciiPrefix}`);
+  const address = `${constantAddressPrefix}${hexPrefix}${randomPartialHex(postfixLength, random)}`;
+  return CheckedAddress(`0x${address}`);
+};
+CheckedAddress.formatShort = (address) => {
+  return `0x${address.slice(2, 6)}...${address.slice(-4)}`;
+};
+CheckedAddress.ZERO = () => CheckedAddress("0x0000000000000000000000000000000000000000");
+CheckedAddress.EEEE = () => CheckedAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+CheckedAddress.ALICE = () => CheckedAddress("0xa11ce00000000000000000000000000000000000");
+// node_modules/@sparkdotfi/common-universal/dist/types/Hex.js
+function Hex(hex, { allowEmpty = false } = {}) {
+  if (allowEmpty && hex === "0x") {
+    return hex;
+  }
+  assert(hex.match(/^0x[0-9a-fA-F]+$/), `Invalid hex: ${hex}`);
+  return hex;
+}
+Hex.random = (ascii = "", length = 64, random) => {
+  const constantHexPrefix = "deadbeef";
+  assert(ascii.length <= length - constantHexPrefix.length, `Ascii prefix too long: ${ascii}`);
+  assert(length >= constantHexPrefix.length, `Total length too short: ${length}`);
+  return Hex(`0x${constantHexPrefix}${asciiToHex(ascii)}${randomPartialHex(length - ascii.length - constantHexPrefix.length, random)}`);
+};
+
+// node_modules/@sparkdotfi/common-universal/dist/types/Hash256.js
+function Hash256(hash2) {
+  assert(hash2.match(/^0x[0-9a-fA-F]{64}$/), `Invalid hash: ${hash2}`);
+  return hash2;
+}
+Hash256.random = (ascii = "", random) => {
+  return Hash256(Hex.random(ascii, 64, random));
+};
+Hash256.fromText = (text) => {
+  return Hash256(keccak256(toHex(text)));
+};
+Hash256.formatShort = (hash2) => {
+  return `${hash2.slice(0, 8)}...${hash2.slice(-8)}`;
+};
 // node_modules/@sparkdotfi/common-universal/dist/types/Percentage.js
+var PERCENTAGE_PRECISION = new bignumber_default(100);
 var BIPS_PRECISION = new bignumber_default(1e4);
 var operationOptions = {
   allowLessThan0: true,
@@ -120489,6 +120769,10 @@ class PercentageClass {
   static fromBips(value_) {
     const value = numberLikeToBigNumber(value_);
     return Percentage(value.div(BIPS_PRECISION));
+  }
+  static fromPercentagePoints(value_) {
+    const value = numberLikeToBigNumber(value_);
+    return Percentage(value.div(PERCENTAGE_PRECISION), { allowMoreThan1: true, allowLessThan0: true });
   }
   static min(...values) {
     assert(values.length > 0, "Requires at least 1 arg");
@@ -120599,6 +120883,22 @@ class PercentageClass {
   toFormat(format) {
     return this.value.toFormat(format);
   }
+  formatAsPercentagePoints() {
+    return this.value.times(PERCENTAGE_PRECISION).toFormat({
+      decimalSeparator: ".",
+      suffix: "%",
+      groupSeparator: "_",
+      groupSize: 3
+    });
+  }
+  formatAsBips() {
+    return this.toBips().toFormat({
+      decimalSeparator: ".",
+      suffix: "bps",
+      groupSeparator: "_",
+      groupSize: 3
+    });
+  }
   toFraction(maxDenominator) {
     return this.value.toFraction(maxDenominator);
   }
@@ -120636,124 +120936,6 @@ function PercentageFunction(value, params) {
 Object.setPrototypeOf(PercentageFunction, PercentageClass);
 PercentageFunction.prototype = PercentageClass.prototype;
 var Percentage = Object.assign(PercentageFunction, PercentageClass);
-// node_modules/@sparkdotfi/common-universal/dist/random/Random.js
-class Random {
-  next() {
-    return Math.random();
-  }
-  nextInt(_min, _max) {
-    const min = Math.ceil(_min);
-    const max = Math.floor(_max);
-    return Math.floor(this.next() * (max - min + 1)) + min;
-  }
-}
-// node_modules/@sparkdotfi/common-universal/dist/math/hexUtils.js
-function randomPartialHex(length, random = new Random) {
-  const hexChars = "0123456789abcdef";
-  let hexString = "";
-  for (let i3 = 0;i3 < length; i3++) {
-    const randomIndex = random.nextInt(0, hexChars.length - 1);
-    hexString += hexChars[randomIndex];
-  }
-  return hexString;
-}
-function asciiToHex(input) {
-  const charMap = {
-    a: "a",
-    b: "b",
-    c: "c",
-    d: "d",
-    e: "e",
-    f: "f",
-    g: "6",
-    h: "6",
-    i: "1",
-    j: "1",
-    k: "1",
-    l: "1",
-    m: "6",
-    n: "6",
-    o: "0",
-    p: "6",
-    q: "9",
-    r: "2",
-    s: "5",
-    t: "7",
-    u: "6",
-    v: "7",
-    w: "7",
-    x: "9",
-    y: "7",
-    z: "2",
-    "0": "0",
-    "1": "1",
-    "2": "2",
-    "3": "3",
-    "4": "4",
-    "5": "5",
-    "6": "6",
-    "7": "7",
-    "8": "8",
-    "9": "9",
-    "-": "0"
-  };
-  return input.split("").map((char) => {
-    const hex = charMap[char.toLowerCase()];
-    assert(hex, `Invalid character: ${char}`);
-    return hex;
-  }).join("");
-}
-
-// node_modules/@sparkdotfi/common-universal/dist/types/CheckedAddress.js
-function CheckedAddress(value) {
-  if (!isAddress(value)) {
-    throw new Error(`Invalid address: ${value}`);
-  }
-  return getAddress(value);
-}
-CheckedAddress.random = (asciiPrefix = "", random) => {
-  const constantAddressPrefix = "00000000";
-  const hexPrefix = asciiToHex(asciiPrefix);
-  const postfixLength = 40 - hexPrefix.length - constantAddressPrefix.length;
-  assert(postfixLength >= 0, `Prefix too long: ${asciiPrefix}`);
-  const address = `${constantAddressPrefix}${hexPrefix}${randomPartialHex(postfixLength, random)}`;
-  return CheckedAddress(`0x${address}`);
-};
-CheckedAddress.formatShort = (address) => {
-  return `0x${address.slice(2, 6)}...${address.slice(-4)}`;
-};
-CheckedAddress.ZERO = () => CheckedAddress("0x0000000000000000000000000000000000000000");
-CheckedAddress.EEEE = () => CheckedAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-CheckedAddress.ALICE = () => CheckedAddress("0xa11ce00000000000000000000000000000000000");
-// node_modules/@sparkdotfi/common-universal/dist/types/Hex.js
-function Hex(hex, { allowEmpty = false } = {}) {
-  if (allowEmpty && hex === "0x") {
-    return hex;
-  }
-  assert(hex.match(/^0x[0-9a-fA-F]+$/), `Invalid hex: ${hex}`);
-  return hex;
-}
-Hex.random = (ascii = "", length = 64, random) => {
-  const constantHexPrefix = "deadbeef";
-  assert(ascii.length <= length - constantHexPrefix.length, `Ascii prefix too long: ${ascii}`);
-  assert(length >= constantHexPrefix.length, `Total length too short: ${length}`);
-  return Hex(`0x${constantHexPrefix}${asciiToHex(ascii)}${randomPartialHex(length - ascii.length - constantHexPrefix.length, random)}`);
-};
-
-// node_modules/@sparkdotfi/common-universal/dist/types/Hash256.js
-function Hash256(hash2) {
-  assert(hash2.match(/^0x[0-9a-fA-F]{64}$/), `Invalid hash: ${hash2}`);
-  return hash2;
-}
-Hash256.random = (ascii = "", random) => {
-  return Hash256(Hex.random(ascii, 64, random));
-};
-Hash256.fromText = (text) => {
-  return Hash256(keccak256(toHex(text)));
-};
-Hash256.formatShort = (hash2) => {
-  return `${hash2.slice(0, 8)}...${hash2.slice(-8)}`;
-};
 // node_modules/viem/_esm/accounts/generatePrivateKey.js
 init_secp256k1();
 init_toHex();
@@ -121275,105 +121457,12 @@ var domainToChain = {
   worldchain,
   optimism,
   unichain,
+  avalanche,
   sepolia,
   baseSepolia
 };
 var domainToChainId = i(domainToChain, (chain) => chain.id);
 var chainIdToDomain = p(domainToChainId);
-// node_modules/@sparkdotfi/common-universal/dist/time/timestamp/timestampLikeToMs.js
-function timestampLikeToMs(value) {
-  if (UnixTimestamp.isInstance(value)) {
-    return value.toMilliseconds();
-  }
-  if ("milliseconds" in value) {
-    return unitToBigInt(value.milliseconds);
-  }
-  const secondsAsBigInt = unitToBigInt(value.seconds);
-  assert(secondsAsBigInt <= YEAR_3000_TIMESTAMP_IN_SECONDS, "Value should be less than or equal to 3000-01-01T00:00:00.000Z. Probably you passed milliseconds instead of seconds.");
-  return secondsAsBigInt * 1000n;
-}
-function unitToBigInt(value) {
-  const valueAsBigNumber = bigNumberify(value);
-  assert(!valueAsBigNumber.dp(), "Value should not have decimal points in its representation");
-  const result = BigInt(valueAsBigNumber.toFixed());
-  assert(result >= 0, "Value should be greater than or equal to 0");
-  return result;
-}
-var YEAR_3000_TIMESTAMP_IN_SECONDS = Math.floor(new Date("3000-01-01T00:00:00.000Z").getTime() / 1000);
-
-// node_modules/@sparkdotfi/common-universal/dist/time/timestamp/UnixTimestamp.js
-class UnixTimestampClass {
-  constructor(value) {
-    Object.defineProperty(this, "milliseconds", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    this.milliseconds = timestampLikeToMs(value);
-  }
-  plus(duration) {
-    const durationMs = durationLikeToMs(duration);
-    return UnixTimestamp({ milliseconds: this.toMilliseconds() + durationMs });
-  }
-  minus(duration) {
-    const durationMs = durationLikeToMs(duration);
-    const result = this.toMilliseconds() - durationMs;
-    assert(result >= 0, `Cannot sub duration (${durationMs}ms) to UnixTimestamp (${this.toMilliseconds()}ms) - result below zero`);
-    return UnixTimestamp({ milliseconds: result });
-  }
-  since(other) {
-    return UnixDuration({ milliseconds: Number(this.toMilliseconds() - timestampLikeToMs(other)) });
-  }
-  until(other) {
-    return UnixDuration({ milliseconds: Number(timestampLikeToMs(other) - this.toMilliseconds()) });
-  }
-  gt(value) {
-    return this.milliseconds > timestampLikeToMs(value);
-  }
-  gte(value) {
-    return this.milliseconds >= timestampLikeToMs(value);
-  }
-  lt(value) {
-    return this.milliseconds < timestampLikeToMs(value);
-  }
-  lte(value) {
-    return this.milliseconds <= timestampLikeToMs(value);
-  }
-  eq(value) {
-    return this.milliseconds === timestampLikeToMs(value);
-  }
-  toSeconds() {
-    return this.milliseconds / 1000n;
-  }
-  toMilliseconds() {
-    return this.milliseconds;
-  }
-  toDate() {
-    return new Date(Number(this.toMilliseconds()));
-  }
-  static now() {
-    return UnixTimestamp.fromDate(new Date);
-  }
-  static fromDate(date) {
-    return UnixTimestamp({ milliseconds: date.getTime() });
-  }
-  static fromString(dateString) {
-    return UnixTimestamp.fromDate(new Date(dateString));
-  }
-  static fromTimestampLike(value) {
-    return UnixTimestamp({ milliseconds: timestampLikeToMs(value) });
-  }
-  static isInstance(value) {
-    return value instanceof UnixTimestampClass;
-  }
-}
-function UnixTimestampFunction(value) {
-  return new UnixTimestampClass(value);
-}
-Object.setPrototypeOf(UnixTimestampFunction, UnixTimestampClass);
-UnixTimestampFunction.prototype = UnixTimestampClass.prototype;
-var UnixTimestamp = Object.assign(UnixTimestampFunction, UnixTimestampClass);
 // node_modules/@sparkdotfi/common-universal/dist/viem/extractRevert/traceTransaction.js
 async function traceTransaction(client, { hash: hash2 }) {
   return await client.request({
@@ -121383,35 +121472,71 @@ async function traceTransaction(client, { hash: hash2 }) {
 }
 // node_modules/@sparkdotfi/common-universal/dist/viem/extractRevert/extractRevertReasonFromTrace.js
 function extractRevertReasonFromTrace(trace, abi2 = []) {
-  const errorMessages = trace.filter((t2) => !!t2.error && t2.result?.output).map((t2) => {
+  const revertReasons = trace.filter((t2) => !!t2.error && t2.result?.output).map((t2) => {
     try {
-      return decodeErrorResult({ abi: abi2, data: t2.result?.output });
+      return {
+        result: decodeErrorResult({ abi: abi2, data: t2.result?.output }),
+        contractAddress: t2.action.to,
+        input: t2.action.input
+      };
     } catch {
       return;
     }
   }).filter(n).map((e) => {
-    if (typeof e === "string") {
-      return e;
+    if (typeof e.result === "string") {
+      return {
+        message: e.result,
+        contractAddress: e.contractAddress,
+        input: e.input
+      };
     }
-    const args = (e.args ?? []).join(" ");
-    if (e.errorName === "Error") {
-      return args;
+    const args = (e.result.args ?? []).join(" ");
+    if (e.result.errorName === "Error") {
+      return { message: args, input: e.input, contractAddress: e.contractAddress };
     }
-    return `${e.errorName}: ${args}`;
+    return {
+      message: `${e.result.errorName}: ${args}`,
+      contractAddress: e.contractAddress,
+      input: e.input
+    };
   });
-  const sorted = errorMessages.sort((a2, b) => b.length - a2.length);
-  const finalErrorMessage = sorted[0];
-  const errorTypes = trace.filter((t2) => !!t2.error).map((t2) => t2.error);
-  const finalErrorType = errorTypes[0];
-  if (finalErrorMessage) {
-    return finalErrorMessage;
+  const sorted = revertReasons.sort((a2, b) => b.message.length - a2.message.length);
+  const finalRevertReason = sorted[0];
+  if (finalRevertReason) {
+    return {
+      message: finalRevertReason.message,
+      contractAddress: finalRevertReason.contractAddress,
+      functionData: getFunctionData({
+        abi: abi2,
+        data: finalRevertReason.input
+      })
+    };
   }
-  if (finalErrorType && finalErrorType !== "Reverted") {
-    return finalErrorType;
+  const failedTraces = trace.filter((t2) => !!t2.error).map((t2) => ({
+    message: t2.error,
+    contractAddress: t2.action.to,
+    input: t2.action.input
+  }));
+  const finalFailedTrace = failedTraces[0];
+  if (finalFailedTrace && finalFailedTrace.message !== "Reverted") {
+    return {
+      message: finalFailedTrace.message,
+      contractAddress: finalFailedTrace.contractAddress,
+      functionData: getFunctionData({
+        abi: abi2,
+        data: finalFailedTrace.input
+      })
+    };
   }
   return;
 }
-
+function getFunctionData(parameters) {
+  try {
+    return decodeFunctionData(parameters);
+  } catch {
+    return;
+  }
+}
 // node_modules/@sparkdotfi/common-universal/dist/viem/extractRevert/tryExtractTransactionRevertReason.js
 async function tryExtractTransactionRevertReason({ client, hash: hash2, abi: abi2 = [] }) {
   const trace = await traceTransaction(client, { hash: hash2 });
@@ -121501,6 +121626,7 @@ var templating = {
   newLine: text(`
 `)
 };
+
 // node_modules/@sparkdotfi/common-reporters/dist/console/ConsoleReporter.js
 class ConsoleReporter {
   constructor(logger, logFunctionName) {
@@ -121683,6 +121809,72 @@ function buildActionDependencies() {
 
 // src/forkAndExecuteSpell.ts
 import assert7 from "node:assert";
+
+// node_modules/@sparkdotfi/common-testnets/dist/helpers/getRandomChainId.js
+function getRandomChainId() {
+  const uniquePostfix = Math.floor(Math.random() * longestSafePostfix);
+  const paddedPostfix = uniquePostfix.toString().padStart(longestSafePostfix.toString().length, "0");
+  return Number.parseInt(`7357${paddedPostfix}`);
+}
+var longestSafePostfix = 99999;
+// node_modules/@sparkdotfi/common-testnets/dist/nodes/anvil/AnvilClient.js
+var import_viem_deal = __toESM(require_lib7(), 1);
+
+// node_modules/@sparkdotfi/common-testnets/dist/nodes/extendWithTestnetHelpers.js
+function extendWithTestnetHelpers(creationArgs) {
+  return (c) => {
+    let baselineSnapshotId = undefined;
+    return {
+      async baselineSnapshot() {
+        assert(baselineSnapshotId === undefined, "baseline snapshot already created");
+        baselineSnapshotId = await c.snapshot();
+      },
+      async revertToBaseline() {
+        assert(baselineSnapshotId !== undefined, "baseline snapshot not created");
+        baselineSnapshotId = await c.revert(baselineSnapshotId);
+      },
+      hasBaselineSnapshot() {
+        return baselineSnapshotId !== undefined;
+      },
+      async assertWriteContract(args) {
+        const txHash = Hash256(await c.writeContract(args));
+        const receipt = await c.waitForTransactionReceipt({
+          hash: txHash
+        });
+        await creationArgs.onBlock({ forkChainId: creationArgs.forkChainId });
+        const reason = await tryExtractTransactionRevertReason({
+          client: c,
+          abi: args.abi,
+          hash: txHash
+        }) ?? { message: "unknown reason" };
+        const summaryText = `${args.functionName ?? ""} ${reason.message} -- ${txHash}`;
+        assert(receipt.status === "success", `Transaction failed: ${summaryText}`);
+        return receipt;
+      },
+      async assertSendTransaction(args) {
+        assert(args.abi === undefined, "assertSendTransaction called with contract call by accident");
+        const txHash = Hash256(await c.sendTransaction(args));
+        const receipt = await c.waitForTransactionReceipt({
+          hash: txHash
+        });
+        await creationArgs.onBlock({ forkChainId: creationArgs.forkChainId });
+        const reason = await tryExtractTransactionRevertReason({
+          client: c,
+          hash: txHash
+        }) ?? { message: "unknown reason" };
+        assert(receipt.status === "success", `Transaction failed: ${reason.message} -- ${txHash}`);
+        return receipt;
+      }
+    };
+  };
+}
+
+// node_modules/@sparkdotfi/common-testnets/dist/nodes/anvil/AnvilClient.js
+var timeout3 = Number(UnixDuration({ seconds: 30 }).toMilliseconds());
+// node_modules/@sparkdotfi/common-nodejs/dist/env/getEnv.js
+var import_dotenv = __toESM(require_main2(), 1);
+// node_modules/@sparkdotfi/common-nodejs/dist/env/getForcedEnv.js
+var import_dotenv2 = __toESM(require_main2(), 1);
 // node_modules/uuid/dist/esm/stringify.js
 var byteToHex = [];
 for (let i3 = 0;i3 < 256; ++i3) {
@@ -121733,55 +121925,6 @@ function v4(options, buf, offset) {
   return unsafeStringify(rnds);
 }
 var v4_default = v4;
-// node_modules/@sparkdotfi/common-testnets/dist/nodes/extendWithTestnetHelpers.js
-function extendWithTestnetHelpers(creationArgs) {
-  return (c) => {
-    let baselineSnapshotId = undefined;
-    return {
-      async baselineSnapshot() {
-        assert(baselineSnapshotId === undefined, "baseline snapshot already created");
-        baselineSnapshotId = await c.snapshot();
-      },
-      async revertToBaseline() {
-        assert(baselineSnapshotId !== undefined, "baseline snapshot not created");
-        baselineSnapshotId = await c.revert(baselineSnapshotId);
-      },
-      hasBaselineSnapshot() {
-        return baselineSnapshotId !== undefined;
-      },
-      async assertWriteContract(args) {
-        const txHash = Hash256(await c.writeContract(args));
-        const receipt = await c.waitForTransactionReceipt({
-          hash: txHash
-        });
-        await creationArgs.onBlock({ forkChainId: creationArgs.forkChainId });
-        const reason = await tryExtractTransactionRevertReason({
-          client: c,
-          abi: args.abi,
-          hash: txHash
-        }) ?? "unknown reason";
-        const summaryText = `${args.functionName ?? ""} ${reason} -- ${txHash}`;
-        assert(receipt.status === "success", `Transaction failed: ${summaryText}`);
-        return receipt;
-      },
-      async assertSendTransaction(args) {
-        assert(args.abi === undefined, "assertSendTransaction called with contract call by accident");
-        const txHash = Hash256(await c.sendTransaction(args));
-        const receipt = await c.waitForTransactionReceipt({
-          hash: txHash
-        });
-        await creationArgs.onBlock({ forkChainId: creationArgs.forkChainId });
-        const reason = await tryExtractTransactionRevertReason({
-          client: c,
-          hash: txHash
-        }) ?? "unknown reason";
-        assert(receipt.status === "success", `Transaction failed: ${reason} -- ${txHash}`);
-        return receipt;
-      }
-    };
-  };
-}
-
 // node_modules/@sparkdotfi/common-testnets/dist/nodes/tenderly/TenderlyClient.js
 function getTenderlyClient(args) {
   return createTestClient({
@@ -121936,20 +122079,6 @@ var createVnetSchema = z.object({
     url: z.string()
   }))
 });
-// node_modules/@sparkdotfi/common-testnets/dist/nodes/anvil/AnvilClient.js
-var import_viem_deal = __toESM(require_lib7(), 1);
-var timeout = Number(UnixDuration({ seconds: 30 }).toMilliseconds());
-// node_modules/@sparkdotfi/common-nodejs/dist/env/getEnv.js
-var import_dotenv = __toESM(require_main2(), 1);
-// node_modules/@sparkdotfi/common-nodejs/dist/env/getForcedEnv.js
-var import_dotenv2 = __toESM(require_main2(), 1);
-// node_modules/@sparkdotfi/common-testnets/dist/helpers/getRandomChainId.js
-function getRandomChainId() {
-  const uniquePostfix = Math.floor(Math.random() * longestSafePostfix);
-  const paddedPostfix = uniquePostfix.toString().padStart(longestSafePostfix.toString().length, "0");
-  return Number.parseInt(`7357${paddedPostfix}`);
-}
-var longestSafePostfix = 99999;
 // node_modules/@sparkdotfi/common-testnets/dist/test-utils/createTestnetForTestSuite.js
 var import_mocha = __toESM(require_mocha(), 1);
 // src/periphery/forge/index.ts
@@ -126943,7 +127072,7 @@ var symbols = {
   writable: Symbol.for("dax.writableStream"),
   readable: Symbol.for("dax.readableStream")
 };
-var TimeoutError2 = class extends Error {
+var TimeoutError3 = class extends Error {
   constructor(message) {
     super(message);
   }
@@ -130716,8 +130845,8 @@ var RequestBuilder = class {
   }
   fetch() {
     return makeRequest(this.#getClonedState()).catch((err) => {
-      if (err instanceof TimeoutError2) {
-        Error.captureStackTrace(err, TimeoutError2);
+      if (err instanceof TimeoutError3) {
+        Error.captureStackTrace(err, TimeoutError3);
       }
       return Promise.reject(err);
     });
@@ -131025,7 +131154,7 @@ var RequestResponse = class {
     try {
       return await action();
     } catch (err) {
-      if (err instanceof TimeoutError2) {
+      if (err instanceof TimeoutError3) {
         Error.captureStackTrace(err);
       }
       throw err;
@@ -131087,9 +131216,9 @@ async function makeRequest(state) {
     if (state.timeout == null) {
       return;
     }
-    const timeout2 = state.timeout;
+    const timeout4 = state.timeout;
     const controller = new AbortController;
-    const timeoutId = setTimeout(() => controller.abort(new TimeoutError2(`Request timed out after ${formatMillis(timeout2)}.`)), timeout2);
+    const timeoutId = setTimeout(() => controller.abort(new TimeoutError3(`Request timed out after ${formatMillis(timeout4)}.`)), timeout4);
     return {
       controller,
       clearTimeout() {
