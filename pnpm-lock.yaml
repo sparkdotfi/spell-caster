@@ -18,17 +18,17 @@ importers:
         specifier: ^1.8.3
         version: 1.9.4
       '@sparkdotfi/common-nodejs':
-        specifier: 0.2.0-20250827.4b8d107e
-        version: 0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
+        specifier: 0.2.0-20251013.77f0fb53
+        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
       '@sparkdotfi/common-reporters':
-        specifier: 0.2.0-20250827.4b8d107e
-        version: 0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)
+        specifier: 0.2.0-20251013.77f0fb53
+        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)
       '@sparkdotfi/common-testnets':
-        specifier: 0.2.0-20250827.4b8d107e
-        version: 0.2.0-20250827.4b8d107e(@sparkdotfi/common-nodejs@0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+        specifier: 0.2.0-20251013.77f0fb53
+        version: 0.2.0-20251013.77f0fb53(@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(mocha@11.7.2)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@sparkdotfi/common-universal':
-        specifier: 0.2.0-20250829.1df52afb
-        version: 0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+        specifier: 0.2.0-20251013.77f0fb53
+        version: 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@superactions/comment':
         specifier: ^0.1.2
         version: 0.1.2
@@ -280,32 +280,33 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@sparkdotfi/common-nodejs@0.2.0-20250827.4b8d107e':
-    resolution: {integrity: sha512-GVk71vZ1rYPF5bqXmSn/5YbDfjSxxh9f5WqJcyIqF4sVDQJUa/3TQBHiplDK4DFo7LHAJszhd1VhACtYw+orVw==}
+  '@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53':
+    resolution: {integrity: sha512-uecxiIfsugLl/iqJJQImrGhjjlXtPFyxktrmJHttdEDeuwf391XObZcd3HIhe/88lMk4ffcZBEuoVIhelVgCbA==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@sparkdotfi/common-universal': '*'
 
-  '@sparkdotfi/common-reporters@0.2.0-20250827.4b8d107e':
-    resolution: {integrity: sha512-Ttm4h4NEKZD4CO6AX4dZaP2S7hTam8dqwUpYVyVK2OESwM6Jr3ra+n/EitVUED1p2sr3Jo4CDMmvrHntJjmFqA==}
+  '@sparkdotfi/common-reporters@0.2.0-20251013.77f0fb53':
+    resolution: {integrity: sha512-YlZoL0RM8H9a3xB9thW7zguqjC1+LfvyYhqh4Tifg/GAPqPbbbP4b/hKCwgCnHfT6ODY47iLFJOXTKhBOyMUmw==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@sparkdotfi/common-universal': '*'
       '@types/mocha': ^10.0.10
       zod: ^3.0
 
-  '@sparkdotfi/common-testnets@0.2.0-20250827.4b8d107e':
-    resolution: {integrity: sha512-YTw2sVQGoebuRRE8zZ73qdX2ShM3ViQTrhkMM41jgzWAWnuSsduVzFQ/7/zq5a66Y9cNYpvFAC2neV/IPNOIcw==}
+  '@sparkdotfi/common-testnets@0.2.0-20251013.77f0fb53':
+    resolution: {integrity: sha512-MsmnbOW3psqLSk4u70XRTTDepiEdAlwHg6fghlGmAsI2bYsbCo0YoaTtokgYCWGDt8ZGvKFGDRH8ogopTO+sCA==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@sparkdotfi/common-nodejs': '*'
       '@sparkdotfi/common-universal': '*'
+      mocha: ^10.0
       remeda: ^2.0.0
       viem: ^2.0.0
       zod: ^3.0
 
-  '@sparkdotfi/common-universal@0.2.0-20250829.1df52afb':
-    resolution: {integrity: sha512-0z5v7jxRmXfVYdzESKznSGH8rbAJknIUP5Cc/gAHb1rWc2TVbESwnfHYiMJrPFuYDKlRD0Fpjy+kVsgLCgg6vg==}
+  '@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53':
+    resolution: {integrity: sha512-n4eGiPDZsCvr3fDC+LntcFaGjKtC0GVwsE6S0DiF0ItLjrsILr69qPlNnVAA/PtUWaKOf8JquVpPOv2peWSIww==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       bignumber.js: ^9.1.2
@@ -389,8 +390,8 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
-  chalk@5.6.0:
-    resolution: {integrity: sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==}
+  chalk@5.6.2:
+    resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   chokidar@4.0.3:
@@ -687,8 +688,8 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  pretty-ms@9.2.0:
-    resolution: {integrity: sha512-4yf0QO/sllf/1zbZWYnvWw3NxCQwLXKzIj0G849LSufP15BXKM0rbD2Z3wVnkMfjdn/CB0Dpp444gYAACdsplg==}
+  pretty-ms@9.3.0:
+    resolution: {integrity: sha512-gjVS5hOP+M3wMm5nmNOucbIrqudzs9v/57bWRHQWLYklXqoXKrVfYW2W9+glfGsqtPgpiz5WwyEEB+ksXIx3gQ==}
     engines: {node: '>=18'}
 
   randombytes@2.1.0:
@@ -1136,39 +1137,40 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@sparkdotfi/common-nodejs@0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))':
+  '@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))':
     dependencies:
-      '@sparkdotfi/common-universal': 0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+      '@sparkdotfi/common-universal': 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       dotenv: 16.6.1
       uuid: 11.1.0
 
-  '@sparkdotfi/common-reporters@0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)':
+  '@sparkdotfi/common-reporters@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(@types/mocha@10.0.10)(zod@3.25.76)':
     dependencies:
       '@pagerduty/pdjs': 2.2.4
-      '@sparkdotfi/common-universal': 0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+      '@sparkdotfi/common-universal': 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       '@types/mocha': 10.0.10
       zod: 3.25.76
     transitivePeerDependencies:
       - encoding
 
-  '@sparkdotfi/common-testnets@0.2.0-20250827.4b8d107e(@sparkdotfi/common-nodejs@0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
+  '@sparkdotfi/common-testnets@0.2.0-20251013.77f0fb53(@sparkdotfi/common-nodejs@0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)))(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))(mocha@11.7.2)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
-      '@sparkdotfi/common-nodejs': 0.2.0-20250827.4b8d107e(@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
-      '@sparkdotfi/common-universal': 0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
+      '@sparkdotfi/common-nodejs': 0.2.0-20251013.77f0fb53(@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76))
+      '@sparkdotfi/common-universal': 0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)
       execa: 9.6.0
       get-port: 7.1.0
+      mocha: 11.7.2
       remeda: 2.30.0
       viem: 2.33.3(typescript@5.9.2)(zod@3.25.76)
       viem-deal: 2.0.4(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))
       zod: 3.25.76
 
-  '@sparkdotfi/common-universal@0.2.0-20250829.1df52afb(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
+  '@sparkdotfi/common-universal@0.2.0-20251013.77f0fb53(bignumber.js@9.3.1)(remeda@2.30.0)(viem@2.33.3(typescript@5.9.2)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
       bignumber.js: 9.3.1
-      chalk: 5.6.0
+      chalk: 5.6.2
       error-stack-parser: 2.1.4
       p-limit: 6.2.0
-      pretty-ms: 9.2.0
+      pretty-ms: 9.3.0
       remeda: 2.30.0
       viem: 2.33.3(typescript@5.9.2)(zod@3.25.76)
       zod: 3.25.76
@@ -1239,7 +1241,7 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chalk@5.6.0: {}
+  chalk@5.6.2: {}
 
   chokidar@4.0.3:
     dependencies:
@@ -1318,7 +1320,7 @@ snapshots:
       is-plain-obj: 4.1.0
       is-stream: 4.0.1
       npm-run-path: 6.0.0
-      pretty-ms: 9.2.0
+      pretty-ms: 9.3.0
       signal-exit: 4.1.0
       strip-final-newline: 4.0.0
       yoctocolors: 2.1.2
@@ -1522,7 +1524,7 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  pretty-ms@9.2.0:
+  pretty-ms@9.3.0:
     dependencies:
       parse-ms: 4.0.0
 
