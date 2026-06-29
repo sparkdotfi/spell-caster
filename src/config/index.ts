@@ -14,8 +14,17 @@ export interface Config {
   spellsRepoPath: string
 }
 
-export interface NetworkConfig {
-  name: SparkDomain
+export type NetworkConfig = MainnetNetworkConfig | ForeignDomainNetworkConfig
+
+export interface MainnetNetworkConfig {
+  name: 'mainnet'
+  chain: Chain
+  sparkProxy: CheckedAddress
+  pauseProxy: CheckedAddress
+}
+
+export interface ForeignDomainNetworkConfig {
+  name: Exclude<SparkDomain, 'mainnet'>
   chain: Chain
   sparkSpellExecutor: CheckedAddress
 }
@@ -41,7 +50,8 @@ export function getConfig(env: IEnv, spellsRepoPath: string): Config {
       [mainnet.id]: {
         name: 'mainnet',
         chain: mainnet,
-        sparkSpellExecutor: CheckedAddress('0x3300f198988e4C9C63F75dF86De36421f06af8c4'),
+        sparkProxy: CheckedAddress('0x3300f198988e4C9C63F75dF86De36421f06af8c4'),
+        pauseProxy: CheckedAddress('0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB'),
       },
       [gnosis.id]: {
         name: 'gnosis',
