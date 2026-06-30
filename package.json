@@ -26,6 +26,7 @@
     "@sparkdotfi/common-reporters": "0.2.0-20251013.77f0fb53",
     "@sparkdotfi/common-testnets": "0.2.0-20251013.77f0fb53",
     "@sparkdotfi/common-universal": "0.2.0-20251013.12619a3b",
+    "@sparkdotfi/common-contracts": "0.2.0-20260630.c4ed5e0e",
     "@superactions/comment": "^0.1.2",
     "dax-sh": "^0.41.0",
     "dedent": "^1.5.3",

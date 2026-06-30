@@ -1,11 +1,11 @@
 import assert from 'node:assert'
+import { executeForeignDomainSpell, executeMainnetSpell } from '@sparkdotfi/common-contracts/spell'
 import { TenderlyTestnetFactory, getRandomChainId } from '@sparkdotfi/common-testnets'
 import { HttpClient } from '@sparkdotfi/common-universal/http-client'
 import { Logger } from '@sparkdotfi/common-universal/logger'
 import { Config } from './config'
 import { deployContract } from './periphery/forge'
 import { buildAppUrl } from './periphery/spark-app'
-import { executeSpell } from './spells/executeSpell'
 import { getChainIdFromSpellName } from './utils/getChainIdFromSpellName'
 
 export interface ForkAndExecuteSpellReturn {
@@ -44,7 +44,21 @@ export async function forkAndExecuteSpell(spellName: string, config: Config): Pr
     cwd: config.spellsRepoPath,
   })
 
-  await executeSpell({ spellAddress, network: chainConfig, client: result.client, deployer: config.deployer })
+  if (chainConfig.name === 'mainnet') {
+    await executeMainnetSpell({
+      client: result.client,
+      sparkProxy: chainConfig.sparkProxy,
+      pauseProxy: chainConfig.pauseProxy,
+      spell: spellAddress,
+    })
+  } else {
+    await executeForeignDomainSpell({
+      client: result.client,
+      executor: chainConfig.sparkSpellExecutor,
+      account: config.deployer,
+      spell: spellAddress,
+    })
+  }
 
   await result.cleanup()
 
