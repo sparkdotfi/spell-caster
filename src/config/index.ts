@@ -1,6 +1,6 @@
 import { CheckedAddress, SparkDomain } from '@sparkdotfi/common-universal'
 import { Chain } from 'viem'
-import { arbitrum, avalanche, base, gnosis, mainnet, optimism, unichain } from 'viem/chains'
+import { arbitrum, avalanche, base, gnosis, mainnet, optimism, unichain, robinhood, xLayer } from 'viem/chains'
 import { IEnv } from './environment/IEnv'
 
 export interface Config {
@@ -82,6 +82,16 @@ export function getConfig(env: IEnv, spellsRepoPath: string): Config {
         name: 'avalanche',
         chain: avalanche,
         sparkSpellExecutor: CheckedAddress('0x7566DEbC906C17338524A414343fA61BcA26A843'),
+      },
+      [robinhood.id]: {
+        name: 'robinhood',
+        chain: robinhood,
+        sparkSpellExecutor: CheckedAddress('0x826AEaeee9233fA8Ba199518dd8621A5962b1D02'),
+      },
+      [xLayer.id]: {
+        name: 'xLayer',
+        chain: xLayer,
+        sparkSpellExecutor: CheckedAddress('0xCF5af6F53ceC74B791cb4182aC778ca9CD323510'),
       },
     },
     deployer: CheckedAddress.ZERO(),
