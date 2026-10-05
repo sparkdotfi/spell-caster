@@ -9,6 +9,7 @@ import { buildActionDependencies } from '../buildDependencies'
 import { ForkAndExecuteSpellReturn, forkAndExecuteSpell } from '../forkAndExecuteSpell'
 import { prepareSlackNotification } from '../periphery/reporter/prepareSlackNotification'
 import { findModifiedSpells } from '../spells/findModifiedSpells'
+import { isSupportedByTenderly } from '../spells/isSupportedByTenderly'
 
 async function main(): Promise<void> {
   const { reportSender, config, logger } = buildActionDependencies()
@@ -16,11 +17,17 @@ async function main(): Promise<void> {
   const modifiedSpellNames = await findModifiedSpells(config.secrets.githubToken, logger)
   logger.info(`Modified spells: ${modifiedSpellNames.join(', ')}`)
 
-  if (modifiedSpellNames.length === 0) {
+  const supportedSpellNames = modifiedSpellNames.filter(isSupportedByTenderly)
+  if (supportedSpellNames.length !== modifiedSpellNames.length) {
+    const skippedSpellNames = modifiedSpellNames.filter((spellName) => !isSupportedByTenderly(spellName))
+    logger.warn(`Skipping spells on chains not supported by Tenderly: ${skippedSpellNames.join(', ')}`)
+  }
+
+  if (supportedSpellNames.length === 0) {
     return
   }
 
-  const forkResults = await Promise.all(modifiedSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
+  const forkResults = await Promise.all(supportedSpellNames.map((spellName) => forkAndExecuteSpell(spellName, config)))
 
   const { status } = await postGithubComment(forkResults, config.secrets.githubToken)
 
