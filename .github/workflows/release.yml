@@ -13,6 +13,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
 
       - run: bun install --frozen-lockfile
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN_READ_ONLY }}
       - run: bun build:action
 
       - uses: ActionwareIO/branch-push-action@action
