@@ -5,12 +5,16 @@ on:
     branches:
       - main
 
+# Pushes the built action to the `action` branch.
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@v4.4.0
+      - uses: oven-sh/setup-bun@v2.2.0
 
       - run: bun install --frozen-lockfile
         env:

@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   test:
     strategy:
@@ -15,8 +18,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@v4.4.0
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2.2.0
 
       - run: bun install --frozen-lockfile
         env:
