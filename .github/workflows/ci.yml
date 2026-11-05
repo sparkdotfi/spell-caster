@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   test:
     strategy:
@@ -15,12 +18,17 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@v4.4.0
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2.2.0
 
-      - run: bun install --frozen-lockfile
+      # bun reads ~/.npmrc; the private @sparkdotfi packages need the read-only token.
+      - name: Configure npm registry auth
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN_READ_ONLY}" > ~/.npmrc
         env:
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN_READ_ONLY }}
+          NPM_TOKEN_READ_ONLY: ${{ secrets.NPM_TOKEN_READ_ONLY }}
+      - run: bun install --frozen-lockfile
       - run: bun check
       - run: bun test
       - run: bun typecheck
